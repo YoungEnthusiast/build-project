@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', 'localhost']
+ALLOWED_HOSTS = ['206.189.236.141', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', 'localhost']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -89,15 +89,32 @@ WSGI_APPLICATION = 'build.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'builddb',
-        'USER': 'postgres',
-        'PASSWORD': 'Quayers6956.',
-        'HOST': 'localhost'
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'builddb',
+            'USER': 'postgres',
+            'PASSWORD': 'Quayers6956.',
+            'HOST': 'localhost'
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'builddb',
+            'USER': 'Yusuf',
+            'PASSWORD': 'Quayers8898.',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
+
+
+
+
+
 
 
 # Password validation
