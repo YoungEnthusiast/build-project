@@ -28,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['206.189.236.141', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', 'localhost']
 
 # Quick-start development settings - unsuitable for production
@@ -103,8 +103,8 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'builddb',
-            'USER': 'postgres',
+            'NAME': 'build_db',
+            'USER': 'Abe',
             'PASSWORD': 'Quayers8898',
             'HOST': 'localhost',
             'PORT': '',
