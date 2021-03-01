@@ -15,10 +15,22 @@ import sys
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(SECRET_KEY = str,)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DJANGO_DEBUG')
+ALLOWED_HOSTS = [env('DJANGO_ALLOWED_HOSTS')]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -26,13 +38,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 #DJANGO_SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = DEBUG = os.getenv("DEBUG", "False") == "True"
-
-ALLOWED_HOSTS = ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+# SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+#
+#
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = DEBUG = os.getenv("DEBUG", "False") == "True"
+#
+# ALLOWED_HOSTS = ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 # Application definition

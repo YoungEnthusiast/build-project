@@ -1,1 +1,1 @@
-web:gunicorn build.wsgi
+web: gunicorn build.wsgi
