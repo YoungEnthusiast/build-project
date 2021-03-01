@@ -12,14 +12,14 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import sys
-import dj_database_url
-from django.core.management.utils import get_random_secret_key
+# import dj_database_url
+
 from pathlib import Path
-import environ
+#import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,8 +28,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ['206.189.236.141', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', 'localhost']
+DEBUG = True
+ALLOWED_HOSTS = ['206.189.236.141', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', '127.0.0.1']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -90,21 +90,21 @@ WSGI_APPLICATION = 'build.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 # if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': 'builddb',
-#             'USER': 'postgres',
-#             'PASSWORD': 'Quayers6956.',
-#             'HOST': 'localhost'
-#         }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'builddb',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Quayers6956.',
+#         'HOST': 'localhost'
 #     }
+# }
 # else:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'build_db',
-        'USER': 'Abe',
+        'USER': 'Me',
         'PASSWORD': 'Quayers8898.',
         'HOST': 'localhost',
         'PORT': '',
