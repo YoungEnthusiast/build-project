@@ -1,1 +1,1 @@
-gunicorn -b 127.0.0.1:8000 build.wsgi:application
+gunicorn -b 127.0.0.1:8000 build.wsgi:build-project
