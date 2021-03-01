@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Roofing Materials</title>
+{% endblock title %}
+
+{% block content %}
+<div class="text-center row mt-1 ml-2 mr-2">
+    <div class="col-lg-12">
+        <img src="{% static 'images/' %}" alt="Roofing wallpaper" class="rounded-lg" width="400" height="250">
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class="text-center row mt-1 ml-2 mr-2">
+  <div class="col-lg-4">
+        <img src="{% static 'images/' %}" alt="Image 1" class="rounded-lg" width="400" height="250">
+        <h6><strong>&#x20A6</strong></h6>
+        <p>Brand: Xxx</p>
+  </div>
+  <div class="col-lg-4">
+        <img src="{% static 'images/' %}" alt="Image 2" class="rounded-lg" width="400" height="250">
+        <h6><strong>&#x20A6</strong></h6>
+        <p>Brand: Xxx</p>
+  </div>
+  <div class="col-lg-4">
+        <img src="{% static 'images/' %}" alt="Image 3" class="rounded-lg" width="400" height="250">
+        <h6><strong>&#x20A6</strong></h6>
+        <p>Brand: Xxx</p>
+  </div>
+  <div class="col-lg-4">
+        <img src="{% static 'images/' %}" alt="Image 4" class="rounded-lg" width="400" height="250">
+        <h6><strong>&#x20A6</strong></h6>
+        <p>Brand: Xxx</p>
+  </div>
+  <div class="col-lg-4">
+        <img src="{% static 'images/' %}" alt="Image 5" class="rounded-lg" width="400" height="250">
+        <h6><strong>&#x20A6</strong></h6>
+        <p>Brand: Xxx</p>
+  </div>
+  <div class="col-lg-4">
+        <img src="{% static 'images/' %}" alt="Image 6" class="rounded-lg" width="400" height="250">
+        <h6><strong>&#x20A6</strong></h6>
+        <p>Brand: Xxx</p>
+  </div>
+</div>
+<div class="text-center row mt-5 ml-5 mr-5">
+  <div class="col-lg-12">
+    <h4>Price as of / /</h4>
+    <br>
+    <a href=""><button class="btn btn-primary my-2 my-sm-0 mr-1" type="submit"><strong>Order </strong>(as Guest)</button></a>
+    <a href=""><button class="btn btn-primary my-2 my-sm-0 mr-1" type="submit"><strong>Order </strong>(as Registered Client)</button></a>
+    <a href=""><button class="btn btn-primary my-2 my-sm-0" type="submit"><strong>Roofing and Ceiling Materials Calculator</strong></button></a>
+  </div>
+</div>
+
+{% endblock content%}

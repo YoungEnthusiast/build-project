@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Edit Profile</title>
+{% endblock title %}
+
+{% block content %}
+</br>
+  <div class="container">
+    <div class="card">
+      <br>
+      {% include 'partials/_alerts.html' %}
+      <form method="post" class="form-group col-md-12">
+        <div class="card-header bg-primary text-white">
+          <h4>
+            <i class="fas fa-user-edit"></i> Edit Profile</h4>
+        </div>
+        <br>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <a href="{% url 'change_password' %}"><strong>Click here</strong></a> to change your password
+        <br>
+        <br>
+        <input type="submit" class="form-group col-md-12 btn btn-info" value="Update">
+      </form>
+    </div>
+  </div>
+<br>
+{% endblock content%}

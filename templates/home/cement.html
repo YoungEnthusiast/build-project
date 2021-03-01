@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Cement</title>
+{% endblock title %}
+
+{% block content %}
+<style media="screen">
+  body {
+   background: url('{% static "img/produc.png" %}') no-repeat top center fixed;
+   position: relative;
+   width: 100%;
+   color: #fff;
+   background-size: cover;
+   /* padding-top: 6rem; */
+  }
+</style>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4 text-dark"><strong>Cement</strong></h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-4 bg-white text-dark">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4">
+            <img src="{% static 'img/cement_bag.png' %}" alt="Image 1" class="img-responsive" width="300" height="350">
+            <h3><strong>&#x20A6</strong></h3>
+            <h5>Brand: Xxx</h5>
+      </div>
+      <div class="col-md-4">
+            <img src="{% static 'img/cement_bag.png' %}" alt="Image 2" class="img-responsive" width="400" height="350">
+            <h3><strong>&#x20A6</strong></h3>
+            <h5>Brand: Xxx</h5>
+      </div>
+      <div class="col-md-4">
+            <img src="{% static 'img/cement_bag.png' %}" alt="Image 3" class="img-responsive" width="400" height="350">
+            <h3><strong>&#x20A6</strong></h3>
+            <h5>Brand: Xxx</h5>
+      </div>
+    </div>
+
+
+  <div class="text-center row mt-5 md-5 mr-5">
+    <div class="col-md-12">
+      <h4>Price as of / /</h4>
+      <br>
+      <a href=""><button class="btn btn-info my-2 my-sm-0 mr-1" type="submit"><strong>Order </strong>(as Guest)</button></a>
+      <a href=""><button class="btn btn-info my-2 my-sm-0 mr-1" type="submit"><strong>Order </strong>(as Registered Client)</button></a>
+      <a href=""><button class="btn btn-info my-2 my-sm-0" type="submit"><strong>Cement Calculator</strong></button></a>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content%}
