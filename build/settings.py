@@ -105,7 +105,7 @@ else:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'builddb',
             'USER': 'postgres',
-            'PASSWORD': 'Quayers8898.',
+            'PASSWORD': 'Quayers8898',
             'HOST': 'localhost',
             'PORT': '',
         }
