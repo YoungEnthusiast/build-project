@@ -90,26 +90,26 @@ WSGI_APPLICATION = 'build.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 # if DEBUG:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'builddb',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Quayers6956.',
-#         'HOST': 'localhost'
-#     }
-# }
-# else:
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'build_prod',
-        'USER': 'dbadmin',
-        'PASSWORD': 'Quayers8898.',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'builddb',
+        'USER': 'postgres',
+        'PASSWORD': 'Quayers6956.',
+        'HOST': 'localhost'
     }
 }
+# else:
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'build_prod',
+#         'USER': 'dbadmin',
+#         'PASSWORD': 'Quayers8898.',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 
