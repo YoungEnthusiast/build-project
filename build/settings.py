@@ -28,8 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = []
 #ALLOWED_HOSTS = ['http://165.232.142.35/:8000', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', '127.0.0.1']
 
 # Quick-start development settings - unsuitable for production
