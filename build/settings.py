@@ -30,7 +30,7 @@ SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['206.189.236.141', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', '127.0.0.1', 'http://0.0.0.0:8000/']
+ALLOWED_HOSTS = ['http://165.232.142.35/:8000', 'http://127.0.0.1:8000/', 'www.buildqwik.ng', 'buildqwik.ng', '127.0.0.1']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
