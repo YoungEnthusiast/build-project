@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from home import views
 from users import views as users_views
+from store import views as store_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
@@ -37,5 +38,9 @@ urlpatterns = [
     path('edit_profile/', users_views.editProfile, name='edit_profile'),
     path('change-password/', users_views.changePassword, name='change_password'),
     path('dashboard/', users_views.showDashboard, name='dashboard'),
+
+    path('store/', store_views.showStore, name='store'),
+    path('cart/', store_views.showCart, name='cart'),
+    path('checkout/', store_views.showCheckOut, name='checkout'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

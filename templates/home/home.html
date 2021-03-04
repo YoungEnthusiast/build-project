@@ -6,7 +6,7 @@
 {% endblock title %}
 
 {% block content %}
-<style media="screen">
+<!-- <style media="screen">
   body {
    background: url('{% static "img/home.png" %}') no-repeat top center fixed;
    position: relative;
@@ -18,9 +18,10 @@
   #circle{
     border-radius: 100px
   }
-</style>
+</style> -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
-  <section class="py-5 text-dark">
+  <section class="py-5 text-dark" id="bg" style= "background-image: url('{% static "img/home.png" %}');">
     <div class="row mt-5 ml-5 mr-5">
       <div class="col-lg-4">
             <img src="{% static 'img/logo.jpg' %}" alt="BuildQwik Logo" class="rounded-lg" width="300">

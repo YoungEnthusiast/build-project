@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
+    'store.apps.StoreConfig',
     'django_filters',
     'crispy_forms',
 ]
@@ -100,17 +101,6 @@ DATABASES = {
         'HOST': 'localhost'
     }
 }
-# else:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'build_prod',
-#         'USER': 'dbadmin',
-#         'PASSWORD': 'Quayers8898.',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
 
 try:
     from .local_settings import *

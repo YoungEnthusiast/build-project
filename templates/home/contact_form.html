@@ -10,17 +10,7 @@
 
 {% block content %}
 
-<style media="screen">
-  body {
-   background-image: url('{% static "img/contact.png" %}');
-   background-position: top;
-   background-size: 1800px 900px;
-   background-attachment: fixed;
-   background-repeat: no-repeat;
-  }
-</style>
-
-<section  class="py-5">
+<section  class="py-5" id="bg" style= "background-image: url('{% static "img/contact.png" %}');">
   <div class="container">
     <div class="row text-center">
       <div class="col-md-12">
@@ -29,6 +19,7 @@
     </div>
   </div>
 </section>
+<br>
 
 <section>
   <div class="row">
