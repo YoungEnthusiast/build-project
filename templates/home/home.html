@@ -6,19 +6,17 @@
 {% endblock title %}
 
 {% block content %}
-<!-- <style media="screen">
-  body {
-   background: url('{% static "img/home.png" %}') no-repeat top center fixed;
-   position: relative;
-
-   color: #fff;
-   background-size: cover;
-   /* padding-top: 6rem; */
+<style media="screen">
+  #bg {
+    background-position: top;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
   }
   #circle{
     border-radius: 100px
   }
-</style> -->
+</style>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
   <section class="py-5 text-dark" id="bg" style= "background-image: url('{% static "img/home.png" %}');">
