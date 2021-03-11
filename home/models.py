@@ -1,6 +1,6 @@
 from django.db import models
 #from datetime import datetime
-#from users.models import User
+from django.contrib.auth.models import User
 
 class Contact(models.Model):
     STATUS_CHOICES = [

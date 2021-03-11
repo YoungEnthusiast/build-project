@@ -58,6 +58,3 @@ def showContact(request):
 
 def showCement(request):
     return render(request, 'home/cement.html')
-
-def showRoofing(request):
-    return render(request, 'home/roofing.html')

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>My Store</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+<div class="container">
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-4">
+      <img class="thumbnail" src="{{product.imageURL}}">
+      <div class="box-element product">
+        <h6><strong>{{product.name}}</strong></h6>
+        <hr>
+        <h5>Price as of / /</h5> <h5><strong>₦{{product.price}}</strong></h5>
+        <button data-product="{{product.id}}" data-action="add" class="btn btn-warning add-btn update-cart"><strong class="text-dark">Order (as Guest)</strong></button>
+
+        <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
+
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<br>
+{% endblock content %}

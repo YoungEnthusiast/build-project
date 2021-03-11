@@ -29,9 +29,9 @@ urlpatterns = [
     path('about-buildqwik/', views.showAbout, name='about'),
     path('contact-us/', views.showContact, name='contact'),
     path('st---only/', views.showContacts, name='contacts'),
-    path('products/cement/', views.showCement, name='cement'),
-    path('products/roofing--materials/', views.showRoofing, name='roofing'),
+    #path('products/cement/', views.showCement, name='cement'),
 
+    # users app urls starts here
     path('register/', users_views.create, name='account'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
@@ -39,7 +39,8 @@ urlpatterns = [
     path('change-password/', users_views.changePassword, name='change_password'),
     path('dashboard/', users_views.showDashboard, name='dashboard'),
 
-    path('store/', store_views.showStore, name='store'),
+    # store app urls starts here
+    path('products/cement/', store_views.showStore, name='store'),
     path('cart/', store_views.showCart, name='cart'),
     path('checkout/', store_views.showCheckOut, name='checkout'),
 
