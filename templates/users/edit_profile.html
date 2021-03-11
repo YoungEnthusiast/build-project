@@ -8,10 +8,19 @@
 {% block content %}
 </br>
   <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <h5>{{message}}</h5>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
     <div class="card">
       <br>
-      {% include 'partials/_alerts.html' %}
-      <form method="post" class="form-group col-md-12">
+      <form method="post" class="form-group col-md-12" enctype="multipart/form-data">
         <div class="card-header bg-primary text-white">
           <h4>
             <i class="fas fa-user-edit"></i> Edit Profile</h4>
@@ -19,6 +28,7 @@
         <br>
         {% csrf_token %}
         {{ form|crispy }}
+        {{ customer_form|crispy }}
         <a href="{% url 'change_password' %}"><strong class="text-info">Click here</strong></a> to change your password
         <br>
         <br>

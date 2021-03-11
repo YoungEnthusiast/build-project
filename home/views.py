@@ -42,19 +42,5 @@ def showContact(request):
             return redirect('contact')
     return render(request, 'home/contact_form.html', {'form': form})
 
-    # if request.method == 'POST':
-    #     contact = request.POST['contact']
-    #     contact_id = request.POST['contact_id']
-    #     name = request.POST['name']
-    #     email = request.POST['email']
-    #     phone_number = request.POST['phone_number']
-    #     message = request.POST['message']
-    #     user_id = request.POST['user_id']
-    #     contact = Contact(contact=contact, contact_id=contact_id, name=name, email=email, phone_number=phone_number, message=message, user_id=user_id)
-    #     contact.save()
-    #     messages.success(request, str(name) + ", your message has been submitted and will receive attention shortly")
-    #     return redirect('/contact-us/'+contact_id )
-    # return render(request, 'home/contact_form.html')
-
 def showCement(request):
     return render(request, 'home/cement.html')

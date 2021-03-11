@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from .models import Customer
 
 class CustomRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -21,3 +22,9 @@ class ProfileEditForm(UserChangeForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
+
+class CustomerEditForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['address', 'city', 'state']
+        # self.fields['password1'].label = 'password1 label'

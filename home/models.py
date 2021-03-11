@@ -1,5 +1,4 @@
 from django.db import models
-#from datetime import datetime
 from django.contrib.auth.models import User
 
 class Contact(models.Model):
@@ -14,7 +13,6 @@ class Contact(models.Model):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     message = models.TextField(max_length=1000, null=True)
     date_submitted = models.DateTimeField(auto_now_add=True)
-    #date_submitted = models.DateTimeField(default=datetime.now, blank=True, null=True)
     status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
     user_id = models.IntegerField(blank=True, null=True)
 
@@ -22,4 +20,4 @@ class Contact(models.Model):
         ordering = ('-date_submitted',)
 
     def __str__(self):
-        return self.name
+        return str(self.name)

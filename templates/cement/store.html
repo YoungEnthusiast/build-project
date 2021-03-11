@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Cement's Store</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+<div class="container">
+  {% include 'partials/_alerts.html' %}
+    <div class="row text-center">
+      {% for cement in cements %}
+      <div class="col-md-4">
+        <img class="img-responsive"  src="{{cement.imageURL}}">
+        <div class="box-element product">
+          <h6><strong>{{cement.type}}</strong></h6>
+          <hr>
+          <h5>Price as of {{cement.date}}</h5> <h5><strong>₦{{cement.price}}</strong></h5>
+          <div class="row text-center">
+            <button class="btn btn-warning col-md-5 ml-4 mr-1" data-toggle="modal" data-target="#inquiryModal2"><strong class="text-dark">Order (Guest)</strong></button>
+            <button class="btn btn-warning col-md-5" data-toggle="modal" data-target="#inquiryModal"><strong class="text-dark">Order (Logged In)</strong></button>
+          </div>
+          <br>
+          <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+<div class="modal fade" id="inquiryModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info" id="inquiryModalLabel">Place Order as Registered User</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <hr>
+                  <input type="submit" value="Confirm" class="btn btn-block btn-warning">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+
+<div class="modal fade" id="inquiryModal2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info" id="inquiryModalLabel">Place Order as a Guest</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{guest_form|crispy}}
+                  <hr>
+                  <input type="submit" value="Confirm" class="btn btn-block btn-warning">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
