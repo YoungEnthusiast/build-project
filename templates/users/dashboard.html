@@ -30,36 +30,38 @@
         <div class="form-group pull-left col-md-2">
           <a class="btn btn-outline-dark" href="{% url 'cement' %}">&#x2190; <strong>Order More Cement</strong></a>
         </div>
-        <table class="table table-bordered">
-          <thead class="thead-dark">
-            <tr class="row">
-              <th class="col-1">DATE</th>
-              <th class="col-1">ORDER ID</th>
-              <th class="col-2">PRODUCT</th>
-              <th class="col-2">TYPE</th>
-              <th class="col-1">PRICE</th>
-              <th class="col-1">QUANTITY</th>
-              <th class="col-2">TOTAL</th>
-              <th class="col-1"></th>
-              <th class="col-1"></th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for cement_order in cement_orders %}
-            <tr class="table-info row">
-              <td class="col-1">{{cement_order.date_ordered}}</td>
-              <td class="col-1">{{cement_order.id}}</td>
-              <td class="col-2"><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
-              <td class="col-2">{{cement_order.cement.type}}</td>
-              <td class="col-1">{{cement_order.cement.price}}</td>
-              <td class="col-1">{{cement_order.quantity}}</td>
-              <td class="col-2">{{cement_order.total_price}}</td>
-              <td class="col-1"><a href="cement/update/{{cement_order.id}}"><button type="button" class="col-12 btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
-              <td class="col-1"><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="col-12 btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>DATE</th>
+                <th>ORDER ID</th>
+                <th>PRODUCT</th>
+                <th>TYPE</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>TOTAL</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for cement_order in cement_orders %}
+              <tr class="table-info">
+                <td>{{cement_order.date_ordered}}</td>
+                <td>{{cement_order.id}}</td>
+                <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                <td>{{cement_order.cement.type}}</td>
+                <td>{{cement_order.cement.price}}</td>
+                <td>{{cement_order.quantity}}</td>
+                <td>{{cement_order.total_price}}</td>
+                <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
+                <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     {% endif %}
   </div>
