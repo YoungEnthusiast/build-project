@@ -11,70 +11,82 @@
 
 {% if contacts_page_obj %}
   <br>
-  <div class="row">
-    <form method="get" class="card bg-light text-success form-group col-md-2 ml-4 mr-2">
-      <h4>Search by Field(s)</h4>
-      {{ filtered_contacts.form|crispy }}
+  <h4 class="text-center">Search by Field(s)</h4>
+  <div class="container">
+    <form method="get" class="form-inline">
+      {% for field in filtered_contacts.form %}
+      <!-- {{ filtered_contacts.form|crispy }} -->
+        <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+      {% endfor %}
       <br>
-      <input type="submit" class="form-group col-md-12 btn btn-success" value="Sort">
+      <input type="submit" class="btn btn-success" value="Sort">
     </form>
-    <div class="col-md-9">
-      <h3 class="form-group">Total message(s): {{ total_contacts }}</h3>
-      <table class="table table-bordered">
-        <thead class="thead-dark text-center">
-          <tr>
-            <th>DATE</th>
-            <th>NAME</th>
-            <th>EMAIL</th>
-            <th>MESSAGE</th>
-            <th>STATUS</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for contact in contacts_page_obj %}
-            {% if contact.status == "Treated" %}
-              <tr class="table-success">
-                <td>{{contact.date_submitted}}</td>
-                <td>{{contact.name}}</td>
-                <td>{{contact.email}}</td>
-                <td>{{contact.message}}</td>
-                <td>{{contact.status}}</td>
-              </tr>
-            {% elif contact.status == "Pending" %}
-              <tr class="table-warning">
-                <td>{{contact.date_submitted}}</td>
-                <td>{{contact.name}}</td>
-                <td>{{contact.email}}</td>
-                <td>{{contact.message}}</td>
-                <td>{{contact.status}}</td>
-              </tr>
-            {% else %}
-              <tr class="table-danger">
-                <td>{{contact.date_submitted}}</td>
-                <td>{{contact.name}}</td>
-                <td>{{contact.email}}</td>
-                <td>{{contact.message}}</td>
-                <td>{{contact.status}}</td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-      <nav aria-label="...">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
-          {% if contacts_page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="{% my_url contacts_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{contacts_page_obj.previous_page_number}}</a></li>
-          {% endif %}
-          <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url contacts_page_obj.number 'page' request.GET.urlencode %}">{{contacts_page_obj.number}}<span class="sr-only">(current)</span></a></li>
-          {% if contacts_page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="{% my_url contacts_page_obj.next_page_number 'page' request.GET.urlencode %}">{{contacts_page_obj.next_page_number}}</a></li>
-          {% endif %}
-          <li class="page-item"><a class="page-link" href="{% my_url contacts_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
-        </ul>
-      </nav>
-    </div>
   </div>
+  <br>
+  <div class="col-md-12">
+    <h3 class="form-group">Total message(s): {{ total_contacts }}</h3>
+    <table class="table table-bordered">
+      <thead class="thead-dark text-center">
+        <tr>
+          <th>DATE</th>
+          <th>NAME</th>
+          <th>EMAIL</th>
+          <th>MOBILE</th>
+          <th>MESSAGE</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contact in contacts_page_obj %}
+          {% if contact.status == "Treated" %}
+            <tr class="table-success">
+              <td>{{contact.date_submitted}}</td>
+              <td>{{contact.name}}</td>
+              <td>{{contact.email}}</td>
+              <td>{{contact.phone_number}}</td>
+              <td>{{contact.message}}</td>
+              <td>{{contact.status}}</td>
+            </tr>
+          {% elif contact.status == "Pending" %}
+            <tr class="table-warning">
+              <td>{{contact.date_submitted}}</td>
+              <td>{{contact.name}}</td>
+              <td>{{contact.email}}</td>
+              <td>{{contact.phone_number}}</td>
+              <td>{{contact.message}}</td>
+              <td>{{contact.status}}</td>
+            </tr>
+          {% else %}
+            <tr class="table-danger">
+              <td>{{contact.date_submitted}}</td>
+              <td>{{contact.name}}</td>
+              <td>{{contact.email}}</td>
+              <td>{{contact.phone_number}}</td>
+              <td>{{contact.message}}</td>
+              <td>{{contact.status}}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <nav aria-label="...">
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+        {% if contacts_page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="{% my_url contacts_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{contacts_page_obj.previous_page_number}}</a></li>
+        {% endif %}
+        <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url contacts_page_obj.number 'page' request.GET.urlencode %}">{{contacts_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+        {% if contacts_page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{% my_url contacts_page_obj.next_page_number 'page' request.GET.urlencode %}">{{contacts_page_obj.next_page_number}}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="{% my_url contacts_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
+
+
 
 {% else %}
   <div class="col-md-9 ml-2">
