@@ -8,16 +8,16 @@
 {% block content %}
 {% load home_tags %}
 
+
+{% if contacts_page_obj %}
   <br>
   <div class="row">
-  {% if contacts_page_obj %}
     <form method="get" class="card bg-light text-success form-group col-md-2 ml-4 mr-2">
       <h4>Search by Field(s)</h4>
       {{ filtered_contacts.form|crispy }}
       <br>
       <input type="submit" class="form-group col-md-12 btn btn-success" value="Sort">
     </form>
-
     <div class="col-md-9">
       <h3 class="form-group">Total message(s): {{ total_contacts }}</h3>
       <table class="table table-bordered">
@@ -74,11 +74,13 @@
         </ul>
       </nav>
     </div>
-  {% else %}
-    <div class="col-md-9 ml-2">
-      <h3>No Message Available!</h3>
-    </div>
-  {% endif %}
   </div>
+
+{% else %}
+  <div class="col-md-9 ml-2">
+    <h3>No Message Available!</h3>
+  </div>
+{% endif %}
+</div>
 
 {% endblock content%}
