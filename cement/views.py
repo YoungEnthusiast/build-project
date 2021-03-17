@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from  .models import Cement, CementOrder
 from .forms import CementOrderForm, GuestCementOrderForm
 from django.contrib import messages
@@ -14,11 +14,13 @@ def showCement(request):
 		if guest_form.is_valid():
 			guest_form.save()
 			messages.success(request, "Order submitted!")
+			
 		elif form.is_valid():
 			form.save(commit=False).user = request.user
 			form.save()
-			messages.success(request, "Order submitted, you may proceed to dashboard to make payment")
+			messages.success(request, "Order submitted! You can checkout below")
+			return redirect('dashboard')
 		else:
-			messages.error(request, "Wrong!")
+			messages.error(request, "ERROR: Please make sure you don't enter too much characters than necessary")
 	context = {'cements': cements, 'form': form, 'guest_form': guest_form}
 	return render(request, 'cement/store.html', context)

@@ -29,6 +29,10 @@ class CementOrder(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 	cement = models.ForeignKey(Cement, on_delete=models.SET_NULL, null=True)
 	quantity = models.IntegerField(default=0)
+	time = models.CharField(max_length=200, null=True, blank=True)
+	address = models.CharField(max_length=255, null=True, blank=True)
+	city = models.CharField(max_length=20, null=True, blank=True)
+	state = models.CharField(max_length=20, null=True, blank=True)
 	date_ordered = models.DateTimeField(auto_now_add=True)
 	last_modified = models.DateTimeField(auto_now=True)
 	status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
@@ -43,6 +47,7 @@ class CementOrder(models.Model):
 		total = self.cement.price * self.quantity
 		return total
 
+
 class GuestCementOrder(models.Model):
 	STATUS_CHOICES = [
         ('Completed','Completed'),
@@ -51,10 +56,12 @@ class GuestCementOrder(models.Model):
     ]
 	cement = models.ForeignKey(Cement, on_delete=models.SET_NULL, null=True)
 	name = models.CharField(max_length=200)
-	address = models.CharField(max_length=200)
+	email = models.EmailField(null=True)
+	address = models.CharField(max_length=255)
 	city = models.CharField(max_length=20)
 	state = models.CharField(max_length=20)
 	quantity = models.IntegerField(default=0)
+	time = models.CharField(max_length=200, null=True, blank=True)
 	date_ordered = models.DateTimeField(auto_now_add=True)
 	status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
 
@@ -67,4 +74,3 @@ class GuestCementOrder(models.Model):
 	def total_price(self):
 		total = self.cement.price * self.quantity
 		return total
-	

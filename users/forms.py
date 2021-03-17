@@ -23,6 +23,8 @@ class ProfileEditForm(UserChangeForm):
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
 
+
+
 class CustomerEditForm(forms.ModelForm):
     class Meta:
         model = Customer

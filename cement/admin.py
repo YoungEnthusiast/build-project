@@ -13,7 +13,7 @@ class CementAdmin(admin.ModelAdmin):
 admin.site.register(Cement, CementAdmin)
 
 class CementOrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'cement', 'quantity', 'total_price', 'date_ordered', 'last_modified', 'status']
+    list_display = ['id', 'user', 'cement', 'quantity', 'total_price', 'time', 'address', 'city', 'state', 'date_ordered', 'last_modified', 'status']
     search_fields = ['id', 'user', 'cement', 'quantity', 'date_ordered', 'last_modified', 'status']
     list_filter = ['cement', 'status']
     list_display_links = ['id', 'user', 'cement',]
@@ -22,10 +22,10 @@ class CementOrderAdmin(admin.ModelAdmin):
 admin.site.register(CementOrder, CementOrderAdmin)
 
 class GuestCementOrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'address', 'city', 'state', 'cement', 'quantity', 'total_price', 'date_ordered', 'status']
-    search_fields = ['id', 'name', 'address', 'city', 'state', 'cement', 'quantity', 'total_price', 'date_ordered', 'status']
+    list_display = ['id', 'name', 'email', 'address', 'city', 'state', 'cement', 'quantity', 'total_price', 'time', 'date_ordered', 'status']
+    search_fields = ['id', 'name', 'email', 'address', 'city', 'state', 'cement', 'quantity', 'total_price', 'date_ordered', 'status']
     list_filter = ['city', 'state', 'cement', 'status']
-    list_display_links = ['id', 'name', 'cement',]
+    list_display_links = ['id', 'name', 'email', 'cement',]
     list_per_page = 10
 
 admin.site.register(GuestCementOrder, GuestCementOrderAdmin)

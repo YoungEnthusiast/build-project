@@ -43,6 +43,7 @@
                 <th>TOTAL</th>
                 <th></th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -56,6 +57,7 @@
                 <td>{{cement_order.quantity}}</td>
                 <td>{{cement_order.total_price}}</td>
                 <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
+                <td><a href="cement/delete/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-danger">Delete</button></a></td>
                 <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
               </tr>
             {% endfor %}

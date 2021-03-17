@@ -9,28 +9,28 @@
 {% block content %}
 <br>
 <div class="container">
-  {% include 'partials/_alerts.html' %}
-    <div class="row text-center">
-      {% for cement in cements %}
-      <div class="col-md-4">
-        <img class="img-responsive"  src="{{cement.imageURL}}">
-        <div class="box-element product">
-          <h6><strong>{{cement.type}}</strong></h6>
-          <hr>
-          <h5>Price as of {{cement.date}}</h5> <h5><strong>₦{{cement.price}}</strong></h5>
-          <button class="btn btn-warning" data-toggle="modal" data-target="#inquiryModal2"><strong class="text-dark">Order (Guest)</strong></button>
-          <br>
-          <br>
-          <button class="btn btn-warning" data-toggle="modal" data-target="#inquiryModal"><strong class="text-dark">Order (Logged In)</strong></button>
-          <br>
-          <br>
-          <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
-        </div>
+{% include 'partials/_alerts.html' %}
+  <div class="row text-center">
+    {% for cement in cements %}
+    <div class="col-md-4">
+      <img class="img-responsive"  src="{{cement.imageURL}}">
+      <div class="box-element product">
+        <h6><strong>{{cement.type}}</strong></h6>
+        <hr>
+        <h5>Price as of {{cement.date}}</h5> <h5><strong>₦{{cement.price}}</strong></h5>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#guest"><strong class="text-dark">Order (Guest)</strong></button>
+        <br>
+        <br>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#registered"><strong class="text-dark">Order (Logged In)</strong></button>
+        <br>
+        <br>
+        <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
       </div>
-      {% endfor %}
     </div>
+    {% endfor %}
+  </div>
 </div>
-<div class="modal fade" id="inquiryModal" role="dialog">
+<div class="modal fade" id="registered" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -53,7 +53,7 @@
 <br>
 
 
-<div class="modal fade" id="inquiryModal2" role="dialog">
+<div class="modal fade" id="guest" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -4,10 +4,12 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from cement.models import Cement, CementOrder
+from cement.models import Cement, CementOrder, GuestCementOrder
 from cement.forms import CementOrderForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import DeleteView
 from .models import Customer
 
 
@@ -18,8 +20,6 @@ def create(request):
             form = form.save(commit=False)
             form.save()
             customer = Customer.objects.create(user=form)
-            #user = form.cleaned_data.get('username')
-            #messages.error(request, "Testing...")
             messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
             return redirect('edit_profile')
     else:
@@ -75,8 +75,37 @@ def updateCementOrder(request, id):
             return redirect('dashboard')
     return render(request, 'cement/cementorder_form.html', {'form': form})
 
+class CementOrderDeleteView(DeleteView):
+    model = CementOrder
+    success_url = reverse_lazy('dashboard')
+
+    def has_permission(self):
+        perms = super(CementOrderDeleteView, self).has_permission()
+        return perms
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'cement/cementorder_confirm_delete.html', {})
+
+# class CementOrderDeleteView(PermissionRequiredMixin, DeleteView):
+#     permission_required = 'cementorder.delete_cementorder'
+#     model = CementOrder
+#     success_url = reverse_lazy('dashboard')
+#     def get_permission_required(self):
+#         perms = super(CementOrderDeleteView, self).get_permission_required()
+#         return perms
+#
+#     def has_permission(self):
+#         perms = super(CementOrderDeleteView, self).has_permission()
+#         return perms
+#
+#     def get(self, request, *args, **kwargs):
+#         return render(request, 'cement/cementorder_confirm_delete.html', {})
+#
+# def handler403(request, exception, template_name='403.html'):
+#     return render(request, '403.html')
+
 @login_required
-def showCementOrder(request, pk):
+def showCementOrder(request, pk, **kwargs):
     cement_order = CementOrder.objects.get(id=pk)
     context = {'cement_order': cement_order}
     return render(request, 'cement/cementorder_detail.html', context)

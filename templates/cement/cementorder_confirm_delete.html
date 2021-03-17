@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Delete Order</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+<div class="d-flex justify-content-center">
+  <div class="text-center card bg-light text-dark form-group col-md-9">
+    <br>
+    <h4 >Deleting this order will remove all the ORDER's records in the system. Do you still wish to continue?</h4>
+    <br>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" class="btn btn-danger" value="Yes, confirm"> <a class="btn btn-outline-dark" href="{% url 'dashboard' %}">No, cancel</a>
+    </form>
+    <br>
+  </div>
+</div>
+
+{% endblock content%}

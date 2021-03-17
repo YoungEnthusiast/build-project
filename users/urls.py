@@ -10,5 +10,6 @@ path('edit_profile/', views.editProfile, name='edit_profile'),
 path('change-password/', views.changePassword, name='change_password'),
 path('dashboard/', views.showDashboard, name='dashboard'),
 path('dashboard/cement/update/<int:id>/', views.updateCementOrder, name='cement_update'),
+path('dashboard/cement/delete/<int:pk>/', views.CementOrderDeleteView.as_view()),
 path('cementorders/<str:pk>/', views.showCementOrder, name='show_cement'),
 ]
