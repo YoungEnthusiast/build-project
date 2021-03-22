@@ -9,11 +9,16 @@
   </br>
   <div class="container">
     {% include 'partials/_alerts.html' %}
+    {% if cement_order.user == request.user %}
     <h3 class="form-group text-center">UPDATE CEMENT</h3>
-    <form method="post" class="form-group col-md-12">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <input type="submit" class="form-group col-md-12 btn btn-info" value="save">
-    </form>
+      <form method="post" class="form-group col-md-12">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="form-group col-md-12 btn btn-info" value="Update">
+      </form>
+    {% else %}
+      <h2 class="text-center">Access Restricted</h2>
+      <br>
+    {% endif %}
   </div>
 {% endblock content%}

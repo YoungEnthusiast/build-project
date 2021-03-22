@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!-- Navbar -->
 <nav class="p-0 navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <a class="ml-2 navbar-brand" href="{% url 'index' %}">
@@ -72,6 +73,10 @@
           <a class="nav-link" href="{% url 'edit_profile' %}">
             <i class="fas fa-user-edit"></i> <strong>Edit Your Profile</strong></a>
         </li>
+
+        <li "nav-item mr-3">
+        <h5 class="text-center text-success"><i class="text-warning">WALLET:</i> <strong>₦{{user.customer.wallet | intcomma}}</strong></h5>
+        </li>
         <li
           {% if 'logout' in request.path %}
             class="nav-item active mr-3"
@@ -92,7 +97,7 @@
         >
           <a class="nav-link" href="{% url 'account' %}">
             <i class="fas fa-user-plus text-danger"></i> <strong class="text-danger">Register</strong></a>
-        </li>
+        </li class="nav-item mr-3">
         <li
           {% if 'login' in request.path %}
             class="nav-item active mr-3"

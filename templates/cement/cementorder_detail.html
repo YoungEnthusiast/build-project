@@ -8,31 +8,23 @@
 
 {% block content %}
 </br>
+  {% if cement_order.user == request.user %}
   <div class="row">
-		<div class="col-lg-6">
-			<div class="box-element" id="form-wrapper">
-				<form id="form">
-					<div id="user-info">
-						<div class="form-group">
-              <label for="email-address">Registered Email</label>
-							<input required class="form-control" type="email" value="{{cement_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
-						</div>
-            <div class="form-group">
-              <label for="amount">Amount</label>
-              <input required class="form-control" readonly type="tel" value="{{cement_order.total_price}}" id="amount" required />
-            </div>
-            <div class="form-group">
-              <button id="form-button" class="btn btn-success btn-block" type="submit" onclick="payWithPaystack()"> Pay </button>
-            </div>
-          </div>
-  			</form>
-  		</div>
-		</div>
     <div class="col-lg-6">
       <div class="box-element">
-        <a  class="btn btn-outline-dark" href="{% url 'dashboard' %}">&#x2190; Back to Dashboard</a>
+        <div class="row">
+          <div class="form-group col-lg-3">
+            <a  class="btn btn-outline-dark" href="{% url 'dashboard' %}">&#x2190; Back to Dashboard</a>
+          </div>
+          <div class="form-group">
+            <input required class="form-control" readonly type="hidden" value="{{cement_order.total_price}}" id="amount" required />
+          </div>
+          <div class="form-group col-lg-9">
+            <button class="btn btn-warning btn-block" type="button" name="button"><a href="pay"><strong>Pay From Wallet Balance</strong></a></button>
+          </div>
+        </div>
         <hr>
-        <h3 class="text-center">Order Summary</h3>
+        <h3 class="text-center">ORDER ID: {{cement_order.id}}</h3>
         <hr>
         <div class="cart-row">
           <div style="flex:2"><img class="row-image" src="{{cement_order.cement.imageURL}}"></div>
@@ -42,6 +34,25 @@
         </div>
         <h5>Total: ₦{{cement_order.total_price}}</h5>
       </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="box-element bg-info" id="form-wrapper">
+      <form id="form">
+        <div id="user-info">
+          <div class="form-group">
+            <label for="email-address">Email</label>
+            <input required class="form-control" type="email" value="{{cement_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input required class="form-control" readonly type="tel" value="{{cement_order.total_price}}" id="amount" required />
+          </div>
+          <div class="form-group">
+            <button id="form-button" class="btn btn-warning btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <br>
@@ -68,7 +79,10 @@
     }
   </script>
 
-
+  {% else %}
+    <h2 class="text-center">Access Restricted</h2>
+    <br>
+  {% endif %}
 
 
 {% endblock content %}

@@ -29,4 +29,3 @@ class CustomerEditForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['address', 'city', 'state']
-        # self.fields['password1'].label = 'password1 label'

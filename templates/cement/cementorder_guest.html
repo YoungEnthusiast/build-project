@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Checkout</title>
+{% endblock title %}
+
+{% block content %}
+</br>
+  {% include 'partials/_alerts.html' %}
+  <div class="container">
+    <div class="box-element bg-info" id="form-wrapper">
+      <form id="form">
+        <div id="user-info">
+          <div class="form-group">
+            <label for="email-address">Email</label>
+            <input required class="form-control" type="email" id="email-address" placeholder="Enter email address used in ordering" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input required class="form-control" placeholder="Enter amount here" type="tel" value="" id="amount" required />
+          </div>
+          <div class="form-group">
+            <button id="form-button" class="btn btn-warning btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br>
+
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script>
+    const form = document.getElementById('form');
+    form.addEventListener("submit", payWithPaystack, false);
+    function payWithPaystack(e) {
+      e.preventDefault();
+      let handler = PaystackPop.setup({
+        key: 'pk_test_8b5034b6a82fb45ee0f2662d339845ca48d7d8e8',
+        email: document.getElementById('email-address').value,
+        amount: document.getElementById('amount').value * 100,
+        onClose: function(){
+          alert('Window closed.');
+        },
+        callback: function(response){
+          let message = 'You have completed your payment! Your Reference Number is: ' + response.reference;
+          alert(message);
+        }
+      });
+      handler.openIframe();
+    }
+  </script>
+
+
+{% endblock content %}

@@ -19,50 +19,159 @@
       </div>
     </div>
   </section>
+  {% if cementorders_page_obj %}
+  <h4 class="text-center">Search by Field(s)</h4>
+  <div class="col-md-12">
+    <form method="get" class="form-inline text-info">
+      {% for field in filtered_cementorders.form %}
+        <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+      {% endfor %}
 
+      <input type="submit" class="btn btn-success" value="Sort">
+    </form>
+  </div>
+  {% endif %}
   <div class="row text-center">
-    {% if cement_orders %}
+    {% if cementorders_page_obj %}
       <div class="col-md-12">
         <br>
         {% include 'partials/_alerts.html' %}
         <br>
-        <h3 class="form-group">CEMENT</h3>
-        <div class="form-group pull-left col-md-2">
-          <a class="btn btn-outline-dark" href="{% url 'cement' %}">&#x2190; <strong>Order More Cement</strong></a>
+        <div class="row">
+          <div class="form-group pull-left col-md-2">
+            <a class="btn btn-outline-dark" href="{% url 'cement' %}">&#x2190; <strong>Order More Cement</strong></a>
+          </div>
+          <div class="form-group pull-right col-md-8">
+            <h3 class="form-group">Total Orders: {{total_cementorders}}</h3>
+          </div>
         </div>
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead class="thead-dark">
               <tr>
                 <th>DATE</th>
-                <th>ORDER ID</th>
+                <th>ID</th>
                 <th>PRODUCT</th>
                 <th>TYPE</th>
                 <th>PRICE</th>
                 <th>QUANTITY</th>
                 <th>TOTAL</th>
+                <th>STATUS</th>
                 <th></th>
                 <th></th>
                 <th></th>
+                <th> <a class="text-warning" href="checkout-many">CHECKOUT ALL SELECTED</a> </th>
               </tr>
             </thead>
             <tbody>
-            {% for cement_order in cement_orders %}
-              <tr class="table-info">
-                <td>{{cement_order.date_ordered}}</td>
-                <td>{{cement_order.id}}</td>
-                <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
-                <td>{{cement_order.cement.type}}</td>
-                <td>{{cement_order.cement.price}}</td>
-                <td>{{cement_order.quantity}}</td>
-                <td>{{cement_order.total_price}}</td>
-                <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
-                <td><a href="cement/delete/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-danger">Delete</button></a></td>
-                <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
-              </tr>
+            {% for cement_order in cementorders_page_obj %}
+              {% if cement_order.status == "Completed" and cement_order.checkout %}
+                <tr class="table-success">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
+                </tr>
+              {% elif cement_order.status == "Completed"%}
+                <tr class="table-success">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
+                </tr>
+              {% elif cement_order.status == "Pending" and cement_order.checkout %}
+                <tr class="table-warning">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
+                </tr>
+              {% elif cement_order.status == "Pending" %}
+                <tr class="table-warning">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
+                </tr>
+              {% elif cement_order.status == "New" and cement_order.checkout %}
+                <tr class="table-danger">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.status}}</td>
+                  <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
+                  <td><a href="cement/delete/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete</strong></button></a></td>
+                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
+                </tr>
+              {% else %}
+                <tr class="table-danger">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.status}}</td>
+                  <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
+                  <td><a href="cement/delete/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete</strong></button></a></td>
+                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
+                </tr>
+              {% endif %}
             {% endfor %}
             </tbody>
           </table>
+          <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+              <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+              {% if cementorders_page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{% my_url cementorders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{cementorders_page_obj.previous_page_number}}</a></li>
+              {% endif %}
+              <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url cementorders_page_obj.number 'page' request.GET.urlencode %}">{{cementorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+              {% if cementorders_page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="{% my_url cementorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{cementorders_page_obj.next_page_number}}</a></li>
+              {% endif %}
+              <li class="page-item"><a class="page-link" href="{% my_url cementorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
     {% endif %}

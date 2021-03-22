@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from .forms import ContactForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
+from django.core.mail import send_mail
 
 def showHome(request):
     return render(request, 'home/home.html')
@@ -37,6 +38,14 @@ def showContact(request):
         if form.is_valid():
             form.save()
             name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            send_mail(
+                'Contact BuildQwik',
+                'A message was sent by ' + name + '. Please log in to admin panel to read message',
+                'yustaoab@gmail.com',
+                [email, 'sonofyuusuf@gmail.com'],
+                fail_silently=False
+            )
             messages.success(request, str(name) + ", your message will receive attention shortly")
         else:
             return redirect('contact')
