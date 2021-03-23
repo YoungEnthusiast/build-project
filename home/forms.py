@@ -1,6 +1,6 @@
 from django import forms
 from .models import Contact
-from django.core import validators
+#from django.core import validators
 
 class ContactForm(forms.ModelForm):
     class Meta:

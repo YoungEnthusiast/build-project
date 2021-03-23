@@ -15,7 +15,6 @@ class Contact(models.Model):
     message = models.TextField(max_length=1000, null=True)
     date_submitted = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
-    user_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         ordering = ('-date_submitted',)

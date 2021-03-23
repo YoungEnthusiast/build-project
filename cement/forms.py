@@ -1,6 +1,6 @@
 from django import forms
-from .models import CementOrder, GuestCementOrder
-from django.core import validators
+from .models import CementOrder, GuestCementOrder, CustomerWallet
+#from django.core import validators
 #from django.forms.widgets import SelectDateWidget
 from django.forms.widgets import NumberInput
 
@@ -24,6 +24,13 @@ class CementOrderForm(forms.ModelForm):
         labels = {
             'payment_mode': 'Payment Mode', 'schedule_delivery': 'Schedule Delivery'
         }
+
+class CustomerWalletForm(forms.ModelForm):
+    transaction_Date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
+                            required = False)
+    class Meta:
+        model = CustomerWallet
+        fields = ['amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']
 
 
 class GuestCementOrderForm(forms.ModelForm):

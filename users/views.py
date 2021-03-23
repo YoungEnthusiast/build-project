@@ -12,7 +12,7 @@ from django.views.generic import DeleteView
 from .models import Customer
 from cement.filters import CementOrderFilter
 from django.core.paginator import Paginator
-
+from django.core.mail import send_mail
 
 def create(request):
     if request.method == "POST":

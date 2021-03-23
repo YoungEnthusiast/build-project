@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from  .models import Cement, CementOrder, GuestCementOrder
-from .forms import CementOrderForm, GuestCementOrderForm
+from  .models import Cement, CementOrder, GuestCementOrder, CustomerWallet
+from .forms import CementOrderForm, GuestCementOrderForm, CustomerWalletForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import send_mail
@@ -15,35 +15,60 @@ def showCement(request):
 		guest_form = GuestCementOrderForm(request.POST or None)
 		if guest_form.is_valid():
 			guest_form.save()
-			# name = guest_form.cleaned_data.get('name')
-			# email = guest_form.cleaned_data.get('email')
-			# send_mail(
-            #     'Guest Order [' + name + ']',
-            #     name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/cement/guest-pay/ to do so',
-            #     'yustaoab@gmail.com',
-			# 	[email],
-            #     fail_silently=False
-            # )
+			name = guest_form.cleaned_data.get('name')
+			email = guest_form.cleaned_data.get('email')
+			send_mail(
+                'Guest Order [' + name + ']',
+                name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/cement/guest-pay/ to do so',
+                'yustaoab@gmail.com',
+				[email],
+                fail_silently=False
+            )
 			messages.success(request, "Your order has been placed! Please make payment below")
 			return redirect('guest_pay')
 
 		elif form.is_valid():
 			form.save(commit=False).user = request.user
 			form.save()
-			# customer = Customer.objects.get(user=request.user)
-			# first_name = customer.user.first_name
-			# last_name = customer.user.last_name
-			# email = customer.user.email
-			# send_mail(
-            #     'Registered User [' + first_name + ' ' + last_name + ']',
-            #     first_name + ', Your order has been received. Remember you can always log in and checkout to pay from your dashboard',
-            #     'yustaoab@gmail.com',
-			# 	[email],
-            #     fail_silently=False
-            # )
+			customer = Customer.objects.get(user=request.user)
+			first_name = customer.user.first_name
+			last_name = customer.user.last_name
+			email = customer.user.email
+			send_mail(
+                'Registered User [' + first_name + ' ' + last_name + ']',
+                first_name + ', Your order has been received. Remember you can always log in and checkout to pay from your dashboard',
+                'yustaoab@gmail.com',
+				[email],
+                fail_silently=False
+            )
 			messages.success(request, "Order submitted! You can checkout below")
 			return redirect('dashboard')
 		else:
-			messages.error(request, "ERROR: Please make sure you don't enter too much characters than necessary")
+			messages.error(request, "Please make sure you don't enter too much characters than necessary")
 	context = {'cements': cements, 'form': form, 'guest_form': guest_form}
 	return render(request, 'cement/store.html', context)
+
+def fundWallet(request, **kwargs):
+	form = CustomerWalletForm()
+	if request.method == 'POST':
+		form = CustomerWalletForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save(commit=False).user = request.user
+			form.save()
+			customer = Customer.objects.get(user=request.user)
+			first_name = customer.user.first_name
+			last_name = customer.user.last_name
+			email = customer.user.email
+			send_mail(
+                'Credit Wallet [' + first_name + ' ' + last_name + ']',
+                first_name + ', Your request has been received! Your wallet will be funded as soon as your payment is verified',
+                'yustaoab@gmail.com',
+				[email],
+                fail_silently=False
+            )
+			messages.success(request, "Request Submitted, Your wallet will be funded as soon as your payment is verified")
+			return redirect('dashboard')
+		else:
+			messages.error(request, "Please make sure you don't enter too much characters than necessary")
+	context = {'form': form}
+	return render(request, 'cement/customerwallet_form.html', context)

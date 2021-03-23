@@ -108,9 +108,6 @@ img {
   #showcase-inner h1 {
     font-size: 40px; } }
 
-
-
-
     body{
     	background-color: hsl(0, 0%, 98%);
     }
@@ -209,3 +206,5 @@ img {
     .hidden{
     	display: none!important;
     }
+
+    

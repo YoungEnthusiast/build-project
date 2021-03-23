@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Fund Wallet</title>
+{% endblock title %}
+
+{% block content %}
+  </br>
+  <div class="container">
+    <div class="pull-right col-md-12">
+      <div class="card text-dark">
+        <br>
+        {% include 'partials/_alerts.html' %}
+        <form method="post" enctype="multipart/form-data" class="form-group col-md-12">
+          <div class="card-header bg-primary text-white">
+            <h4>
+              <i class="fas fa-wallet"></i> Fund Wallet</h4>
+          </div>
+          <br>
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="submit" class="form-group col-md-12 btn btn-warning" value="Submit">
+        </form>
+      </div>
+      <br>
+    </div>
+  </div>
+
+{% endblock content%}

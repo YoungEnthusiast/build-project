@@ -29,3 +29,12 @@ class GuestCementOrderAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(GuestCementOrder, GuestCementOrderAdmin)
+
+class CustomerWalletAdmin(admin.ModelAdmin):
+    list_display = ['user', 'amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence', 'date_Submitted']
+    search_fields = ['user', 'amount_Paid', 'transaction_Date', 'transaction_Name']
+    list_filter = ['transaction_Date', 'transaction_Name']
+    list_display_links = ['user', 'payment_Evidence']
+    list_per_page = 10
+
+admin.site.register(CustomerWallet, CustomerWalletAdmin)
