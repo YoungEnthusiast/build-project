@@ -38,7 +38,7 @@ class CementOrder(models.Model):
     ]
 
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
+	#customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
 	cement = models.ForeignKey(Cement, on_delete=models.SET_NULL, null=True)
 	quantity = models.IntegerField(default=0)
 	payment_mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
