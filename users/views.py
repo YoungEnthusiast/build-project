@@ -132,6 +132,8 @@ def updateWallet(request, pk, **kwargs):
     if wallet.wallet > 0:
         wallet.save()
         messages.success(request, "Your payment has been made and your wallet updated")
+        cement_order.payment_status = "Confirmed"
+        cement_order.save()
         return redirect('dashboard')
     else:
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")

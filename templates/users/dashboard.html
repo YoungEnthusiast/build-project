@@ -56,7 +56,8 @@
                 <th>PRICE</th>
                 <th>QUANTITY</th>
                 <th>TOTAL</th>
-                <th>STATUS</th>
+                <th>ORDER STATUS</th>
+                <th>PAYMENT STATUS</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -65,7 +66,7 @@
             </thead>
             <tbody>
             {% for cement_order in cementorders_page_obj %}
-              {% if cement_order.status == "Completed" and cement_order.checkout %}
+              {% if cement_order.order_status == "Completed" and cement_order.checkout and cement_order.payment_status == "Unconfirmed" %}
                 <tr class="table-success">
                   <td>{{cement_order.date_ordered}}</td>
                   <td>{{cement_order.id}}</td>
@@ -74,13 +75,14 @@
                   <td>{{cement_order.cement.price}}</td>
                   <td>{{cement_order.quantity}}</td>
                   <td>{{cement_order.total_price}}</td>
-                  <td>{{cement_order.status}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
                   <td><s>Edit</s></td>
                   <td><s>Delete</s></td>
                   <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
                 </tr>
-              {% elif cement_order.status == "Completed"%}
+              {% elif cement_order.order_status == "Completed" and cement_order.checkout and cement_order.payment_status == "Confirmed" %}
                 <tr class="table-success">
                   <td>{{cement_order.date_ordered}}</td>
                   <td>{{cement_order.id}}</td>
@@ -89,13 +91,46 @@
                   <td>{{cement_order.cement.price}}</td>
                   <td>{{cement_order.quantity}}</td>
                   <td>{{cement_order.total_price}}</td>
-                  <td>{{cement_order.status}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><s>Checkout</s></td>
+                  <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
+                </tr>
+              {% elif cement_order.order_status == "Completed" and cement_order.payment_status == "Unconfirmed" %}
+                <tr class="table-success">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
                   <td><s>Edit</s></td>
                   <td><s>Delete</s></td>
                   <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
                 </tr>
-              {% elif cement_order.status == "Pending" and cement_order.checkout %}
+              {% elif cement_order.order_status == "Completed" and cement_order.payment_status == "Confirmed" %}
+                <tr class="table-success">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><s>Checkout</s></td>
+                  <td><s>Click to select</s></td>
+                </tr>
+              {% elif cement_order.order_status == "Pending" and cement_order.checkout and cement_order.payment_status == "Unconfirmed" %}
                 <tr class="table-warning">
                   <td>{{cement_order.date_ordered}}</td>
                   <td>{{cement_order.id}}</td>
@@ -104,13 +139,14 @@
                   <td>{{cement_order.cement.price}}</td>
                   <td>{{cement_order.quantity}}</td>
                   <td>{{cement_order.total_price}}</td>
-                  <td>{{cement_order.status}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
                   <td><s>Edit</s></td>
                   <td><s>Delete</s></td>
                   <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
                 </tr>
-              {% elif cement_order.status == "Pending" %}
+              {% elif cement_order.order_status == "Pending" and cement_order.checkout and cement_order.payment_status == "Confirmed" %}
                 <tr class="table-warning">
                   <td>{{cement_order.date_ordered}}</td>
                   <td>{{cement_order.id}}</td>
@@ -119,13 +155,46 @@
                   <td>{{cement_order.cement.price}}</td>
                   <td>{{cement_order.quantity}}</td>
                   <td>{{cement_order.total_price}}</td>
-                  <td>{{cement_order.status}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
                   <td><s>Edit</s></td>
                   <td><s>Delete</s></td>
-                  <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
-                  <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
+                  <td><s>Checkout</s></td>
+                  <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
                 </tr>
-              {% elif cement_order.status == "New" and cement_order.checkout %}
+                {% elif cement_order.order_status == "Pending" and cement_order.payment_status == "Unconfirmed" %}
+                  <tr class="table-warning">
+                    <td>{{cement_order.date_ordered}}</td>
+                    <td>{{cement_order.id}}</td>
+                    <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                    <td>{{cement_order.cement.type}}</td>
+                    <td>{{cement_order.cement.price}}</td>
+                    <td>{{cement_order.quantity}}</td>
+                    <td>{{cement_order.total_price}}</td>
+                    <td>{{cement_order.order_status}}</td>
+                    <td>{{cement_order.payment_status}}</td>
+                    <td><s>Edit</s></td>
+                    <td><s>Delete</s></td>
+                    <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                    <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
+                  </tr>
+              {% elif cement_order.order_status == "Pending" and cement_order.payment_status == "Confirmed" %}
+                <tr class="table-warning">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><s>Checkout</s></td>
+                  <td><s>Click to select</s></td>
+                </tr>
+              {% elif cement_order.order_status == "New" and cement_order.checkout and cement_order.payment_status == "Unconfirmed" %}
                 <tr class="table-danger">
                   <td>{{cement_order.date_ordered}}</td>
                   <td>{{cement_order.id}}</td>
@@ -134,13 +203,14 @@
                   <td>{{cement_order.cement.price}}</td>
                   <td>{{cement_order.quantity}}</td>
                   <td>{{cement_order.total_price}}</td>
-                  <td>{{cement_order.status}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
                   <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
                   <td><a href="cement/delete/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete</strong></button></a></td>
                   <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
                 </tr>
-              {% else %}
+              {% elif cement_order.order_status == "New" and cement_order.checkout and cement_order.payment_status == "Confirmed" %}
                 <tr class="table-danger">
                   <td>{{cement_order.date_ordered}}</td>
                   <td>{{cement_order.id}}</td>
@@ -149,11 +219,44 @@
                   <td>{{cement_order.cement.price}}</td>
                   <td>{{cement_order.quantity}}</td>
                   <td>{{cement_order.total_price}}</td>
-                  <td>{{cement_order.status}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><s>Checkout</s></td>
+                  <td><a class="text-info" href="{% url 'deselect_cement' cement_order.id %}"><strong>Selected</strong></a></td>
+                </tr>
+              {% elif cement_order.order_status == "New" and cement_order.payment_status == "Unconfirmed" %}
+                <tr class="table-danger">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
                   <td><a href="cement/update/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit</strong></button></a></td>
                   <td><a href="cement/delete/{{cement_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete</strong></button></a></td>
                   <td><a href="{% url 'show_cement' cement_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   <td><a class="text-info" href="{% url 'select_cement' cement_order.id %}"><strong>Click to select</strong></a></td>
+                </tr>
+              {% elif cement_order.order_status == "New" and cement_order.payment_status == "Confirmed" %}
+                <tr class="table-danger">
+                  <td>{{cement_order.date_ordered}}</td>
+                  <td>{{cement_order.id}}</td>
+                  <td><img class="row-image" src="{{cement_order.cement.imageURL}}"></td>
+                  <td>{{cement_order.cement.type}}</td>
+                  <td>{{cement_order.cement.price}}</td>
+                  <td>{{cement_order.quantity}}</td>
+                  <td>{{cement_order.total_price}}</td>
+                  <td>{{cement_order.order_status}}</td>
+                  <td>{{cement_order.payment_status}}</td>
+                  <td><s>Edit</s></td>
+                  <td><s>Delete</s></td>
+                  <td><s>Checkout</s></td>
+                  <td><s>Click to select</s></td>
                 </tr>
               {% endif %}
             {% endfor %}
@@ -167,13 +270,18 @@
               {% endif %}
               <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url cementorders_page_obj.number 'page' request.GET.urlencode %}">{{cementorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
               {% if cementorders_page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="{% my_url cementorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{cementorders_page_obj.next_page_number}}</a></li>
+                <li class="page-item"><a cla  ss="page-link" href="{% my_url cementorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{cementorders_page_obj.next_page_number}}</a></li>
               {% endif %}
               <li class="page-item"><a class="page-link" href="{% my_url cementorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
             </ul>
           </nav>
         </div>
       </div>
+    {% else %}
+    <div class="container">
+      <h3>No order found for the search query</h3>
+    </div>
+
     {% endif %}
   </div>
 

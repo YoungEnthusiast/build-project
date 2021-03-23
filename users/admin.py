@@ -3,8 +3,8 @@ from .models import Customer
 from django.contrib.auth.models import User
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'address', 'city', 'state', 'wallet']
-    search_fields = ['user', 'address', 'city', 'state', 'wallet']
+    list_display = ['user', 'state', 'city', 'address', 'wallet']
+    search_fields = ['user', 'state', 'city', 'address', 'wallet']
     list_filter = ['city', 'state']
 
     list_display_links = ['user']

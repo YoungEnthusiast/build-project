@@ -15,33 +15,32 @@ def showCement(request):
 		guest_form = GuestCementOrderForm(request.POST or None)
 		if guest_form.is_valid():
 			guest_form.save()
-			name = guest_form.cleaned_data.get('name')
-			email = guest_form.cleaned_data.get('email')
-			send_mail(
-                'Guest Order [' + name + ']',
-                name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/cement/guest-pay/ to do so',
-                'yustaoab@gmail.com',
-				[email],
-                fail_silently=False
-            )
+			# name = guest_form.cleaned_data.get('name')
+			# email = guest_form.cleaned_data.get('email')
+			# send_mail(
+            #     'Guest Order [' + name + ']',
+            #     name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/cement/guest-pay/ to do so',
+            #     'yustaoab@gmail.com',
+			# 	[email],
+            #     fail_silently=False
+            # )
 			messages.success(request, "Your order has been placed! Please make payment below")
 			return redirect('guest_pay')
 
 		elif form.is_valid():
 			form.save(commit=False).user = request.user
 			form.save()
-			nam = Customer.objects.get(user=request.user)
-			name = nam.user.first_name
-			email = nam.user.email
-			# name = form.cleaned_data.get('name')
-			# email = form.cleaned_data.get('email')
-			send_mail(
-                'Registered User [' + name + ']',
-                name + ', Your order has been received. Remember you can always log in and checkout to pay from your dashboard',
-                'yustaoab@gmail.com',
-				[email],
-                fail_silently=False
-            )
+			# customer = Customer.objects.get(user=request.user)
+			# first_name = customer.user.first_name
+			# last_name = customer.user.last_name
+			# email = customer.user.email
+			# send_mail(
+            #     'Registered User [' + first_name + ' ' + last_name + ']',
+            #     first_name + ', Your order has been received. Remember you can always log in and checkout to pay from your dashboard',
+            #     'yustaoab@gmail.com',
+			# 	[email],
+            #     fail_silently=False
+            # )
 			messages.success(request, "Order submitted! You can checkout below")
 			return redirect('dashboard')
 		else:
