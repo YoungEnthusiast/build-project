@@ -19,7 +19,7 @@ def showProduct(request):
 			email = guest_form.cleaned_data.get('email')
 			send_mail(
                 'Guest Order [' + name + ']',
-                name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/Product/guest-pay/ to do so',
+                name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/product/guest-pay/ to do so',
                 'yustaoab@gmail.com',
 				[email],
                 fail_silently=False
