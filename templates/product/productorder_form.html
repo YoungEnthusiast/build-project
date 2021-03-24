@@ -2,15 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Update Cement Order</title>
+  <title>Update Product Order</title>
 {% endblock title %}
 
 {% block content %}
   </br>
   <div class="container">
     {% include 'partials/_alerts.html' %}
-    {% if cement_order.user == request.user %}
-    <h3 class="form-group text-center">UPDATE CEMENT</h3>
+    {% if product_order.user == request.user %}
+    <h3 class="form-group text-center">UPDATE Product</h3>
       <form method="post" class="form-group col-md-12">
         {% csrf_token %}
         {{ form|crispy }}

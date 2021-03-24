@@ -10,8 +10,8 @@
 <div class="d-flex justify-content-center">
   <div class="text-center card bg-light text-dark form-group col-md-9">
     <br>
-    {% if cement_order.user == request.user %}
-      <h4 >Deleting ORDER ID: {{cement_order}} will remove all the ORDER's records in the system. Do you still wish to continue?</h4>
+    {% if product_order.user == request.user %}
+      <h4 >Deleting ORDER ID: {{product_order}} will remove all the ORDER's records in the system. Do you still wish to continue?</h4>
       <br>
       <form method="post">
         {% csrf_token %}

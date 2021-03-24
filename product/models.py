@@ -60,7 +60,7 @@ class ProductOrder(models.Model):
 
 	@property
 	def total_price(self):
-		total = self.Product.price * self.quantity
+		total = self.product.price * self.quantity
 		return total
 
 	def get_absolute_url(self):

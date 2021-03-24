@@ -13,7 +13,7 @@
       <a  class="btn btn-outline-dark" href="{% url 'dashboard' %}">&#x2190; Back to Dashboard</a>
     </div>
     <div class="form-group">
-      <input required class="form-control" readonly type="hidden" value="{{cement_order.total_price}}" id="amount" required />
+      <input required class="form-control" readonly type="hidden" value="{{product_order.total_price}}" id="amount" required />
     </div>
     <div class="form-group col-lg-9">
       <button class="btn btn-warning btn-block" type="button" name="button"><a href="pay"><strong>Pay From Wallet Balance</strong></a></button>
@@ -27,9 +27,9 @@
         <h3 class="text-center">ORDER ID: {{each.id}}</h3>
         <hr>
         <div class="cart-row">
-          <div style="flex:2"><img class="row-image" src="{{each.cement.imageURL}}"></div>
-          <div style="flex:2"><p>{{each.cement.type}}</p></div>
-          <div style="flex:1"><p>₦{{each.cement.price}}</p></div>
+          <div style="flex:2"><img class="row-image" src="{{each.product.imageURL}}"></div>
+          <div style="flex:2"><p>{{each.product.type}}</p></div>
+          <div style="flex:1"><p>₦{{each.product.price}}</p></div>
           <div style="flex:1"><p>x{{each.quantity}}</p></div>
         </div>
         <h5>Total: ₦{{each.total_price}}</h5>
@@ -42,7 +42,7 @@
 					<div id="user-info">
 						<div class="form-group">
               <label for="email-address">Email</label>
-							<input required class="form-control" type="email" value="{{cement_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
+							<input required class="form-control" type="email" value="{{product_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
 						</div>
             <div class="form-group">
               <label for="amount">Amount</label>

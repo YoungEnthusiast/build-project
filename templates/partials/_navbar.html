@@ -20,17 +20,13 @@
           <a class="nav-link" href="{% url 'index' %}"><strong>Home</strong></a>
         </li>
         <li
-          {% if 'cement' in request.path or 'roofing' in request.path %}
-            class="nav-item active dropdown mr-3"
+          {% if 'product' in request.path %}
+            class="nav-item active mr-3"
           {% else %}
-            class="nav-item dropdown mr-3"
+            class="nav-item mr-3"
           {% endif %}
         >
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>PRODUCTS</strong></a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li class="dropdown-submenu"><a class="dropdown-item" href="{% url 'cement' %}"><strong class="text-primary">CEMENT</strong></a></li>
-            <div class="dropdown-divider"></div>
-            </ul>
+          <a class="nav-link" href="{% url 'product' %}"><strong>Products</strong></a>
         </li>
         <li
           {% if 'about' in request.path %}

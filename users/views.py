@@ -4,13 +4,13 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from cement.models import Cement, CementOrder, GuestCementOrder
-from cement.forms import CementOrderForm
+from product.models import Product, ProductOrder, GuestProductOrder
+from product.forms import ProductOrderForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import DeleteView
 from .models import Customer
-from cement.filters import CementOrderFilter
+from product.filters import ProductOrderFilter
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 
@@ -60,96 +60,96 @@ def changePassword(request):
 @login_required
 def showDashboard(request):
     context = {}
-    filtered_cementorders = CementOrderFilter(
+    filtered_productorders = ProductOrderFilter(
         request.GET,
-        queryset = CementOrder.objects.filter(user=request.user)
+        queryset = ProductOrder.objects.filter(user=request.user)
     )
-    context['filtered_cementorders'] = filtered_cementorders
-    paginated_filtered_cementorders = Paginator(filtered_cementorders.qs, 10)
+    context['filtered_productorders'] = filtered_productorders
+    paginated_filtered_productorders = Paginator(filtered_productorders.qs, 10)
     page_number = request.GET.get('page')
-    cementorders_page_obj = paginated_filtered_cementorders.get_page(page_number)
-    context['cementorders_page_obj'] = cementorders_page_obj
-    total_cementorders = filtered_cementorders.qs.count()
-    context['total_cementorders'] = total_cementorders
+    productorders_page_obj = paginated_filtered_productorders.get_page(page_number)
+    context['productorders_page_obj'] = productorders_page_obj
+    total_productorders = filtered_productorders.qs.count()
+    context['total_productorders'] = total_productorders
     return render(request, 'users/dashboard.html', context=context)
 
-def updateCementOrder(request, id):
-    cement_order = CementOrder.objects.get(id=id)
-    form = CementOrderForm(instance=cement_order)
+def updateProductOrder(request, id):
+    product_order = ProductOrder.objects.get(id=id)
+    form = ProductOrderForm(instance=product_order)
     if request.method=='POST':
-        form = CementOrderForm(request.POST, instance=cement_order)
+        form = ProductOrderForm(request.POST, instance=product_order)
         if form.is_valid():
             form.save()
             messages.success(request, "Your order has been modified")
             return redirect('dashboard')
-    return render(request, 'cement/cementorder_form.html', {'form': form, 'cement_order': cement_order})
+    return render(request, 'product/productorder_form.html', {'form': form, 'product_order': product_order})
 
-def deleteCementOrder(request, id):
-    cement_order = CementOrder.objects.get(id=id)
-    obj = get_object_or_404(CementOrder, id = id)
+def deleteProductOrder(request, id):
+    product_order = ProductOrder.objects.get(id=id)
+    obj = get_object_or_404(ProductOrder, id = id)
     if request.method =="POST":
         obj.delete()
         return redirect('dashboard')
-    context = {'cement_order': cement_order}
-    return render(request, 'cement/cementorder_confirm_delete.html', context)
+    context = {'product_order': product_order}
+    return render(request, 'product/productorder_confirm_delete.html', context)
     # def handler403(request, exception, template_name='403.html'):
     #     return render(request, '403.html')
 
-def selectCementOrder(request, id):
-    cement_order = CementOrder.objects.get(id=id)
-    cement_order.checkout = True
-    cement_order.save()
+def selectProductOrder(request, id):
+    product_order = ProductOrder.objects.get(id=id)
+    product_order.checkout = True
+    product_order.save()
     messages.success(request, "Order selected")
     return redirect('dashboard')
 
-def deSelectCementOrder(request, id):
-    cement_order = CementOrder.objects.get(id=id)
-    cement_order.checkout = False
-    cement_order.save()
+def deSelectProductOrder(request, id):
+    product_order = ProductOrder.objects.get(id=id)
+    product_order.checkout = False
+    product_order.save()
     messages.success(request, "Order deselected")
     return redirect('dashboard')
 
-def showCementOrder(request, pk, **kwargs):
-    cement_order = CementOrder.objects.get(id=pk)
-    context = {'cement_order': cement_order}
-    return render(request, 'cement/cementorder_detail.html', context)
+def showProductOrder(request, pk, **kwargs):
+    product_order = ProductOrder.objects.get(id=pk)
+    context = {'product_order': product_order}
+    return render(request, 'product/productorder_detail.html', context)
 
-def showCementOrder2(request):
-    that = CementOrder.objects.filter(user=request.user, checkout=True)
+def showProductOrder2(request):
+    that = ProductOrder.objects.filter(user=request.user, checkout=True)
     response_that = []
     for each in that:
-        selected = CementOrder.objects.filter(user=request.user, checkout=True)
+        selected = ProductOrder.objects.filter(user=request.user, checkout=True)
         tot = 0
-        for a_cement in selected:
-            tot = tot + a_cement.total_price
+        for a_product in selected:
+            tot = tot + a_product.total_price
         response_that.append(each)
-    return render(request, 'cement/cementorder_detail2.html', {'that': response_that, 'tot':tot})
+    return render(request, 'product/productorder_detail2.html', {'that': response_that, 'tot':tot})
 
 def updateWallet(request, pk, **kwargs):
-    cement_order = CementOrder.objects.get(id=pk)
+    product_order = ProductOrder.objects.get(id=pk)
     wallet = Customer.objects.get(user=request.user)
-    wallet.wallet = wallet.wallet - cement_order.total_price
+    wallet.wallet = wallet.wallet - product_order.total_price
     if wallet.wallet > 0:
         wallet.save()
         messages.success(request, "Your payment has been made and your wallet updated")
-        cement_order.payment_status = "Confirmed"
-        cement_order.checkout = False
-        cement_order.save()
+        product_order.payment_status = "Confirmed"
+        product_order.checkout = False
+        product_order.save()
         return redirect('dashboard')
     else:
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
 
-    context = {'cement_order': cement_order, 'wallet': wallet}
-    return render(request, 'cement/wallet.html', context)
+    context = {'product_order': product_order, 'wallet': wallet}
+    return render(request, 'product/wallet.html', context)
 
 def updateWallet2(request):
-    that = CementOrder.objects.filter(user=request.user, checkout=True)
+    that = ProductOrder.objects.filter(user=request.user, checkout=True)
     response_that = []
     for each in that:
-        selected = CementOrder.objects.filter(user=request.user, checkout=True)
+        selected = ProductOrder.objects.filter(user=request.user, checkout=True)
         tot = 0
-        for a_cement in selected:
-            tot = tot + a_cement.total_price
+        for a_product in selected:
+            tot = tot + a_product.total_price
 
     wallet = Customer.objects.get(user=request.user)
     wallet.wallet = wallet.wallet - tot
@@ -165,7 +165,7 @@ def updateWallet2(request):
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
     response_that.append(each)
     context = {'that': response_that, 'tot':tot, 'wallet': wallet}
-    return render(request, 'cement/wallet.html', context)
+    return render(request, 'product/wallet.html', context)
 
 def guestPay(request):
-    return render(request, 'cement/cementorder_guest.html')
+    return render(request, 'product/productorder_guest.html')

@@ -50,6 +50,3 @@ def showContact(request):
         else:
             return redirect('contact')
     return render(request, 'home/contact_form.html', {'form': form})
-
-def showCement(request):
-    return render(request, 'home/cement.html')

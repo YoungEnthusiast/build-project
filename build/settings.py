@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
-    'cement.apps.CementConfig',
     'product.apps.ProductConfig',
     'django_filters',
     'crispy_forms',

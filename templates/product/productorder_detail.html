@@ -8,7 +8,7 @@
 
 {% block content %}
 </br>
-  {% if cement_order.user == request.user %}
+  {% if product_order.user == request.user %}
   <div class="row">
     <div class="col-lg-6">
       <div class="box-element">
@@ -17,22 +17,22 @@
             <a  class="btn btn-outline-dark" href="{% url 'dashboard' %}">&#x2190; Back to Dashboard</a>
           </div>
           <div class="form-group">
-            <input required class="form-control" readonly type="hidden" value="{{cement_order.total_price}}" id="amount" required />
+            <input required class="form-control" readonly type="hidden" value="{{product_order.total_price}}" id="amount" required />
           </div>
           <div class="form-group col-lg-9">
             <button class="btn btn-warning btn-block" type="button" name="button"><a href="pay"><strong>Pay From Wallet Balance</strong></a></button>
           </div>
         </div>
         <hr>
-        <h3 class="text-center">ORDER ID: {{cement_order.id}}</h3>
+        <h3 class="text-center">ORDER ID: {{product_order.id}}</h3>
         <hr>
         <div class="cart-row">
-          <div style="flex:2"><img class="row-image" src="{{cement_order.cement.imageURL}}"></div>
-          <div style="flex:2"><p>{{cement_order.cement.type}}</p></div>
-          <div style="flex:1"><p>₦{{cement_order.cement.price}}</p></div>
-          <div style="flex:1"><p>x{{cement_order.quantity}}</p></div>
+          <div style="flex:2"><img class="row-image" src="{{product_order.product.imageURL}}"></div>
+          <div style="flex:2"><p>{{product_order.product.type}}</p></div>
+          <div style="flex:1"><p>₦{{product_order.product.price}}</p></div>
+          <div style="flex:1"><p>x{{product_order.quantity}}</p></div>
         </div>
-        <h5>Total: ₦{{cement_order.total_price}}</h5>
+        <h5>Total: ₦{{product_order.total_price}}</h5>
       </div>
     </div>
   </div>
@@ -42,11 +42,11 @@
         <div id="user-info">
           <div class="form-group">
             <label for="email-address">Email</label>
-            <input required class="form-control" type="email" value="{{cement_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
+            <input required class="form-control" type="email" value="{{product_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
           </div>
           <div class="form-group">
             <label for="amount">Amount</label>
-            <input required class="form-control" readonly type="tel" value="{{cement_order.total_price}}" id="amount" required />
+            <input required class="form-control" readonly type="tel" value="{{product_order.total_price}}" id="amount" required />
           </div>
           <div class="form-group">
             <button id="form-button" class="btn btn-warning btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Cement's Store</title>
+  <title>Products' Store</title>
 {% endblock title %}
 
 {% block content %}
@@ -11,13 +11,13 @@
 <div class="container">
 {% include 'partials/_alerts.html' %}
   <div class="row text-center">
-    {% for cement in cements %}
+    {% for product in products %}
     <div class="col-md-4">
-      <img class="img-responsive"  src="{{cement.imageURL}}">
+      <img class="img-responsive"  src="{{product.imageURL}}">
       <div class="box-element product">
-        <h6><strong>{{cement.type}}</strong></h6>
+        <h6><strong>{{product.type}}</strong></h6>
         <hr>
-        <h5>Price as of {{cement.date}}</h5> <h5><strong>₦{{cement.price}}</strong></h5>
+        <h5>Price as of {{product.date}}</h5> <h5><strong>₦{{product.price}}</strong></h5>
         <button class="btn btn-warning" data-toggle="modal" data-target="#guest"><strong class="text-dark">Order (Guest)</strong></button>
         <br>
         <br>

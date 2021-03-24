@@ -1,7 +1,7 @@
 from django.urls import path
-from cement import views
+from product import views
 
 urlpatterns = [
-    path('cement/', views.showCement, name='cement'),
+    path('product/', views.showProduct, name='product'),
     path('fund-wallet/', views.fundWallet, name='fund'),
 ]

@@ -1,10 +1,10 @@
 from django import forms
-from .models import CementOrder, GuestCementOrder, CustomerWallet
+from .models import ProductOrder, GuestProductOrder, CustomerCredit
 #from django.core import validators
 #from django.forms.widgets import SelectDateWidget
 from django.forms.widgets import NumberInput
 
-class CementOrderForm(forms.ModelForm):
+class ProductOrderForm(forms.ModelForm):
     #schedule_delivery = forms.DateField(widget=SelectDateWidget, required = False)
     schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
                             required = False)
@@ -19,26 +19,26 @@ class CementOrderForm(forms.ModelForm):
                           (attrs={'placeholder':'Leave blank to use registered city'}),
                           required = False)
     class Meta:
-        model = CementOrder
-        fields = ['cement', 'quantity', 'payment_mode', 'schedule_delivery', 'state', 'city', 'address']
+        model = ProductOrder
+        fields = ['product', 'quantity', 'payment_mode', 'schedule_delivery', 'state', 'city', 'address']
         labels = {
             'payment_mode': 'Payment Mode', 'schedule_delivery': 'Schedule Delivery'
         }
 
-class CustomerWalletForm(forms.ModelForm):
+class CustomerCreditForm(forms.ModelForm):
     transaction_Date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
                             required = False)
     class Meta:
-        model = CustomerWallet
+        model = CustomerCredit
         fields = ['amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']
 
 
-class GuestCementOrderForm(forms.ModelForm):
+class GuestProductOrderForm(forms.ModelForm):
     schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
                             required = False)
     class Meta:
-        model = GuestCementOrder
-        fields = ['name', 'email', 'state', 'city', 'address', 'cement', 'quantity', 'payment_mode', 'schedule_delivery']
+        model = GuestProductOrder
+        fields = ['name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'schedule_delivery']
         labels = {
             'payment_mode': 'Payment Mode', 'schedule_delivery': 'Schedule Delivery'
         }
