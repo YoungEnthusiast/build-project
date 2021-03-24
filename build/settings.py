@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
     'cement.apps.CementConfig',
+    'product.apps.ProductConfig',
     'django_filters',
     'crispy_forms',
     'django.contrib.humanize',
