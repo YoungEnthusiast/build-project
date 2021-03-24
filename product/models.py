@@ -40,7 +40,7 @@ class ProductOrder(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 	#customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-	quantity = models.IntegerField(default=0)
+	quantity = models.IntegerField(default=1)
 	payment_mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
 	schedule_delivery = models.DateField(blank=True, null=True)
 	address = models.CharField(max_length=255, null=True, blank=True)

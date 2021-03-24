@@ -10,19 +10,18 @@
 </br>
   {% if product_order.user == request.user %}
   <div class="row">
+    <div class="form-group col-lg-3">
+      <a  class="btn btn-outline-dark" href="{% url 'dashboard' %}">&#x2190; Back to Dashboard</a>
+    </div>
+    <div class="form-group">
+      <input required class="form-control" readonly type="hidden" value="{{product_order.total_price}}" id="amount" required />
+    </div>
+    <div class="form-group col-lg-9">
+      <a class="bg-warning" href="pay"><strong>Pay From Wallet Balance</strong></a>
+  </div>
+  
     <div class="col-lg-6">
       <div class="box-element">
-        <div class="row">
-          <div class="form-group col-lg-3">
-            <a  class="btn btn-outline-dark" href="{% url 'dashboard' %}">&#x2190; Back to Dashboard</a>
-          </div>
-          <div class="form-group">
-            <input required class="form-control" readonly type="hidden" value="{{product_order.total_price}}" id="amount" required />
-          </div>
-          <div class="form-group col-lg-9">
-            <button class="btn btn-warning btn-block" type="button" name="button"><a href="pay"><strong>Pay From Wallet Balance</strong></a></button>
-          </div>
-        </div>
         <hr>
         <h3 class="text-center">ORDER ID: {{product_order.id}}</h3>
         <hr>
@@ -35,7 +34,7 @@
         <h5>Total: ₦{{product_order.total_price}}</h5>
       </div>
     </div>
-  </div>
+
   <div class="col-lg-6">
     <div class="box-element bg-info" id="form-wrapper">
       <form id="form">
@@ -55,7 +54,9 @@
       </form>
     </div>
   </div>
+</div>
   <br>
+
 
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
