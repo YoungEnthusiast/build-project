@@ -133,6 +133,7 @@ def updateWallet(request, pk, **kwargs):
         wallet.save()
         messages.success(request, "Your payment has been made and your wallet updated")
         cement_order.payment_status = "Confirmed"
+        cement_order.checkout = False
         cement_order.save()
         return redirect('dashboard')
     else:
@@ -149,15 +150,20 @@ def updateWallet2(request):
         tot = 0
         for a_cement in selected:
             tot = tot + a_cement.total_price
-        response_that.append(each)
+
     wallet = Customer.objects.get(user=request.user)
     wallet.wallet = wallet.wallet - tot
     if wallet.wallet > 0:
         wallet.save()
         messages.success(request, "Your payment has been made and your wallet updated")
+        for each2 in that:
+            each2.payment_status = "Confirmed"
+            each2.checkout = False
+            each2.save()
         return redirect('dashboard')
     else:
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
+    response_that.append(each)
     context = {'that': response_that, 'tot':tot, 'wallet': wallet}
     return render(request, 'cement/wallet.html', context)
 

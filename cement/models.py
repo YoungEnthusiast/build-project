@@ -68,7 +68,7 @@ class CementOrder(models.Model):
 
 class CustomerWallet(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
+	#customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
 	amount_Paid = models.DecimalField( null=True, max_digits=11, decimal_places=2)
 	transaction_Date = models.DateField()
 	transaction_Name = models.CharField(max_length=45, null=True)
