@@ -38,7 +38,6 @@ class ProductOrder(models.Model):
     ]
 
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	#customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
 	quantity = models.IntegerField(default=1)
 	payment_mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
@@ -68,7 +67,6 @@ class ProductOrder(models.Model):
 
 class CustomerCredit(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	#customer = models.ForeignKey(Customer, null=True, blank=True, on_delete=models.SET_NULL)
 	amount_Paid = models.DecimalField( null=True, max_digits=11, decimal_places=2)
 	transaction_Date = models.DateField()
 	transaction_Name = models.CharField(max_length=45, null=True)
@@ -104,7 +102,7 @@ class GuestProductOrder(models.Model):
 	address = models.CharField(max_length=255)
 	city = models.CharField(max_length=20)
 	state = models.CharField(max_length=20)
-	quantity = models.IntegerField(default=0)
+	quantity = models.IntegerField(default=1)
 	payment_mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
 	schedule_delivery = models.DateField(blank=True, null=True)
 	date_ordered = models.DateTimeField(auto_now_add=True)

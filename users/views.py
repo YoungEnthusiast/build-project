@@ -1,3 +1,7 @@
+import json
+import urllib
+from django.shortcuts import render, redirect
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomRegisterForm, ProfileEditForm, CustomerEditForm
 from django.contrib import messages
@@ -18,11 +22,26 @@ def create(request):
     if request.method == "POST":
         form = CustomRegisterForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
-            customer = Customer.objects.create(user=form)
-            messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
-            return redirect('edit_profile')
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+
+            if result['success']:
+                form = form.save(commit=False)
+                form.save()
+                customer = Customer.objects.create(user=form)
+                messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
+                return redirect('edit_profile')
+            else:
+                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            return redirect('account')
     else:
         form = CustomRegisterForm()
     return render(request, 'users/account.html', {'form': form})

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Products' Store</title>
+{% endblock title %}
+
+{% block content %}
+<section class="py-0 bg-primary">
+  <div class="container">
+  {% include 'partials/_alerts.html' %}
+    <h1 class="text-center"><strong ><span class="text-warning">QwikExplore</span></strong></h1>
+    <p class="lead text-light">
+      QwikExplore is buildqwik adtech meets proptech product.
+      QwikExplore provides companies that operate in the building and
+      construction industry a platform to promote their products and
+      communicate offers to target audience. Individuals and businesses
+      can have easy access to offers and promotions offered by various
+      companies, giving them the advantage of saving money on best
+      available products.
+    </p>
+
+</section>
+{% endblock content %}
