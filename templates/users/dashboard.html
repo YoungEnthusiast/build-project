@@ -22,13 +22,16 @@
   {% if productorders_page_obj %}
   <h4 class="text-center">Search by Field(s)</h4>
   <div class="col-md-12">
-    <form method="get" class="form-inline text-info">
-      {% for field in filtered_productorders.form %}
-        <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
-      {% endfor %}
+    <div class="box-element bg-warning" id="form-wrapper">
+      <form method="get" class="form-inline text-dark">
+        {% for field in filtered_productorders.form %}
+          <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+        {% endfor %}
 
-      <input type="submit" class="btn btn-success" value="Sort">
-    </form>
+        <input type="submit" class="btn btn-dark" value="Sort">
+      </form>
+    </div>
+
   </div>
   {% endif %}
   <div class="row text-center">
@@ -45,7 +48,7 @@
             <h3 class="form-group">Total Orders: {{total_productorders}}</h3>
           </div>
           <div class="form-group pull-right col-md-2">
-            <button class="btn btn-danger"><a href="{% url 'fund' %}"><strong class="text-light">Fund Wallet</strong></a></button>
+            <button class="btn btn-warning"><a href="{% url 'fund' %}"><strong>Fund Wallet</strong></a></button>
           </div>
         </div>
         <div class="table-responsive">
@@ -83,7 +86,7 @@
                   <td><s>Edit</s></td>
                   <td><s>Delete</s></td>
                   <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
-                  <td><a class="text-info" href="{% url 'deselect_product' product_order.id %}"><strong>Selected</strong></a></td>
+                  <td><a class="text-info " href="{% url 'deselect_product' product_order.id %}"><strong>Selected</strong></a></td>
                 </tr>
               {% elif product_order.order_status == "Completed" and product_order.checkout and product_order.payment_status == "Confirmed" %}
                 <tr class="table-success">
@@ -273,7 +276,7 @@
               {% endif %}
               <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url productorders_page_obj.number 'page' request.GET.urlencode %}">{{productorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
               {% if productorders_page_obj.has_next %}
-                <li class="page-item"><a cla  ss="page-link" href="{% my_url productorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{productorders_page_obj.next_page_number}}</a></li>
+                <li class="page-item"><a class="page-link" href="{% my_url productorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{productorders_page_obj.next_page_number}}</a></li>
               {% endif %}
               <li class="page-item"><a class="page-link" href="{% my_url productorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
             </ul>

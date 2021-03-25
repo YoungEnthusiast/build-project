@@ -14,7 +14,7 @@
       <form method="post" class="form-group col-md-12">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" class="form-group col-md-12 btn btn-info" value="Update">
+        <input type="submit" class="form-group col-md-12 btn btn-warning" value="Update">
       </form>
     {% else %}
       <h2 class="text-center">Access Restricted</h2>

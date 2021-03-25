@@ -10,7 +10,7 @@
     <div class="container">
       {% if messages %}
         {% for message in messages %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <h5>{{message}}</h5>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -23,14 +23,14 @@
         <!-- {% include 'partials/_alerts.html' %} -->
 
         <form method="post" class="form-group col-md-12">
-          <div class="card-header bg-primary text-white">
+          <div class="card-header bg-primary text-warning">
             <h4>
               <i class="fas fa-user-plus"></i> Register</h4>
           </div>
           <br>
           {% csrf_token %}
           {{form|crispy}}
-          <input type="submit" class="form-group col-md-12 btn btn-success" value="Register">
+          <input type="submit" class="form-group col-md-12 btn btn-warning" value="Register">
         </form>
       </div>
     </div>
