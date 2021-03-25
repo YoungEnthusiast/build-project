@@ -40,7 +40,7 @@ def create(request):
                 messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
                 return redirect('edit_profile')
             else:
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+                messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
             return redirect('account')
     else:
         form = CustomRegisterForm()
