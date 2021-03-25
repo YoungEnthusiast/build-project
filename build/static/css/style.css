@@ -202,7 +202,10 @@ img {
     	opacity: .6;
     }
 
-
     .hidden{
     	display: none!important;
+    }
+
+    .icon-background {
+      color: #edc17e;
     }

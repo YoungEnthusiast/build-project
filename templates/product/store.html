@@ -7,69 +7,95 @@
 {% endblock title %}
 
 {% block content %}
-<br>
-<div class="container">
-{% include 'partials/_alerts.html' %}
-  <div class="row text-center">
-    {% for product in products %}
-    <div class="col-md-4">
-      <img class="img-responsive"  src="{{product.imageURL}}">
-      <div class="box-element product">
-        <h6><strong>{{product.type}}</strong></h6>
-        <hr>
-        <h5>Price as of {{product.date}}</h5> <h5><strong>₦{{product.price}}</strong></h5>
-        <button class="btn btn-warning" data-toggle="modal" data-target="#guest"><strong class="text-dark">Order (Guest)</strong></button>
-        <br>
-        <br>
-        <button class="btn btn-warning" data-toggle="modal" data-target="#registered"><strong class="text-dark">Order (Logged In)</strong></button>
-        <br>
-        <br>
-        <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
+<section class="py-0 bg-primary">
+  <div class="container">
+  {% include 'partials/_alerts.html' %}
+    <h1 class="text-center"><strong ><span class="text-warning">QwikMaterials</span></strong></h1>
+    <p class="lead text-light">QwikMaterials is the bespoke flagship e-commerce product that seeks
+      to provide affordability and ease of sourcing all kind of building
+      materials on one platform. We have developed an ease to use
+      technology that makes sourcing and ordering building materials of any
+      quantity seamless. Either you are contractor/developer that needs to
+      deliver large and multiple projects QwikMaterials takes the stress of
+      sourcing your material away and get them deliver to/on schedule, so
+      that you can focus on things that matters. Or you are individual that
+      just need to get a quick fix done on/in your building, QwikMaterials is
+      just a click away for a hassle-free material sourcing.
+    </p>
+    <p class="lead text-light">
+      QwikMaterials are sourced directly from the manufacturers and are of
+      best available quality. Be it cements, steels and rods, paints, roofing
+      sheets and ceilings, bricks and interlocks. We get them to you
+      anywhere across the country and within schedule. QwikMaterials
+      helps you to deliver that project on schedule and within budget.
+      Make your order and schedule delivery.
+    </p>
+    <p class="lead text-light">
+      <strong class="text-warning">How we make money:</strong> Sales at profitable margin on all and each
+      product.
+    </p>
+    <div class="row text-center">
+      {% for product in products %}
+      <div class="col-md-4">
+        <img class="img-responsive"  src="{{product.imageURL}}">
+        <div class="box-element product">
+          <h6><strong>{{product.type}}</strong></h6>
+          <hr>
+          <h5>Price as of {{product.date}}</h5> <h5><strong>₦{{product.price}}</strong></h5>
+          <button class="btn btn-warning" data-toggle="modal" data-target="#guest"><strong class="text-dark">Order (Guest)</strong></button>
+          <br>
+          <br>
+          <button class="btn btn-warning" data-toggle="modal" data-target="#registered"><strong class="text-dark">Order (Logged In)</strong></button>
+          <br>
+          <br>
+          <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
-</div>
-<div class="modal fade" id="registered" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-info" id="inquiryModalLabel">Place Order as Registered User</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  {{ form|crispy }}
-                  <hr>
-                  <input type="submit" value="Confirm" class="btn btn-block btn-warning">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
+  <div class="modal fade" id="registered" role="dialog">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title text-info" id="inquiryModalLabel">Place Order as Registered User</h5>
+                  <button type="button" class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <hr>
+                    <input type="submit" value="Confirm" class="btn btn-block btn-warning">
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  <br>
 
-<div class="modal fade" id="guest" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-info" id="inquiryModalLabel">Place Order as a Guest</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  {{guest_form|crispy}}
-                  <hr>
-                  <input type="submit" value="Confirm" class="btn btn-block btn-warning">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+  <div class="modal fade" id="guest" role="dialog">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title text-info" id="inquiryModalLabel">Place Order as a Guest</h5>
+                  <button type="button" class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{guest_form|crispy}}
+                    <hr>
+                    <input type="submit" value="Confirm" class="btn btn-block btn-warning">
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
 {% endblock content %}
