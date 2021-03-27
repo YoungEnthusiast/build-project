@@ -10,13 +10,13 @@ class ProductOrderForm(forms.ModelForm):
                             required = False)
 
     address = forms.CharField(widget= forms.TextInput
-                          (attrs={'placeholder':'Leave blank to use registered city'}),
+                          (attrs={'placeholder':'Leave blank to use registered address'}),
                           required = False)
     city= forms.CharField(widget= forms.TextInput
                           (attrs={'placeholder':'Leave blank to use registered city'}),
                           required = False)
     state= forms.CharField(widget= forms.TextInput
-                          (attrs={'placeholder':'Leave blank to use registered city'}),
+                          (attrs={'placeholder':'Leave blank to use registered state'}),
                           required = False)
     class Meta:
         model = ProductOrder

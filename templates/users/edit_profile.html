@@ -29,7 +29,7 @@
         {% csrf_token %}
         {{ form|crispy }}
         {{ customer_form|crispy }}
-        <a href="{% url 'change_password' %}"><strong class="text-info">Click here</strong></a> to change your password
+        <a href="{% url 'change_password' %}"><strong class="text-warning">Click here</strong></a> to change your password
         <br>
         <br>
         <input type="submit" class="form-group col-md-12 btn btn-warning" value="Update">

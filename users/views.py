@@ -92,6 +92,7 @@ def showDashboard(request):
     context['total_productorders'] = total_productorders
     return render(request, 'users/dashboard.html', context=context)
 
+@login_required
 def updateProductOrder(request, id):
     product_order = ProductOrder.objects.get(id=id)
     form = ProductOrderForm(instance=product_order)
@@ -103,6 +104,7 @@ def updateProductOrder(request, id):
             return redirect('dashboard')
     return render(request, 'product/productorder_form.html', {'form': form, 'product_order': product_order})
 
+@login_required
 def deleteProductOrder(request, id):
     product_order = ProductOrder.objects.get(id=id)
     obj = get_object_or_404(ProductOrder, id = id)
@@ -114,6 +116,7 @@ def deleteProductOrder(request, id):
     # def handler403(request, exception, template_name='403.html'):
     #     return render(request, '403.html')
 
+@login_required
 def selectProductOrder(request, id):
     product_order = ProductOrder.objects.get(id=id)
     product_order.checkout = True
@@ -121,6 +124,7 @@ def selectProductOrder(request, id):
     messages.success(request, "Order selected")
     return redirect('dashboard')
 
+@login_required
 def deSelectProductOrder(request, id):
     product_order = ProductOrder.objects.get(id=id)
     product_order.checkout = False
@@ -128,11 +132,13 @@ def deSelectProductOrder(request, id):
     messages.success(request, "Order deselected")
     return redirect('dashboard')
 
+@login_required
 def showProductOrder(request, pk, **kwargs):
     product_order = ProductOrder.objects.get(id=pk)
     context = {'product_order': product_order}
     return render(request, 'product/productorder_detail.html', context)
 
+@login_required
 def showProductOrder2(request):
     that = ProductOrder.objects.filter(user=request.user, checkout=True)
     response_that = []
@@ -144,6 +150,7 @@ def showProductOrder2(request):
         response_that.append(each)
     return render(request, 'product/productorder_detail2.html', {'that': response_that, 'tot':tot})
 
+@login_required
 def updateWallet(request, pk, **kwargs):
     product_order = ProductOrder.objects.get(id=pk)
     wallet = Customer.objects.get(user=request.user)
@@ -161,6 +168,7 @@ def updateWallet(request, pk, **kwargs):
     context = {'product_order': product_order, 'wallet': wallet}
     return render(request, 'product/wallet.html', context)
 
+@login_required
 def updateWallet2(request):
     that = ProductOrder.objects.filter(user=request.user, checkout=True)
     response_that = []

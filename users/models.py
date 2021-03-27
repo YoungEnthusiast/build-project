@@ -7,7 +7,7 @@ class Customer(models.Model):
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=20, null=True)
     state = models.CharField(max_length=20, null=True)
-    wallet = models.DecimalField(max_digits=11, decimal_places=2, null=True)
+    wallet = models.DecimalField(max_digits=11, decimal_places=2, null=True, default=0.00)
 
     def __str__(self):
         return str(self.user.username)

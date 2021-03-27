@@ -15,15 +15,15 @@ def showProduct(request):
 		guest_form = GuestProductOrderForm(request.POST or None)
 		if guest_form.is_valid():
 			guest_form.save()
-			name = guest_form.cleaned_data.get('name')
-			email = guest_form.cleaned_data.get('email')
-			send_mail(
-                'Guest Order [' + name + ']',
-                name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/product/guest-pay/ to do so',
-                'yustaoab@gmail.com',
-				[email],
-                fail_silently=False
-            )
+			# name = guest_form.cleaned_data.get('name')
+			# email = guest_form.cleaned_data.get('email')
+			# send_mail(
+            #     'Guest Order [' + name + ']',
+            #     name + ', Your order has been received. If you have not paid you can follow this link www.buildqwik.ng/products/product/guest-pay/ to do so',
+            #     'yustaoab@gmail.com',
+			# 	[email],
+            #     fail_silently=False
+            # )
 			messages.success(request, "Your order has been placed! Please make payment below")
 			return redirect('guest_pay')
 
@@ -31,16 +31,16 @@ def showProduct(request):
 			form.save(commit=False).user = request.user
 			form.save()
 			customer = Customer.objects.get(user=request.user)
-			first_name = customer.user.first_name
-			last_name = customer.user.last_name
-			email = customer.user.email
-			send_mail(
-                'Registered User [' + first_name + ' ' + last_name + ']',
-                first_name + ', Your order has been received. Remember you can always log in and checkout to pay from your dashboard',
-                'yustaoab@gmail.com',
-				[email],
-                fail_silently=False
-            )
+			# first_name = customer.user.first_name
+			# last_name = customer.user.last_name
+			# email = customer.user.email
+			# send_mail(
+            #     'Registered User [' + first_name + ' ' + last_name + ']',
+            #     first_name + ', Your order has been received. Remember you can always log in and checkout to pay from your dashboard',
+            #     'yustaoab@gmail.com',
+			# 	[email],
+            #     fail_silently=False
+            # )
 			messages.success(request, "Order submitted! You can checkout below")
 			return redirect('dashboard')
 		else:
@@ -48,6 +48,7 @@ def showProduct(request):
 	context = {'products': products, 'form': form, 'guest_form': guest_form}
 	return render(request, 'product/store.html', context)
 
+@login_required
 def fundWallet(request, **kwargs):
 	form = CustomerCreditForm()
 	if request.method == 'POST':
