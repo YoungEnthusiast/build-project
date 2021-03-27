@@ -33,7 +33,7 @@ def create(request):
             response = urllib.request.urlopen(req)
             result = json.loads(response.read().decode())
 
-            if result['success']:
+            if req and result['success']:
                 form = form.save(commit=False)
                 form.save()
                 customer = Customer.objects.create(user=form)
