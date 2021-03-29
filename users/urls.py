@@ -20,6 +20,7 @@ path('dashboard/select/<int:id>/', views.selectProductOrder, name='select_produc
 path('dashboard/deselect/<int:id>/', views.deSelectProductOrder, name='deselect_product'),
 path('dashboard/checkout-many/', views.showProductOrder2, name='show_product2'),
 path('productorders/<str:pk>/pay', views.updateWallet),
-path('dashboard/checkout-many/pay/', views.updateWallet2),
+# path('dashboard/checkout-many/pay/', views.updateWallet2),
 path('products/product/guest-pay/', views.guestPay, name='guest_pay'),
+path('dashboard/wallet-history/', views.showWallet, name='wallet_history'),
 ]

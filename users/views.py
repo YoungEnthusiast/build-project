@@ -13,8 +13,9 @@ from product.forms import ProductOrderForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import DeleteView
-from .models import Customer
+from .models import Customer, WalletHistory
 from product.filters import ProductOrderFilter
+from .filters import WalletHistoryFilter
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 
@@ -153,10 +154,18 @@ def showProductOrder2(request):
 @login_required
 def updateWallet(request, pk, **kwargs):
     product_order = ProductOrder.objects.get(id=pk)
-    wallet = Customer.objects.get(user=request.user)
-    wallet.wallet = wallet.wallet - product_order.total_price
-    if wallet.wallet > 0:
-        wallet.save()
+    #wallet = WalletHistory.objects.filter(user_id=kwargs[pk])
+    wallet = WalletHistory.objects.filter(user=request.user)[0]
+    wallet.current = wallet.current_balance - product_order.total_price
+    wallet.amount_debited = product_order.total_price
+    if wallet.current_balance > 0:
+        wallet_entry = WalletHistory()
+        wallet_entry.user = wallet.user
+        wallet_entry.customer = wallet.customer
+        wallet_entry.amount_debited = wallet.amount_debited
+        wallet_entry.current = wallet.current_balance
+        #wallet.save()
+        wallet_entry.save()
         messages.success(request, "Your payment has been made and your wallet updated")
         product_order.payment_status = "Confirmed"
         product_order.checkout = False
@@ -164,35 +173,50 @@ def updateWallet(request, pk, **kwargs):
         return redirect('dashboard')
     else:
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
-
-    context = {'product_order': product_order, 'wallet': wallet}
+    context = {'product_order': product_order, 'wallet': wallet_entry}
     return render(request, 'product/wallet.html', context)
+#
+# @login_required
+# def updateWallet2(request):
+#     that = ProductOrder.objects.filter(user=request.user, checkout=True)
+#     response_that = []
+#     for each in that:
+#         selected = ProductOrder.objects.filter(user=request.user, checkout=True)
+#         tot = 0
+#         for a_product in selected:
+#             tot = tot + a_product.total_price
+#
+#     wallet = Customer.objects.get(user=request.user)
+#     wallet.wallet = wallet.wallet - tot
+#     if wallet.wallet > 0:
+#         wallet.save()
+#         messages.success(request, "Your payment has been made and your wallet updated")
+#         for each2 in that:
+#             each2.payment_status = "Confirmed"
+#             each2.checkout = False
+#             each2.save()
+#         return redirect('dashboard')
+#     else:
+#         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
+#     response_that.append(each)
+#     context = {'that': response_that, 'tot':tot, 'wallet': wallet}
+#     return render(request, 'product/wallet.html', context)
 
-@login_required
-def updateWallet2(request):
-    that = ProductOrder.objects.filter(user=request.user, checkout=True)
-    response_that = []
-    for each in that:
-        selected = ProductOrder.objects.filter(user=request.user, checkout=True)
-        tot = 0
-        for a_product in selected:
-            tot = tot + a_product.total_price
-
-    wallet = Customer.objects.get(user=request.user)
-    wallet.wallet = wallet.wallet - tot
-    if wallet.wallet > 0:
-        wallet.save()
-        messages.success(request, "Your payment has been made and your wallet updated")
-        for each2 in that:
-            each2.payment_status = "Confirmed"
-            each2.checkout = False
-            each2.save()
-        return redirect('dashboard')
-    else:
-        messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
-    response_that.append(each)
-    context = {'that': response_that, 'tot':tot, 'wallet': wallet}
-    return render(request, 'product/wallet.html', context)
 
 def guestPay(request):
     return render(request, 'product/productorder_guest.html')
+
+def showWallet(request):
+    context = {}
+    filtered_wallets = WalletHistoryFilter(
+        request.GET,
+        queryset = WalletHistory.objects.filter(user=request.user)
+    )
+    context['filtered_wallets'] = filtered_wallets
+    paginated_filtered_wallets = Paginator(filtered_wallets.qs, 10)
+    page_number = request.GET.get('page')
+    wallets_page_obj = paginated_filtered_wallets.get_page(page_number)
+    context['wallets_page_obj'] = wallets_page_obj
+    total_wallets = filtered_wallets.qs.count()
+    context['total_wallets'] = total_wallets
+    return render(request, 'users/wallet_history.html', context=context)

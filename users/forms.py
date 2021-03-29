@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from .models import Customer
-#from django.forms.widgets import NumberInput
-#from django.core import validators
+
 
 class CustomRegisterForm(UserCreationForm):
     email = forms.EmailField()

@@ -3485,8 +3485,8 @@ input[type="button"].btn-block {
 
 .alert-success {
   color: #11694f;
-  background-color: #edc17e;
-  border-color: #edc17e; }
+  background-color: #f0ddb1;
+  border-color: #f0ddb1; }
   .alert-success hr {
     border-top-color: #acebd8; }
   .alert-success .alert-link {
@@ -4303,6 +4303,9 @@ button.bg-success:focus {
 
 .bg-info {
   background-color: #17a2b8 !important; }
+
+.bg-facebook {
+  background-color: #4293f5 !important; }
 
 a.bg-info:hover, a.bg-info:focus,
 button.bg-info:hover,
@@ -6201,6 +6204,16 @@ a.text-success:hover, a.text-success:focus {
 
 .text-info {
   color: #17a2b8 !important; }
+
+.text-facebook {
+  color: #4293f5 !important; }
+
+.text-whatsapp {
+  color: #12b01f !important; }
+
+.text-twitter {
+  color: #2d9beb !important; }
+
 
 a.text-info:hover, a.text-info:focus {
   color: #117a8b !important; }

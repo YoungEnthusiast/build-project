@@ -6,7 +6,19 @@
 {% endblock title %}
 
 {% block content %}
-  </br>
+  <br>
+  <br>
+<div class="sidebar">
+    <br>
+    <br>
+    <br>
+    <br>
+  <a href="{% url 'dashboard' %}"><i class=""></i>Dashboard</a>
+  <a href="{% url 'fund' %}"><i class=""></i><strong class="text-warning">Fund Wallet</strong></a>
+  <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
+  <a href="#"><i class=""></i>Invoice</a>
+</div>
+<section class="main">
   <div class="container">
     <div class="pull-right col-md-12">
       <div class="card text-primary">
@@ -26,5 +38,7 @@
       <br>
     </div>
   </div>
+</section>
+
 
 {% endblock content%}

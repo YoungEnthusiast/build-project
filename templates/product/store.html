@@ -60,12 +60,12 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <hr>
-                    <input type="submit" value="Confirm" class="btn btn-block btn-warning">
-                  </form>
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <hr>
+                  <input type="submit" value="Confirm" class="btn btn-block btn-warning">
+                </form>
               </div>
           </div>
       </div>

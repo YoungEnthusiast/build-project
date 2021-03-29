@@ -67,7 +67,7 @@ class ProductOrder(models.Model):
 
 class CustomerCredit(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	amount_Paid = models.DecimalField( null=True, max_digits=11, decimal_places=2)
+	amount_Paid = models.DecimalField( null=True, max_digits=15, decimal_places=2)
 	transaction_Date = models.DateField()
 	transaction_Name = models.CharField(max_length=45, null=True)
 	payment_Evidence = models.ImageField(upload_to='payment/%Y/%m/%d', null=True)
