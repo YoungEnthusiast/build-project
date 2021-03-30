@@ -18,6 +18,7 @@ from product.filters import ProductOrderFilter
 from .filters import WalletHistoryFilter
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
+from django.db.models import Sum
 
 def create(request):
     if request.method == "POST":
@@ -79,6 +80,24 @@ def changePassword(request):
 
 @login_required
 def showDashboard(request):
+    new_orders = ProductOrder.objects.filter(user=request.user, order_status = 'New')
+    new = new_orders.count()
+    pending_orders = ProductOrder.objects.filter(user=request.user, order_status = 'Pending')
+    pending = pending_orders.count()
+    completed_orders = ProductOrder.objects.filter(user=request.user, order_status = 'Completed')
+    completed = completed_orders.count()
+
+    total_debited = WalletHistory.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
+    wallet = WalletHistory.objects.filter(user=request.user)[0]
+    last_tran = wallet.amount_debited
+    current_balance = wallet.current
+
+    context = {'new': new, 'pending': pending, 'completed': completed,
+                'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
+    return render(request, 'users/dashboard.html', context)
+
+@login_required
+def showOrders(request):
     context = {}
     filtered_productorders = ProductOrderFilter(
         request.GET,
@@ -91,7 +110,7 @@ def showDashboard(request):
     context['productorders_page_obj'] = productorders_page_obj
     total_productorders = filtered_productorders.qs.count()
     context['total_productorders'] = total_productorders
-    return render(request, 'users/dashboard.html', context=context)
+    return render(request, 'users/orders.html', context=context)
 
 @login_required
 def updateProductOrder(request, id):
@@ -102,7 +121,7 @@ def updateProductOrder(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, "Your order has been modified")
-            return redirect('dashboard')
+            return redirect('orders')
     return render(request, 'product/productorder_form.html', {'form': form, 'product_order': product_order})
 
 @login_required
@@ -111,7 +130,7 @@ def deleteProductOrder(request, id):
     obj = get_object_or_404(ProductOrder, id = id)
     if request.method =="POST":
         obj.delete()
-        return redirect('dashboard')
+        return redirect('orders')
     context = {'product_order': product_order}
     return render(request, 'product/productorder_confirm_delete.html', context)
     # def handler403(request, exception, template_name='403.html'):
@@ -123,7 +142,7 @@ def selectProductOrder(request, id):
     product_order.checkout = True
     product_order.save()
     messages.success(request, "Order selected")
-    return redirect('dashboard')
+    return redirect('orders')
 
 @login_required
 def deSelectProductOrder(request, id):
@@ -131,7 +150,7 @@ def deSelectProductOrder(request, id):
     product_order.checkout = False
     product_order.save()
     messages.success(request, "Order deselected")
-    return redirect('dashboard')
+    return redirect('orders')
 
 @login_required
 def showProductOrder(request, pk, **kwargs):
@@ -170,7 +189,7 @@ def updateWallet(request, pk, **kwargs):
         product_order.payment_status = "Confirmed"
         product_order.checkout = False
         product_order.save()
-        return redirect('dashboard')
+        return redirect('orders')
     else:
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
     context = {'product_order': product_order, 'wallet': wallet_entry}
@@ -195,7 +214,7 @@ def updateWallet(request, pk, **kwargs):
 #             each2.payment_status = "Confirmed"
 #             each2.checkout = False
 #             each2.save()
-#         return redirect('dashboard')
+#         return redirect('orders')
 #     else:
 #         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
 #     response_that.append(each)

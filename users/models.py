@@ -22,7 +22,6 @@ class WalletHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     amount_debited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
-    amount_paid = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     amount_credited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     current = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     date_recorded = models.DateTimeField(auto_now_add=True, null=True)

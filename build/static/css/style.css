@@ -213,7 +213,7 @@ img {
     /*sidebar starts here*/
     .sidebar {
     height: 100%;
-    width: 160px;
+    width: 170px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -239,7 +239,7 @@ img {
 
     /* Style the main content */
     .main {
-    margin-left: 160px; /* Same as the width of the sidenav */
+    margin-left: 170px; /* Same as the width of the sidenav */
     padding: 0px 10px;
     }
 

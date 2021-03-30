@@ -14,7 +14,7 @@ admin.site.register(Product, ProductAdmin)
 
 class ProductOrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'product', 'quantity', 'payment_mode', 'total_price', 'schedule_delivery', 'order_status', 'payment_status', 'address', 'city', 'state', 'date_ordered', 'last_modified']
-    search_fields = ['id', 'user', 'product', 'quantity', 'payment_mode', 'date_ordered', 'last_modified', 'order_status', 'payment_status']
+    search_fields = ['id', 'user__username', 'product__type', 'quantity', 'payment_mode', 'date_ordered', 'last_modified', 'order_status', 'payment_status']
     list_filter = ['product', 'payment_mode', 'order_status', 'payment_status', 'checkout']
     list_display_links = ['id', 'user', 'product']
     list_per_page = 10
@@ -32,7 +32,7 @@ admin.site.register(GuestProductOrder, GuestProductOrderAdmin)
 
 class CustomerCreditAdmin(admin.ModelAdmin):
     list_display = ['user', 'amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence', 'date_Submitted']
-    search_fields = ['user', 'amount_Paid', 'transaction_Date', 'transaction_Name']
+    search_fields = ['user__username', 'amount_Paid', 'transaction_Date', 'transaction_Name']
     list_filter = ['transaction_Date', 'transaction_Name']
     list_display_links = ['user', 'payment_Evidence']
     list_per_page = 10

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load humanize %}
 
 {% block title %}
   <title>My Wallet History</title>
@@ -14,7 +15,8 @@
     <br>
     <br>
     <br>
-  <a href="{% url 'dashboard' %}"><i></i>Dashboard</a>
+  <a href="{% url 'edit_profile' %}"><i></i>Edit Profile</a>
+  <a href="{% url 'orders' %}"><i></i>Orders History</a>
   <a href="{% url 'fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i><strong class="text-warning">Wallet History</strong></a>
   <a href="#"><i class=""></i>Invoice</a>
@@ -39,29 +41,28 @@
     <div class="row text-center">
       {% if wallets_page_obj %}
         <div class="col-md-12">
-          <div class="form-group col-md-12">
-            <h3 class="form-group">Total Wallet Histories: {{total_walllets}}</h3>
-          </div>
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead class="thead-dark">
                 <tr>
                   <th>DATE</th>
                   <th>AMOUNT DEBITED</th>
-                  <th>AMOUNT PAID</th>
                   <th>AMOUNT CREDITED</th>
-                  <th>CURRENT BALANCE</th>
+                  <th>BALANCE</th>
                 </tr>
               </thead>
               <tbody>
               {% for wallet in wallets_page_obj %}
-                <tr class="table-warning">
-                  <td>{{wallet.date_recorded}}</td>
-                  <td>{{wallet.amount_debited|default_if_none:"-"}}</td>
-                  <td>{{wallet.amount_paid|default_if_none:"-"}}</td>
-                  <td>{{wallet.amount_credited|default_if_none:"-"}}</td>
-                  <td>{{wallet.current_balance|default_if_none:"-"}}</td>
-                </tr>
+                {% if wallet.amount_debited == None and wallet.amount_credited == None %}
+
+                {% else %}
+                  <tr class="table-warning">
+                    <td>{{wallet.date_recorded}}</td>
+                    <td>₦{{wallet.amount_debited|default_if_none:"---"|intcomma}}</td>
+                    <td>₦{{wallet.amount_credited|default_if_none:"---"|intcomma}}</td>
+                    <td>₦{{wallet.current_balance|default_if_none:"---"|intcomma}}</td>
+                  </tr>
+                {% endif %}
               {% endfor %}
               </tbody>
             </table>

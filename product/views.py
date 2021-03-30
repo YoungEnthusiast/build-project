@@ -42,7 +42,7 @@ def showProduct(request):
             #     fail_silently=False
             # )
 			messages.success(request, "Order submitted! You can checkout below")
-			return redirect('dashboard')
+			return redirect('orders')
 		else:
 			messages.error(request, "Please make sure you don't enter too much characters than necessary")
 	context = {'products': products, 'form': form, 'guest_form': guest_form}
