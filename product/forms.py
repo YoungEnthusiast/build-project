@@ -6,9 +6,13 @@ from django.forms.widgets import NumberInput
 
 class ProductOrderForm(forms.ModelForm):
     #schedule_delivery = forms.DateField(widget=SelectDateWidget, required = False)
-    schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
-                            required = False)
-
+    schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+    email = forms.EmailField(widget= forms.TextInput
+                          (attrs={'placeholder':'Leave blank to use registered email address'}),
+                          required = False)
+    phone_number = forms.CharField(widget= forms.TextInput
+                          (attrs={'placeholder':'Leave blank to use registered phone number'}),
+                          required = False)
     address = forms.CharField(widget= forms.TextInput
                           (attrs={'placeholder':'Leave blank to use registered address'}),
                           required = False)
@@ -20,7 +24,7 @@ class ProductOrderForm(forms.ModelForm):
                           required = False)
     class Meta:
         model = ProductOrder
-        fields = ['product', 'quantity', 'payment_mode', 'schedule_delivery', 'state', 'city', 'address']
+        fields = ['product', 'quantity', 'payment_mode', 'schedule_delivery', 'email', 'phone_number', 'state', 'city', 'address']
         labels = {
             'payment_mode': 'Payment Mode', 'schedule_delivery': 'Schedule Delivery'
         }
@@ -34,11 +38,10 @@ class CustomerCreditForm(forms.ModelForm):
 
 
 class GuestProductOrderForm(forms.ModelForm):
-    schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
-                            required = False)
+    schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
     class Meta:
         model = GuestProductOrder
-        fields = ['name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'schedule_delivery']
+        fields = ['name', 'email', 'phone_number', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'schedule_delivery']
         labels = {
             'payment_mode': 'Payment Mode', 'schedule_delivery': 'Schedule Delivery'
         }

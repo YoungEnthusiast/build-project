@@ -28,4 +28,4 @@ class ProfileEditForm(UserChangeForm):
 class CustomerEditForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['state', 'city', 'address']
+        fields = ['phone_number', 'state', 'city', 'address']

@@ -4,9 +4,11 @@ from django.contrib.auth.models import User
 
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=20, null=True)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=20, null=True)
     state = models.CharField(max_length=20, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.user.username)
@@ -20,11 +22,11 @@ class Customer(models.Model):
 
 class WalletHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     amount_debited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     amount_credited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     current = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     date_recorded = models.DateTimeField(auto_now_add=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.user.username)
@@ -41,10 +43,3 @@ class WalletHistory(models.Model):
         else:
             cur = self.current + self.amount_credited
         return cur
-
-
-
-    # @property
-    # def current_balance(self):
-    #     new = self.customer.wallet
-    #     return new

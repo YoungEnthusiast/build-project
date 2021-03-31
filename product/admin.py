@@ -13,19 +13,19 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class ProductOrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'product', 'quantity', 'payment_mode', 'total_price', 'schedule_delivery', 'order_status', 'payment_status', 'address', 'city', 'state', 'date_ordered', 'last_modified']
-    search_fields = ['id', 'user__username', 'product__type', 'quantity', 'payment_mode', 'date_ordered', 'last_modified', 'order_status', 'payment_status']
-    list_filter = ['product', 'payment_mode', 'order_status', 'payment_status', 'checkout']
-    list_display_links = ['id', 'user', 'product']
+    list_display = ['order_id', 'user', 'product', 'quantity', 'payment_mode', 'total_price', 'schedule_delivery', 'order_status', 'payment_status', 'phone_number', 'state', 'city', 'address', 'date_ordered']
+    search_fields = ['order_id', 'user__username', 'product__type', 'quantity', 'payment_mode', 'date_ordered', 'last_modified', 'order_status', 'payment_status', 'phone_number' 'state', 'city']
+    list_filter = ['product', 'payment_mode', 'order_status', 'payment_status', 'state', 'city', 'checkout']
+    list_display_links = ['order_id', 'user', 'product']
     list_per_page = 10
 
 admin.site.register(ProductOrder, ProductOrderAdmin)
 
 class GuestProductOrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'total_price', 'schedule_delivery', 'order_status', 'payment_status', 'date_ordered']
-    search_fields = ['id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'total_price', 'date_ordered', 'order_status', 'payment_status']
-    list_filter = ['state', 'city', 'product', 'payment_mode', 'order_status', 'payment_status']
-    list_display_links = ['id', 'name', 'email', 'product']
+    list_display = ['order_id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'total_price', 'schedule_delivery', 'order_status', 'payment_status', 'date_ordered']
+    search_fields = ['order_id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_mode', 'total_price', 'date_ordered', 'order_status', 'state', 'city', 'payment_status']
+    list_filter = ['state', 'city', 'product', 'payment_mode', 'order_status', 'payment_status', 'state', 'city']
+    list_display_links = ['order_id', 'name', 'email', 'product']
     list_per_page = 10
 
 admin.site.register(GuestProductOrder, GuestProductOrderAdmin)

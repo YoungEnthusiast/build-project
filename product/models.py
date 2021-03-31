@@ -2,12 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from users.models import Customer
 from django.urls import reverse
+from .utils import create_new_order_id
 
 class Product(models.Model):
 	type = models.CharField(max_length=200, unique=True)
 	price = models.DecimalField(max_digits=11, decimal_places=2)
 	date = models.DateField(null=True)
-	#digital = models.BooleanField(default=False,null=True, blank=True)
 	image = models.ImageField(null=True, blank=True)
 
 	class Meta:
@@ -39,9 +39,18 @@ class ProductOrder(models.Model):
 
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+	order_id = models.CharField(
+		 max_length = 10,
+		 null=True,
+		 editable=False,
+		 unique=True,
+		 default=create_new_order_id()
+	)
 	quantity = models.IntegerField(default=1)
 	payment_mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
 	schedule_delivery = models.DateField(blank=True, null=True)
+	email = models.EmailField(null=True)
+	phone_number = models.CharField(max_length=20, null=True)
 	address = models.CharField(max_length=255, null=True, blank=True)
 	city = models.CharField(max_length=20, null=True, blank=True)
 	state = models.CharField(max_length=20, null=True, blank=True)
@@ -51,11 +60,10 @@ class ProductOrder(models.Model):
 	payment_status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True)
 	checkout = models.BooleanField(default='False')
 
-
 	class Meta:
-		ordering = ('-id',)
+		ordering = ('-date_ordered',)
 	def __str__(self):
-		return str(self.id)
+		return str(self.order_id)
 
 	@property
 	def total_price(self):
@@ -97,8 +105,16 @@ class GuestProductOrder(models.Model):
         ('Confirmed', 'Confirmed')
     ]
 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+	order_id = models.CharField(
+		 max_length = 10,
+		 null=True,
+		 editable=False,
+		 unique=True,
+		 default=create_new_order_id()
+	)
 	name = models.CharField(max_length=200)
 	email = models.EmailField(null=True)
+	phone_number = models.CharField(max_length=20, null=True)
 	address = models.CharField(max_length=255)
 	city = models.CharField(max_length=20)
 	state = models.CharField(max_length=20)
@@ -106,15 +122,21 @@ class GuestProductOrder(models.Model):
 	payment_mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
 	schedule_delivery = models.DateField(blank=True, null=True)
 	date_ordered = models.DateTimeField(auto_now_add=True)
+	last_modified = models.DateTimeField(auto_now=True)
 	order_status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
 	payment_status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True)
 
 	class Meta:
-		ordering = ('-id',)
+		ordering = ('-date_ordered',)
 	def __str__(self):
-		return str(self.id)
+		return str(self.order_id)
 
 	@property
 	def total_price(self):
 		total = self.product.price * self.quantity
 		return total
+
+	@property
+	def order_id(self):
+		order = random.randint(1000000,9999999)
+		return order

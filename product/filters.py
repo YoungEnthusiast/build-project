@@ -9,3 +9,11 @@ class ProductOrderFilter(filters.FilterSet):
     class Meta:
         model = ProductOrder
         fields = ['id', 'product', 'order_status', 'payment_status']
+
+class ProductOrderFilter2(filters.FilterSet):
+    start_date = DateFilter(field_name="date_ordered", lookup_expr='gte', label='Date Ordered')
+    #end_date = DateFilter(field_name="date_ordered", lookup_expr='lte')
+
+    class Meta:
+        model = ProductOrder
+        fields = ['id', 'product', 'order_status']

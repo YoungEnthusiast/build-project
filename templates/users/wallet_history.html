@@ -19,13 +19,13 @@
   <a href="{% url 'orders' %}"><i></i>Orders History</a>
   <a href="{% url 'fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i><strong class="text-warning">Wallet History</strong></a>
-  <a href="#"><i class=""></i>Invoice</a>
+  <a href="{% url 'invoices' %}"><i class=""></i>Invoice</a>
 </div>
   <section class="main">
     {% include 'partials/_alerts.html' %}
 
     {% if wallets_page_obj %}
-    <h4 class="text-center">Search by Field(s)</h4>
+    <h4 class="text-center">Search Wallet History by One or Many Fields</h4>
     <div class="col-md-12">
       <div class="box-element bg-warning" id="form-wrapper">
         <form method="get" class="form-inline text-dark">

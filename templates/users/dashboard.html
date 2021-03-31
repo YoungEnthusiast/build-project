@@ -19,7 +19,7 @@
   <a href="{% url 'orders' %}"><i></i>Orders History</strong></a>
   <a href="{% url 'fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
-  <a href="#"><i class=""></i>Invoice</a>
+  <a href="{% url 'invoices' %}"><i class=""></i>Invoice</a>
 
 </div>
   <section class="main">
@@ -72,7 +72,7 @@
               <h5 class="card-title text-light">Total Previous Wallet Transactions</h5>
             </div>
             <div class="card-body">
-              <h3 class="card-title">₦{{total_debited|intcomma}}</h3>
+              <h3 class="card-title">₦{{total_debited|default_if_none:"---"|intcomma}}</h3>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
               <h5 class="card-title text-light">Last Wallet Transaction</h5>
             </div>
             <div class="card-body">
-              <h3 class="card-title">₦{{last_tran|intcomma}}</h3>
+              <h3 class="card-title">₦{{last_tran|default_if_none:"---"|intcomma}}</h3>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
               <h5 class="card-title text-warning">Wallet Balance</h5>
             </div>
             <div class="card-body bg-primary">
-              <h3 class="card-title">₦{{current_balance|intcomma}}</h3>
+              <h3 class="card-title">₦{{current_balance|default_if_none:"---"|intcomma}}</h3>
             </div>
           </div>
         </div>
