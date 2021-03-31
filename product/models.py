@@ -43,7 +43,7 @@ class ProductOrder(models.Model):
 		 max_length = 10,
 		 null=True,
 		 editable=False,
-		 unique=True,
+		 unique=False,
 		 default=create_new_order_id()
 	)
 	quantity = models.IntegerField(default=1)
