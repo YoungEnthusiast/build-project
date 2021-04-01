@@ -1,9 +1,9 @@
-from django import forms
-from .models import CustomerCredit#, ProductOrder, GuestProductOrde
-#from django.core import validators
-#from django.forms.widgets import SelectDateWidget
-from django.forms.widgets import NumberInput
-
+# from django import forms
+# from .models import CustomerCredit, ProductOrder, GuestProductOrder
+# #from django.core import validators
+# #from django.forms.widgets import SelectDateWidget
+# from django.forms.widgets import NumberInput
+#
 # class ProductOrderForm(forms.ModelForm):
 #     #schedule_delivery = forms.DateField(widget=SelectDateWidget, required = False)
 #     schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
@@ -28,14 +28,14 @@ from django.forms.widgets import NumberInput
 #         labels = {
 #             'payment_mode': 'Payment Mode', 'schedule_delivery': 'Schedule Delivery'
 #         }
-
-class CustomerCreditForm(forms.ModelForm):
-    transaction_Date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
-                            required = False)
-    class Meta:
-        model = CustomerCredit
-        fields = ['amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']
-
+#
+# class CustomerCreditForm(forms.ModelForm):
+#     transaction_Date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
+#                             required = False)
+#     class Meta:
+#         model = CustomerCredit
+#         fields = ['amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']
+#
 #
 # class GuestProductOrderForm(forms.ModelForm):
 #     schedule_delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
