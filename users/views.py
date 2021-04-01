@@ -1,71 +1,70 @@
-# import json
-# import urllib.request
-# from django.shortcuts import render, redirect
-# from django.conf import settings
-# from django.shortcuts import render, redirect, get_object_or_404
-# from .forms import CustomRegisterForm, ProfileEditForm, CustomerEditForm
-# from django.contrib import messages
-# from django.urls import reverse_lazy
-# from django.contrib.auth.forms import PasswordChangeForm
-# from django.contrib.auth import update_session_auth_hash
+import json
+import urllib.request
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import CustomRegisterForm, ProfileEditForm, ProductCustomerEditForm
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 # from product.models import Product, ProductOrder, GuestProductOrder
 # from product.forms import ProductOrderForm
-# from django.db.models import Count
-# from django.contrib.auth.decorators import login_required, permission_required
-# from django.views.generic import DeleteView
-# from .models import Customer, WalletHistory
-# from product.filters import ProductOrderFilter, ProductOrderFilter2
-# from .filters import WalletHistoryFilter
-# from django.core.paginator import Paginator
-# from django.core.mail import send_mail
-# from django.db.models import Sum
-# from django.http import HttpResponseRedirect
-#
-# def create(request):
-#     if request.method == "POST":
-#         form = CustomRegisterForm(request.POST)
-#         if form.is_valid():
-#             recaptcha_response = request.POST.get('g-recaptcha-response')
-#             url = 'https://www.google.com/recaptcha/api/siteverify'
-#             values = {
-#                 'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-#                 'response': recaptcha_response
-#             }
-#             data = urllib.parse.urlencode(values).encode()
-#             req =  urllib.request.Request(url, data=data)
-#             response = urllib.request.urlopen(req)
-#             result = json.loads(response.read().decode())
-#
-#             if result['success']:
-#                 form = form.save(commit=False)
-#                 form.save()
-#                 customer = Customer.objects.create(user=form)
-#                 messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
-#                 return redirect('edit_profile')
-#             else:
-#                 messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
-#             return redirect('account')
-#     else:
-#         form = CustomRegisterForm()
-#     return render(request, 'users/account.html', {'form': form})
-#
-# @login_required
-# def editProfile(request):
-#     if request.method == "POST":
-#         form = ProfileEditForm(request.POST, instance=request.user)
-#         customer_form = CustomerEditForm(request.POST, instance=request.user.customer)
-#         if form.is_valid() and customer_form.is_valid():
-#             form.save()
-#             customer_form.save()
-#             messages.success(request, "Your profile has been modified successfully")
-#             return redirect('edit_profile')
-#         else:
-#             messages.error(request, "Error updating your profile")
-#     else:
-#         form = ProfileEditForm(instance=request.user)
-#         customer_form = CustomerEditForm(instance=request.user.customer)
-#     return render(request, 'users/edit_profile.html', {'form': form, 'customer_form': customer_form})
-#
+from django.db.models import Count
+from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic import DeleteView
+from .models import ProductCustomer#, WalletHistory
+#from .filters import WalletHistoryFilter
+from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.db.models import Sum
+from django.http import HttpResponseRedirect
+
+def create(request):
+    if request.method == "POST":
+        form = CustomRegisterForm(request.POST)
+        if form.is_valid():
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req =  urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
+
+            if result['success']:
+                form = form.save(commit=False)
+                form.save()
+                customer = Customer.objects.create(user=form)
+                messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
+                return redirect('edit_profile')
+            else:
+                messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
+            return redirect('account')
+    else:
+        form = CustomRegisterForm()
+    return render(request, 'users/account.html', {'form': form})
+
+@login_required
+def editProfile(request):
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST, instance=request.user)
+        customer_form = ProductCustomerEditForm(request.POST, instance=request.user.customer)
+        if form.is_valid() and customer_form.is_valid():
+            form.save()
+            customer_form.save()
+            messages.success(request, "Your profile has been modified successfully")
+            return redirect('edit_profile')
+        else:
+            messages.error(request, "Error updating your profile")
+    else:
+        form = ProfileEditForm(instance=request.user)
+        customer_form = CustomerEditForm(instance=request.user.customer)
+    return render(request, 'users/edit_profile.html', {'form': form, 'customer_form': customer_form})
+
 # @login_required
 # def changePassword(request):
 #     if request.method == "POST":

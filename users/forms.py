@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-from .models import Customer
+from .models import ProductCustomer
 
 
 class CustomRegisterForm(UserCreationForm):
@@ -25,7 +25,7 @@ class ProfileEditForm(UserChangeForm):
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
 
 
-class CustomerEditForm(forms.ModelForm):
+class ProductCustomerEditForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['phone_number', 'state', 'city', 'address']
+        fields = ['phone_Number', 'state', 'city', 'address']
