@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProductCustomer#, WalletHistory
+from .models import ProductCustomer, ProductWalletHistorie
 from django.contrib.auth.models import User
 
 class ProductCustomerAdmin(admin.ModelAdmin):
@@ -11,12 +11,12 @@ class ProductCustomerAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(ProductCustomer, ProductCustomerAdmin)
-# #
-# # class WalletHistoryAdmin(admin.ModelAdmin):
-# #     list_display = ['user', 'amount_debited', 'amount_credited', 'current_balance', 'date_recorded']
-# #     search_fields = ['user__username', 'amount_debited', 'amount_credited', 'current']
-# #     list_filter = ['amount_debited', 'amount_credited']
-# #     list_display_links = ['user']
-# #     list_per_page = 10
-# #
-# # admin.site.register(WalletHistory, WalletHistoryAdmin)
+
+class ProductWalletHistorieAdmin(admin.ModelAdmin):
+    list_display = ['user', 'amount_debited', 'amount_credited', 'current_balance', 'date_recorded']
+    search_fields = ['user__username', 'amount_debited', 'amount_credited', 'current']
+    list_filter = ['amount_debited', 'amount_credited']
+    list_display_links = ['user']
+    list_per_page = 10
+
+admin.site.register(ProductWalletHistorie, ProductWalletHistorieAdmin)

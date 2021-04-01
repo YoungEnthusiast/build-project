@@ -27,5 +27,5 @@ class ProfileEditForm(UserChangeForm):
 
 class ProductCustomerEditForm(forms.ModelForm):
     class Meta:
-        model = Customer
+        model = ProductCustomer
         fields = ['phone_Number', 'state', 'city', 'address']

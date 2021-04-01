@@ -1,26 +1,26 @@
-# from django.db import models
-# from django.contrib.auth.models import User
-# from users.models import Customer
-# from django.urls import reverse
-# from .utils import create_new_order_id
+from django.db import models
+from django.contrib.auth.models import User
+from users.models import ProductCustomer
+from django.urls import reverse
+from .utils import create_new_order_id
 
-# class Product(models.Model):
-# 	type = models.CharField(max_length=200, unique=True)
-# 	price = models.DecimalField(max_digits=11, decimal_places=2)
-# 	date = models.DateField(null=True)
-# 	image = models.ImageField(null=True, blank=True)
-#
-# 	class Meta:
-# 		ordering = ('type',)
-# 	def __str__(self):
-# 		return self.type
-# 	@property
-# 	def imageURL(self):
-# 		try:
-# 			url = self.image.url
-# 		except:
-# 			url = ''
-# 		return url
+class Product(models.Model):
+	type = models.CharField(max_length=200, unique=True)
+	price = models.DecimalField(max_digits=11, decimal_places=2)
+	date = models.DateField(null=True)
+	image = models.ImageField(null=True, blank=True)
+
+	class Meta:
+		ordering = ('type',)
+	def __str__(self):
+		return self.type
+	@property
+	def imageURL(self):
+		try:
+			url = self.image.url
+		except:
+			url = ''
+		return url
 
 # class ProductOrder(models.Model):
 # 	PAYMENT_CHOICES = [

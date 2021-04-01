@@ -28,4 +28,4 @@ path('reset-password-complete/', auth_views.PasswordResetCompleteView.as_view(te
 # path('orders/checkout-many/pay/', views.updateWallet2),
 # path('products/product/guest-pay/', views.guestPay, name='guest_pay'),
 # path('orders/wallet-history/', views.showWallet, name='wallet_history'),
-# ]
+]

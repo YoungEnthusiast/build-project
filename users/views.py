@@ -65,19 +65,19 @@ def editProfile(request):
         customer_form = CustomerEditForm(instance=request.user.customer)
     return render(request, 'users/edit_profile.html', {'form': form, 'customer_form': customer_form})
 
-# @login_required
-# def changePassword(request):
-#     if request.method == "POST":
-#         form = PasswordChangeForm(data=request.POST, user=request.user)
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#             messages.success(request, "Your password has been changed successfully")
-#             return redirect('change_password')
-#     else:
-#         form = PasswordChangeForm(user=request.user)
-#     return render(request, 'users/change_password.html', {'form': form})
-#
+@login_required
+def changePassword(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.success(request, "Your password has been changed successfully")
+            return redirect('change_password')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return render(request, 'users/change_password.html', {'form': form})
+
 # @login_required
 # def showDashboard(request):
 #     new_orders = ProductOrder.objects.filter(user=request.user, order_status = 'New')

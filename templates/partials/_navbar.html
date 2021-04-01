@@ -25,7 +25,7 @@
             class="nav-item mr-3"
           {% endif %}
         >
-          <a class="nav-link" href=""><strong>QwikMaterials</strong></a>
+          <a class="nav-link" href="{% url 'product' %}"><strong>QwikMaterials</strong></a>
         </li>
         <li
           {% if 'explore' in request.path %}
@@ -34,7 +34,7 @@
             class="nav-item mr-3"
           {% endif %}
         >
-          <a class="nav-link" href=""><strong>QwikExplore</strong></a>
+          <a class="nav-link" href="{% url 'explore' %}"><strong>QwikExplore</strong></a>
         </li>
         <li
           {% if 'about' in request.path %}
@@ -65,7 +65,7 @@
             class="nav-item mr-3"
           {% endif %}
         >
-          <a class="nav-link" href=""><strong>Dashboard</strong></a>
+          <a class="nav-link" href="{% url 'dashboard' %}"><strong>Dashboard</strong></a>
         </li>
         <li
           {% if 'logout' in request.path %}
