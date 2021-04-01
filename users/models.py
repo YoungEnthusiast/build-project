@@ -2,13 +2,13 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-class Customer(models.Model):
+class ProductCustomer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=20, null=True)
+    phone_Number = models.CharField(max_length=20, null=True)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=20, null=True)
     state = models.CharField(max_length=20, null=True)
-    last_modified = models.DateTimeField(auto_now=True)
+    last_Modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.user.username)
