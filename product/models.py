@@ -22,7 +22,7 @@ class Product(models.Model):
 			url = ''
 		return url
 
-# class ProductOrder(models.Model):
+# class RegisteredProductOrder(models.Model):
 # 	PAYMENT_CHOICES = [
 # 		('Pay Instantly','Pay Instantly'),
 # 		('Pay on Site', 'Pay on Site')
@@ -33,9 +33,49 @@ class Product(models.Model):
 #         ('Pending', 'Pending')
 #     ]
 # 	PAID_CHOICES = [
-#         ('Unconfirmed','Unconfirmed'),
+#         ('Unconfirmed', 'Unconfirmed'),
 #         ('Confirmed', 'Confirmed')
 #     ]
+# 	STATE_CHOICES = [
+# 		('Abia', 'Abia'),
+# 		('Adamawa', 'Adamawa'),
+# 		('Akwa Ibom', 'Akwa Ibom'),
+# 		('Anambra', 'Anambra'),
+# 		('Bauchi', 'Bauchi'),
+# 		('Bayelsa', 'Bayelsa'),
+# 		('Benue', 'Benue'),
+# 		('Borno', 'Borno'),
+# 		('Cross River', 'Cross River'),
+# 		('Delta', 'Delta'),
+# 		('Ebonyi', 'Ebonyi'),
+# 		('Edo', 'Edo'),
+# 		('Ekiti', 'Ekiti'),
+# 		('Enugu', 'Enugu'),
+# 		('FCT', 'FCT')
+# 		('Gombe', 'Gombe'),
+# 		('Imo', 'Imo'),
+# 		('Jigawa', 'Jigawa'),
+# 		('Kaduna', 'Kaduna'),
+# 		('Kano', 'Kano'),
+# 		('Katsina', 'Katsina'),
+# 		('Kebbi', 'Kebbi'),
+# 		('Kogi', 'Kogi'),
+# 		('Kwara', 'Kwara'),
+# 		('Lagos', 'Lagos'),
+# 		('Nasarawa', 'Nasarawa'),
+# 		('Niger', 'Niger'),
+# 		('Ogun', 'Ogun'),
+# 		('Ondo', 'Ondo'),
+# 		('Osun', 'Osun'),
+# 		('Oyo', 'Oyo'),
+# 		('Plateau', 'Plateau'),
+# 		('Rivers', 'Rivers'),
+# 		('Sokoto', 'Sokoto'),
+# 		('Taraba', 'Taraba'),
+# 		('Yobe', 'Yobe'),
+# 		('Zamfara', 'Zamfara')
+# 	]
+#
 #
 # 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 # 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)

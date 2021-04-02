@@ -3,11 +3,50 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 class ProductCustomer(models.Model):
+    STATE_CHOICES = [
+		('Abia', 'Abia'),
+		('Adamawa', 'Adamawa'),
+		('Akwa Ibom', 'Akwa Ibom'),
+		('Anambra', 'Anambra'),
+		('Bauchi', 'Bauchi'),
+		('Bayelsa', 'Bayelsa'),
+		('Benue', 'Benue'),
+		('Borno', 'Borno'),
+		('Cross River', 'Cross River'),
+		('Delta', 'Delta'),
+		('Ebonyi', 'Ebonyi'),
+		('Edo', 'Edo'),
+		('Ekiti', 'Ekiti'),
+		('Enugu', 'Enugu'),
+		('FCT', 'FCT'),
+		('Gombe', 'Gombe'),
+		('Imo', 'Imo'),
+		('Jigawa', 'Jigawa'),
+		('Kaduna', 'Kaduna'),
+		('Kano', 'Kano'),
+		('Katsina', 'Katsina'),
+		('Kebbi', 'Kebbi'),
+		('Kogi', 'Kogi'),
+		('Kwara', 'Kwara'),
+		('Lagos', 'Lagos'),
+		('Nasarawa', 'Nasarawa'),
+		('Niger', 'Niger'),
+		('Ogun', 'Ogun'),
+		('Ondo', 'Ondo'),
+		('Osun', 'Osun'),
+		('Oyo', 'Oyo'),
+		('Plateau', 'Plateau'),
+		('Rivers', 'Rivers'),
+		('Sokoto', 'Sokoto'),
+		('Taraba', 'Taraba'),
+		('Yobe', 'Yobe'),
+		('Zamfara', 'Zamfara')
+	]
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_Number = models.CharField(max_length=20, null=True)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=20, null=True)
-    state = models.CharField(max_length=20, null=True)
+    state = models.CharField(max_length=11, choices=STATE_CHOICES, default='Abia', null=True)
     last_Modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
