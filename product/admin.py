@@ -1,16 +1,16 @@
-# from django.contrib import admin
-#
-# from .models import *
-#
-# class ProductAdmin(admin.ModelAdmin):
-#     list_display = ['type', 'price', 'date']
-#     search_fields = ['type', 'price', 'date']
-#     list_filter = ['type']
-#
-#     list_display_links = ['type']
-#     list_per_page = 10
-#
-# admin.site.register(Product, ProductAdmin)
+from django.contrib import admin
+
+from .models import *
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['type', 'price', 'date']
+    search_fields = ['type', 'price', 'date']
+    list_filter = ['type']
+
+    list_display_links = ['type']
+    list_per_page = 10
+
+admin.site.register(Product, ProductAdmin)
 #
 # class ProductOrderAdmin(admin.ModelAdmin):
 #     list_display = ['order_id', 'user', 'product', 'quantity', 'payment_mode', 'total_price', 'schedule_delivery', 'order_status', 'payment_status', 'phone_number', 'state', 'city', 'address', 'date_ordered']
