@@ -62,9 +62,9 @@
                 <th>{{product_invoice.date_Ordered}}</th>
                 <td>{{product_invoice.order_Id}}</td>
                 <td>{{product_invoice.product}}</td>
-                <td>{{product_invoice.product.price}}</td>
+                <td>₦{{product_invoice.product.price}}</td>
                 <td>{{product_invoice.quantity}}</td>
-                <td>{{product_invoice.total_Price}}</td>
+                <td>₦{{product_invoice.total_Price}}</td>
               </tr>
             </tbody>
           </table>
@@ -73,7 +73,7 @@
 
             </div>
             <div class="bg-warning text-primary form-group col-md-4">
-              <strong>TOTAL = {{product_invoice.total_Price}}</strong>
+              <strong>TOTAL = ₦{{product_invoice.total_Price}}</strong>
             </div>
           </div>
       </div>

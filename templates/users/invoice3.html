@@ -60,9 +60,9 @@
                   <th>{{each.date_Ordered}}</th>
                   <td>{{each.order_Id}}</td>
                   <td>{{each.product}}</td>
-                  <td>{{each.product.price}}</td>
+                  <td>₦{{each.product.price}}</td>
                   <td>{{each.quantity}}</td>
-                  <td>{{each.total_Price}}</td>
+                  <td>₦{{each.total_Price}}</td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -71,7 +71,7 @@
             <div class="col-md-8">
             </div>
             <div class="bg-warning text-primary form-group col-md-4">
-              <strong>TOTAL = {{tot}}</strong>
+              <strong>TOTAL = ₦{{tot}}</strong>
             </div>
           </div>
       </div>
