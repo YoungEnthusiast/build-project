@@ -48,7 +48,7 @@ class ProductCustomer(models.Model):
     state = models.CharField(max_length=14, choices=STATE_CHOICES, default='Select a State', null=True)
     city = models.CharField(max_length=20, null=True)
     address = models.CharField(max_length=200, null=True)
-    CAC_Certificate = models.ImageField(upload_to='CAC_Certs/%Y/%m/%d', null=True)
+    CAC_Certificate = models.ImageField(upload_to='CAC_Certs/%Y/%m/%d', null=True, blank=True)
     last_Modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
