@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %}
+  <title>{{user.username}}</title>
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+  <br>
+<div class="sidebar">
+    <br>
+    <br>
+    <br>
+    <br>
+  <a href=""><i></i>Upload Request</a>
+  <a href=""><i></i>History</strong></a>
+
+</div>
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+    <h2 class="text-center">Welcome to Xplore, <span class="text-warning"><strong><i>{{user.username}}</i></strong></span>. Navigate through Xplore using the left panel</h2>
+    <br>
+    <div class="row">
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h5 class="card-title text-light">New Requests</h5>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{new}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h5 class="card-title text-light">Requests Pending</h5>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{pending}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h5 class="card-title text-light">Requests Completed</h5>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{completed}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h5 class="card-title text-light">Previous Wallet Transactions</h5>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">₦{{total_debited|default_if_none:"---"|intcomma}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h5 class="card-title text-light">Last Wallet Transaction</h5>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">₦{{last_tran|default_if_none:"---"|intcomma}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h5 class="card-title text-warning">Wallet Balance</h5>
+            </div>
+            <div class="card-body bg-primary">
+              <h3 class="card-title">₦{{current_balance|default_if_none:"---"|intcomma}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content%}

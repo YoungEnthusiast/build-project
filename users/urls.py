@@ -13,6 +13,7 @@ path('reset-password-sent/', auth_views.PasswordResetDoneView.as_view(template_n
 path('reset-password/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_form.html'), name='password_reset_confirm'),
 path('reset-password-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_done.html'), name='password_reset_complete'),
 
+path('xplordash/', views.showXploreDashboard, name='xplore-dashboard'),
 path('dashboard/', views.showDashboard, name='dashboard'),
 path('orders/', views.showOrders, name='orders'),
 path('invoices/', views.showInvoices, name='invoices'),

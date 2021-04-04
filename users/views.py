@@ -49,21 +49,21 @@ def create(request):
         form = CustomRegisterForm()
     return render(request, 'users/account.html', {'form': form})
 
-def create(request):
-    if request.method == "POST":
-        form = CustomRegisterForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
-            productcustomer = ProductCustomer.objects.create(user=form)
-            messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
-            return redirect('edit_profile')
-        else:
-            messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
-        return redirect('account')
-    else:
-        form = CustomRegisterForm()
-    return render(request, 'users/account.html', {'form': form})
+# def create(request):
+#     if request.method == "POST":
+#         form = CustomRegisterForm(request.POST)
+#         if form.is_valid():
+#             form = form.save(commit=False)
+#             form.save()
+#             productcustomer = ProductCustomer.objects.create(user=form)
+#             messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
+#             return redirect('edit_profile')
+#         else:
+#             messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
+#         return redirect('account')
+#     else:
+#         form = CustomRegisterForm()
+#     return render(request, 'users/account.html', {'form': form})
 
 @login_required
 def editProfile(request, **kwargs):
@@ -80,14 +80,17 @@ def editProfile(request, **kwargs):
             else:
                 new_customer.save()
                 try:
-                    new_xplorer = XploreCustomer()
-                    new_xplorer.user = new_customer.user
-                    new_xplorer.phone_Number = new_customer.phone_Number
-                    new_xplorer.state = new_customer.state
-                    new_xplorer.city = new_customer.city
-                    new_xplorer.address = new_customer.address
-                    new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
-                    new_xplorer.save()
+                    if new_customer.CAC_Certificate == "":
+                        pass
+                    else:
+                        new_xplorer = XploreCustomer()
+                        new_xplorer.user = new_customer.user
+                        new_xplorer.phone_Number = new_customer.phone_Number
+                        new_xplorer.state = new_customer.state
+                        new_xplorer.city = new_customer.city
+                        new_xplorer.address = new_customer.address
+                        new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
+                        new_xplorer.save()
                 except:
                     new_xplorer = XploreCustomer.objects.get(user=request.user)
                     new_xplorer.user = new_customer.user
@@ -142,6 +145,28 @@ def showDashboard(request):
     context = {'new': new, 'pending': pending, 'completed': completed,
                 'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
     return render(request, 'users/dashboard.html', context)
+
+@login_required
+def showXploreDashboard(request):
+    # new_orders = UserOrder.objects.filter(user=request.user, order_Status = 'New')
+    # new = new_orders.count()
+    # pending_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Pending')
+    # pending = pending_orders.count()
+    # completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Completed')
+    # completed = completed_orders.count()
+    #
+    # total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
+    # try:
+    #     wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
+    #     last_tran = wallet.amount_debited
+    #     current_balance = wallet.current
+    # except:
+    #     last_tran = "---"
+    #     current_balance = "---"
+    #
+    # context = {'new': new, 'pending': pending, 'completed': completed,
+    #             'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
+    return render(request, 'xplorers/xplore_dashboard.html')#, context)
 
 @login_required
 def showOrders(request):
@@ -335,6 +360,7 @@ def updateWallet2(request):
 def guestPay(request):
     return render(request, 'product/productorder_guest.html')
 
+@login_required
 def showWallet(request):
     context = {}
     filtered_wallets = ProductWalletHistorieFilter(

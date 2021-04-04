@@ -6,5 +6,5 @@ urlpatterns = [
     path('about-buildqwik/', views.showAbout, name='about'),
     path('contact-us/', views.showContact, name='contact'),
     path('st---only/', views.showContacts, name='contacts'),
-    path('explore/', views.showExplore, name='explore'),
+    path('xplore/', views.showXplore, name='xplore'),
 ]

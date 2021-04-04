@@ -6,7 +6,6 @@ class XploreCustomerAdmin(admin.ModelAdmin):
     list_display = ['user', 'phone_Number', 'state', 'city', 'address', 'CAC_Certificate']
     search_fields = ['user__username', 'phone_Number', 'state', 'city', 'address']
     list_filter = ['city', 'state']
-
     list_display_links = ['user', 'CAC_Certificate']
     list_per_page = 10
 
