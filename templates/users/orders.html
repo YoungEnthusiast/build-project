@@ -67,7 +67,7 @@
               {% for product_order in productorders_page_obj %}
                 {% if product_order.order_Status == "Completed" and product_order.checkout_checked and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-success">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -83,7 +83,7 @@
                   </tr>
                 {% elif product_order.order_Status == "Completed" and product_order.checkout_checked and product_order.payment_Status == "Confirmed" %}
                   <tr class="table-success">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -99,7 +99,7 @@
                   </tr>
                 {% elif product_order.order_Status == "Completed" and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-success">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -115,7 +115,7 @@
                   </tr>
                 {% elif product_order.order_Status == "Completed" and product_order.payment_Status == "Confirmed" %}
                   <tr class="table-success">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -131,7 +131,7 @@
                   </tr>
                 {% elif product_order.order_Status == "Pending" and product_order.checkout_checked and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-warning">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -147,7 +147,7 @@
                   </tr>
                 {% elif product_order.order_Status == "Pending" and product_order.checkout_checked and product_order.payment_Status == "Confirmed" %}
                   <tr class="table-warning">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -163,7 +163,7 @@
                   </tr>
                   {% elif product_order.order_Status == "Pending" and product_order.payment_Status == "Unconfirmed" %}
                     <tr class="table-warning">
-                      <td>{{product_order.date_ordered}}</td>
+                      <td>{{product_order.date_Ordered}}</td>
                       <td>{{product_order.order_Id}}</td>
                       <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                       <td>{{product_order.product.type}}</td>
@@ -179,7 +179,7 @@
                     </tr>
                 {% elif product_order.order_Status == "Pending" and product_order.payment_Status == "Confirmed" %}
                   <tr class="table-warning">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -195,7 +195,7 @@
                   </tr>
                 {% elif product_order.order_Status == "New" and product_order.checkout_checked and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-danger">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -211,7 +211,7 @@
                   </tr>
                 {% elif product_order.order_Status == "New" and product_order.checkout_checked and product_order.payment_Status == "Confirmed" %}
                   <tr class="table-danger">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -227,7 +227,7 @@
                   </tr>
                 {% elif product_order.order_Status == "New" and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-danger">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
@@ -243,7 +243,7 @@
                   </tr>
                 {% elif product_order.order_Status == "New" and product_order.payment_Status == "Confirmed" %}
                   <tr class="table-danger">
-                    <td>{{product_order.date_ordered}}</td>
+                    <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td><img class="row-image" src="{{product_order.product.imageURL}}"></td>
                     <td>{{product_order.product.type}}</td>
