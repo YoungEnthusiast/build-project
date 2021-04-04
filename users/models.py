@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class ProductCustomer(models.Model):
     STATE_CHOICES = [
+        ('Select a State', 'Select a State'),
 		('Abia', 'Abia'),
 		('Adamawa', 'Adamawa'),
 		('Akwa Ibom', 'Akwa Ibom'),
@@ -44,9 +45,10 @@ class ProductCustomer(models.Model):
 	]
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_Number = models.CharField(max_length=20, null=True)
-    address = models.CharField(max_length=200, null=True)
+    state = models.CharField(max_length=14, choices=STATE_CHOICES, default='Select a State', null=True)
     city = models.CharField(max_length=20, null=True)
-    state = models.CharField(max_length=11, choices=STATE_CHOICES, default='Abia', null=True)
+    address = models.CharField(max_length=200, null=True)
+    CAC_Certificate = models.ImageField(upload_to='CAC_Certs/%Y/%m/%d', null=True)
     last_Modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):

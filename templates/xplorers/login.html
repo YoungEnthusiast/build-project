@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Login</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+<div class="col-md-6 mx-auto">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h5>{{message}}</h5>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+  <div class="card">
+
+    <form method="post" class="form-group col-md-12">
+      <br>
+      <div class="card-header bg-primary text-warning">
+        <h4>
+          <i class="fas fa-key"></i> Login</h4>
+      </div>
+      <br>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <br>
+      <input type="submit" class="form-group col-md-12 btn btn-warning pull left" value="Sign In">
+      <i class="fas fa-lock"></i> Forgot Password?<a href="{% url 'reset_password' %}"><span class="text-warning"> Reset Here</span></a>
+    </form>
+  </div>
+</div>
+<br>
+
+{% endblock content%}
