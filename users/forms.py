@@ -44,6 +44,13 @@ class ProfileEditForm(UserChangeForm):
 
 class ProductCustomerEditForm(forms.ModelForm):
     CAC_Certificate = forms.ImageField(required = False)
+
+    def clean_state(self):
+       state = self.cleaned_data.get('state')
+       if state == "Select a State":
+           raise ValidationError("Please select a state from the dropdown")
+       return state
+
     class Meta:
         model = ProductCustomer
         fields = ['phone_Number', 'state', 'city', 'address', 'CAC_Certificate']

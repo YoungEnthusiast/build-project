@@ -7,7 +7,7 @@ from .forms import CustomRegisterForm, ProfileEditForm, ProductCustomerEditForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, login
 from products.models import Product, UserOrder, VisitorOrder
 from products.filters import UserOrderFilter, UserOrderFilter2
 from products.forms import UserOrderForm
@@ -20,19 +20,13 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
-
-
 from django.views.generic import View, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-
-from django.contrib.auth import login
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
 
 def create(request):
     if request.method == "POST":
@@ -48,7 +42,6 @@ def create(request):
             req =  urllib.request.Request(url, data=data)
             response = urllib.request.urlopen(req)
             result = json.loads(response.read().decode())
-
             if result['success']:
                 user = form.save(commit=False)
                 user.is_active = False
@@ -64,13 +57,6 @@ def create(request):
                 user.email_user(subject, message)
                 messages.success(request, ('Please login to your email, you have been sent a message for your email verification.'))
                 return redirect('login')
-
-
-                # form = form.save(commit=False)
-                # form.save()
-                # productcustomer = ProductCustomer.objects.create(user=form)
-                # messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
-                # return redirect('edit_profile')
             else:
                 messages.error(request, "Please ensure you pass reCAPTCHA so as to ascertain that you are human")
             return redirect('account')
@@ -131,24 +117,12 @@ def editProfile(request, **kwargs):
             form.save()
             customer_form.save()
             new_customer = ProductCustomer.objects.get(user=request.user)
-            if new_customer.state == "Select a State":
-                messages.error(request, "Please select a state from dropdown")
-            else:
-                new_customer.save()
-                try:
-                    if new_customer.CAC_Certificate == "":
-                        pass
-                    else:
-                        new_xplorer = XploreCustomer()
-                        new_xplorer.user = new_customer.user
-                        new_xplorer.phone_Number = new_customer.phone_Number
-                        new_xplorer.state = new_customer.state
-                        new_xplorer.city = new_customer.city
-                        new_xplorer.address = new_customer.address
-                        new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
-                        new_xplorer.save()
-                except:
-                    new_xplorer = XploreCustomer.objects.get(user=request.user)
+            new_customer.save()
+            try:
+                if new_customer.CAC_Certificate == "":
+                    pass
+                else:
+                    new_xplorer = XploreCustomer()
                     new_xplorer.user = new_customer.user
                     new_xplorer.phone_Number = new_customer.phone_Number
                     new_xplorer.state = new_customer.state
@@ -156,14 +130,24 @@ def editProfile(request, **kwargs):
                     new_xplorer.address = new_customer.address
                     new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
                     new_xplorer.save()
-                messages.success(request, "Your profile has been modified successfully")
-                return redirect('edit_profile')
+            except:
+                new_xplorer = XploreCustomer.objects.get(user=request.user)
+                new_xplorer.user = new_customer.user
+                new_xplorer.phone_Number = new_customer.phone_Number
+                new_xplorer.state = new_customer.state
+                new_xplorer.city = new_customer.city
+                new_xplorer.address = new_customer.address
+                new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
+                new_xplorer.save()
+            messages.success(request, "Your profile has been modified successfully")
+            return redirect('edit_profile')
         else:
             messages.error(request, "Error updating your profile")
     else:
         form = ProfileEditForm(instance=request.user)
         customer_form = ProductCustomerEditForm(instance=request.user.productcustomer)
     return render(request, 'users/edit_profile.html', {'form': form, 'customer_form': customer_form})
+
 
 @login_required
 def changePassword(request):
@@ -178,7 +162,7 @@ def changePassword(request):
             send_mail(
                 'Password Changed!',
                 'Dear ' + str(name) + ', your password has just been changed. If this activity was not carried out by you, please reply to this email',
-                'yustaoab@gmail.com',
+                'support@buildqwik.ng',
                 [email],
                 fail_silently=False
             )
