@@ -172,7 +172,7 @@ EMAIL_HOST_USER = 'support@buildqwik.ng'
 EMAIL_HOST_PASSWORD = 'BuildAdmin7236;'
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = 'BuildQwik Technology Limited <noreply@buildqwik.ng>'
+DEFAULT_FROM_EMAIL = 'BuildQwik Technology Limited <support@buildqwik.ng>'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'yustaoab@gmail.com'
