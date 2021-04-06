@@ -25,13 +25,13 @@ def showProduct(request):
 				visitor.save()
 				name = guest_form.cleaned_data.get('name')
 				email = guest_form.cleaned_data.get('email')
-				# send_mail(
-				# 	'Guest Order [' + str(name) + ']',
-				# 	'Dear ' + str(name) + ', your order has been received. If you have not paid you can follow this link www.buildqwik.ng/visitor-pay/ to do so',
-				# 	'yustaoab@gmail.com',
-				# 	[email],
-				# 	fail_silently=False
-				# )
+				send_mail(
+					'Guest Order [' + str(name) + ']',
+					'Dear ' + str(name) + ', your order has been received. If you have not paid you can follow this link www.buildqwik.ng/visitor-pay/ to do so',
+					'support@buildqwik.ng',
+					[email, 'support@buildqwik.ng'],
+					fail_silently=False
+				)
 				messages.success(request, "Your order has been placed! Please make payment below")
 				return redirect('guest_pay')
 		elif form.is_valid():
@@ -54,13 +54,13 @@ def showProduct(request):
 			first_name = customer.user.first_name
 			last_name = customer.user.last_name
 			email = customer.user.email
-			# send_mail(
-			# 	'Registered User [' + str(first_name) + ' ' + str(last_name) + ']',
-			# 	'Dear ' + str(first_name) + ', your order has been received. Remember you can always log in and checkout to pay from your dashboard',
-			# 	'yustaoab@gmail.com',
-			# 	[email],
-			# 	fail_silently=False
-			# )
+			send_mail(
+				'Registered User [' + str(first_name) + ' ' + str(last_name) + ']',
+				'Dear ' + str(first_name) + ', your order has been received. Remember you can always log in and checkout to pay from your dashboard',
+				'support@buildqwik.ng',
+				[email, 'support@buildqwik.ng'],
+				fail_silently=False
+			)
 			messages.success(request, "Order submitted! You can checkout below")
 			return redirect('orders')
 		else:
@@ -83,8 +83,8 @@ def fundWallet(request, **kwargs):
 			send_mail(
                 'Credit Wallet [' + str(first_name) + ' ' + str(last_name) + ']',
                 'Dear ' + str(first_name) + ', Your request has been received! Your wallet will be funded as soon as your payment is verified',
-                'yustaoab@gmail.com',
-				[email],
+                'support@buildqwik.ng',
+				[email, 'support@buildqwik.ng'],
                 fail_silently=False
             )
 			messages.success(request, "Request Submitted, Your wallet will be funded as soon as your payment is verified")
