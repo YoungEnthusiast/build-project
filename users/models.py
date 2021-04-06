@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 class ProductCustomer(models.Model):
     STATE_CHOICES = [
         ('Select a State', 'Select a State'),
@@ -51,6 +54,14 @@ class ProductCustomer(models.Model):
     CAC_Certificate = models.ImageField(upload_to='CAC_Certs/%Y/%m/%d', null=True, blank=True)
     last_Modified = models.DateTimeField(auto_now=True)
 
+    email_confirmed = models.BooleanField(default=False)
+
+    @receiver(post_save, sender=User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            ProductCustomer.objects.create(user=instance)
+            instance.productcustomer.save()
+
     def __str__(self):
         return str(self.user.username)
         #return 'Profile for user {}'.format(self.user.username)
@@ -60,6 +71,9 @@ class ProductCustomer(models.Model):
 
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.pk})
+
+
+
 
 class ProductWalletHistorie(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -74,6 +88,11 @@ class ProductWalletHistorie(models.Model):
 
     class Meta:
         ordering = ('-date_recorded',)
+
+    @property
+    def current_once(self):
+        curr = self.current
+        return curr
 
     @property
     def current_balance(self):

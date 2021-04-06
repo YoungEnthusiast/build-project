@@ -2,13 +2,25 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from .models import ProductCustomer
+from django.core.exceptions import ValidationError
+
 
 class CustomRegisterForm(UserCreationForm):
     email = forms.EmailField()
+
+    def clean(self):
+       email = self.cleaned_data.get('email')
+       if User.objects.filter(email=email).exists():
+           raise ValidationError("A user with the supplied email already exists")
+       return self.cleaned_data
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
         labels = {'first_name': 'First Name', 'last_name': 'Last Name'}
+
+
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # self.fields['password1'].label = 'password1 label'

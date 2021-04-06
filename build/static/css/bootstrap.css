@@ -3503,8 +3503,8 @@ input[type="button"].btn-block {
 
 .alert-warning {
   color: #856404;
-  background-color: #edc17e;
-  border-color: #edc17e; }
+  background-color: #f5e5bc;
+  border-color: #f5e5bc; }
   .alert-warning hr {
     border-top-color: #ffe8a1; }
   .alert-warning .alert-link {

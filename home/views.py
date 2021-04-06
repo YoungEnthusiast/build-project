@@ -40,13 +40,13 @@ def showContact(request):
             form.save()
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
-            # send_mail(
-            #     'Contact BuildQwik',
-            #     'A message was sent by ' + name + '. Please log in to admin panel to read message',
-            #     'yustaoab@gmail.com',
-            #     [email, 'sonofyuusuf@gmail.com'],
-            #     fail_silently=False
-            # )
+            send_mail(
+                'Contact BuildQwik',
+                'A message was sent by ' + name + '. Please log in to admin panel to read message',
+                'support@buildqwik.ng',
+                [email, 'support@buildqwik.ng'],
+                fail_silently=False
+            )
             messages.success(request, str(name) + ", your message will receive attention shortly")
         else:
             return redirect('contact')

@@ -23,7 +23,7 @@
     <div class="col-lg-6">
       <div class="box-element">
         <hr>
-        <h3 class="text-center">ORDER ID: {{product_order.id}}</h3>
+        <h3 class="text-center">ORDER ID: {{product_order.order_Id}}</h3>
         <hr>
         <div class="cart-row">
           <div style="flex:2"><img class="row-image" src="{{product_order.product.imageURL}}"></div>
@@ -40,7 +40,7 @@
           <div id="user-info">
             <div class="form-group">
               <label for="email-address">Email</label>
-              <input required class="form-control" type="email" value="{{product_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
+              <input required class="form-control" readonly type="email" value="{{product_order.user.email}}" id="email-address" name="email" placeholder="Enter Email" required />
             </div>
             <div class="form-group">
               <label for="amount">Amount</label>

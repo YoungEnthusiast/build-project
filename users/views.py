@@ -21,6 +21,19 @@ from django.core.mail import send_mail
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
 
+
+from django.views.generic import View, UpdateView
+from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+
+from django.contrib.auth import login
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+
 def create(request):
     if request.method == "POST":
         form = CustomRegisterForm(request.POST)
@@ -37,13 +50,29 @@ def create(request):
             result = json.loads(response.read().decode())
 
             if result['success']:
-                form = form.save(commit=False)
-                form.save()
-                productcustomer = ProductCustomer.objects.create(user=form)
-                messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
-                return redirect('edit_profile')
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                subject = 'Activate Your BuildQwik Account'
+                message = render_to_string('users/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+                user.email_user(subject, message)
+                messages.success(request, ('Please login to your email, you have been sent a message for your email verification.'))
+                return redirect('login')
+
+
+                # form = form.save(commit=False)
+                # form.save()
+                # productcustomer = ProductCustomer.objects.create(user=form)
+                # messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
+                # return redirect('edit_profile')
             else:
-                messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
+                messages.error(request, "<ul><li>PLEASE NOTE:</li><li>You must pass reCAPTCHA so as to ascertain that you are not a robot.<li>Your username and/or email address already exists with a registered user</li>")
             return redirect('account')
     else:
         form = CustomRegisterForm()
@@ -53,17 +82,45 @@ def create(request):
 #     if request.method == "POST":
 #         form = CustomRegisterForm(request.POST)
 #         if form.is_valid():
-#             form = form.save(commit=False)
-#             form.save()
-#             productcustomer = ProductCustomer.objects.create(user=form)
-#             messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
-#             return redirect('edit_profile')
+#             user = form.save(commit=False)
+#             user.is_active = False
+#             user.save()
+#             current_site = get_current_site(request)
+#             subject = 'Activate Your BuildQwik Account'
+#             message = render_to_string('users/account_activation_email.html', {
+#                 'user': user,
+#                 'domain': current_site.domain,
+#                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#                 'token': account_activation_token.make_token(user),
+#             })
+#             user.email_user(subject, message)
+#             messages.success(request, ('Please login to your email, you have been sent a message for your email verification.'))
+#             return redirect('login')
+#             #return redirect('edit_profile')
 #         else:
-#             messages.error(request, 'Please ensure you pass reCAPTCHA to ascertain that you are not a robot')
+#             messages.error(request, 'A user with the supplied username or email already exists')
 #         return redirect('account')
 #     else:
 #         form = CustomRegisterForm()
 #     return render(request, 'users/account.html', {'form': form})
+
+class ActivateAccount(View):
+    def get(self, request, uidb64, token, *args, **kwargs):
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.productcustomer.email_confirmed = True
+            user.save()
+            login(request, user)
+            messages.success(request, ('Your account has been confirmed! Please complete registration by supplying location information'))
+            return redirect('edit_profile')
+        else:
+            messages.warning(request, ('The confirmation link has either been used or expired.'))
+            return redirect('index')
 
 @login_required
 def editProfile(request, **kwargs):
@@ -73,7 +130,6 @@ def editProfile(request, **kwargs):
         if form.is_valid() and customer_form.is_valid():
             form.save()
             customer_form.save()
-
             new_customer = ProductCustomer.objects.get(user=request.user)
             if new_customer.state == "Select a State":
                 messages.error(request, "Please select a state from dropdown")
@@ -100,10 +156,8 @@ def editProfile(request, **kwargs):
                     new_xplorer.address = new_customer.address
                     new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
                     new_xplorer.save()
-
                 messages.success(request, "Your profile has been modified successfully")
                 return redirect('edit_profile')
-
         else:
             messages.error(request, "Error updating your profile")
     else:
@@ -118,6 +172,16 @@ def changePassword(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
+            user = request.user
+            name = user.first_name
+            email = user.email
+            send_mail(
+                'Password Changed!',
+                'Dear ' + str(name) + ', your password has just been changed. If this activity was not carried out by you, please reply to this email',
+                'yustaoab@gmail.com',
+                [email],
+                fail_silently=False
+            )
             messages.success(request, "Your password has been changed successfully")
             return redirect('change_password')
     else:
@@ -132,7 +196,6 @@ def showDashboard(request):
     pending = pending_orders.count()
     completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Completed')
     completed = completed_orders.count()
-
     total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
     try:
         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
@@ -286,6 +349,8 @@ def showInvoiceMany(request):
 @login_required
 def showProductOrder2(request):
     that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
+    user = request.user
+    email = user.email
     response_that = []
     for each in that:
         selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
@@ -293,7 +358,7 @@ def showProductOrder2(request):
         for a_product in selected:
             tot = tot + a_product.total_Price
         response_that.append(each)
-    return render(request, 'product/productorder_detail2.html', {'that': response_that, 'tot':tot})
+    return render(request, 'product/productorder_detail2.html', {'email': email, 'that': response_that, 'tot':tot})
 
 @login_required
 def updateWallet(request, pk, **kwargs):
@@ -305,10 +370,8 @@ def updateWallet(request, pk, **kwargs):
         if wallet.current_balance > 0:
             wallet_entry = ProductWalletHistorie()
             wallet_entry.user = wallet.user
-            #wallet_entry.customer = wallet.customer
             wallet_entry.amount_debited = wallet.amount_debited
             wallet_entry.current = wallet.current_balance
-            #wallet.save()
             wallet_entry.save()
             messages.success(request, "Your payment has been made and your wallet updated")
             product_order.payment_Status = "Confirmed"
@@ -358,7 +421,19 @@ def updateWallet2(request):
         return render(request, 'product/wallet.html')
 
 def guestPay(request):
-    return render(request, 'product/productorder_guest.html')
+    visitor = VisitorOrder.objects.all()[0]
+    order_Id = visitor.order_Id
+    imageURL = visitor.product.imageURL
+    type = visitor.product.type
+    price = visitor.product.price
+    quantity = visitor.quantity
+    email = visitor.email
+    total_Price = visitor.total_Price
+    context = {'order_Id': order_Id, 'imageURL': imageURL, 'type': type, 'price': price, 'quantity': quantity, 'email': email, 'total_Price': total_Price}
+    return render(request, 'product/productorder_guest.html', context)
+
+def visitorPay(request):
+    return render(request, 'product/productorder_visitor.html')
 
 @login_required
 def showWallet(request):

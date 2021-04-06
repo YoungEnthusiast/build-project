@@ -166,13 +166,17 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'support@buildqwik.ng'
+EMAIL_HOST_PASSWORD = 'BuildAdmin7236;'
+EMAIL_USE_SSL = True
 
 
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'yustaoab@gmail.com'
-EMAIL_HOST_PASSWORD = 'twnqanloovwgjrsq'
-EMAIL_USE_TLS=True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'yustaoab@gmail.com'
+# EMAIL_HOST_PASSWORD = 'twnqanloovwgjrsq'
+# EMAIL_USE_TLS=True
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6Lel75saAAAAALidKht0ZK-CYwML-J3__IiXIN0N'
