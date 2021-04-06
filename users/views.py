@@ -72,7 +72,7 @@ def create(request):
                 # messages.success(request, "Your account has been created! Please login to complete registration by supplying location information")
                 # return redirect('edit_profile')
             else:
-                messages.error(request, "<ul><li>PLEASE NOTE:</li><li>You must pass reCAPTCHA so as to ascertain that you are not a robot.<li>Your username and/or email address already exists with a registered user</li></ul>")
+                messages.error(request, "<ul><li>PLEASE NOTE:</li><li>You must pass reCAPTCHA so as to ascertain that you are not a robot.</li><li>Your username and/or email address already exists with a registered user</li></ul>")
             return redirect('account')
     else:
         form = CustomRegisterForm()
