@@ -3,7 +3,7 @@ import urllib.request
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomRegisterForm, ProfileEditForm, ProductCustomerEditForm
+from .forms import CustomRegisterForm, ProfileEditForm, ProductCustomerEditForm, AdminCreditForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
@@ -148,7 +148,6 @@ def editProfile(request, **kwargs):
         customer_form = ProductCustomerEditForm(instance=request.user.productcustomer)
     return render(request, 'users/edit_profile.html', {'form': form, 'customer_form': customer_form})
 
-
 @login_required
 def changePassword(request):
     if request.method == "POST":
@@ -183,8 +182,8 @@ def showDashboard(request):
     total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
     try:
         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-        last_tran = wallet.amount_debited
-        current_balance = wallet.current
+        last_tran = wallet.last_tran
+        current_balance = wallet.current_balance
     except:
         last_tran = "---"
         current_balance = "---"
@@ -195,24 +194,7 @@ def showDashboard(request):
 
 @login_required
 def showXploreDashboard(request):
-    # new_orders = UserOrder.objects.filter(user=request.user, order_Status = 'New')
-    # new = new_orders.count()
-    # pending_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Pending')
-    # pending = pending_orders.count()
-    # completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Completed')
-    # completed = completed_orders.count()
-    #
-    # total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
-    # try:
-    #     wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-    #     last_tran = wallet.amount_debited
-    #     current_balance = wallet.current
-    # except:
-    #     last_tran = "---"
-    #     current_balance = "---"
-    #
-    # context = {'new': new, 'pending': pending, 'completed': completed,
-    #             'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
+
     return render(request, 'xplorers/xplore_dashboard.html')#, context)
 
 @login_required
@@ -349,13 +331,14 @@ def updateWallet(request, pk, **kwargs):
     try:
         product_order = UserOrder.objects.get(id=pk)
         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-        wallet.current = wallet.current_balance - product_order.total_Price
+        wallet.current_balance = wallet.current_balance - product_order.total_Price
         wallet.amount_debited = product_order.total_Price
         if wallet.current_balance > 0:
             wallet_entry = ProductWalletHistorie()
             wallet_entry.user = wallet.user
             wallet_entry.amount_debited = wallet.amount_debited
-            wallet_entry.current = wallet.current_balance
+            wallet_entry.current_balance = wallet.current_balance
+            wallet_entry.last_tran = wallet_entry.amount_debited
             wallet_entry.save()
             messages.success(request, "Your payment has been made and your wallet updated")
             product_order.payment_Status = "Confirmed"
@@ -381,13 +364,14 @@ def updateWallet2(request):
             for a_product in selected:
                 tot = tot + a_product.total_Price
         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-        wallet.current = wallet.current_balance - tot
+        wallet.current_balance = wallet.current_balance - tot
         wallet.amount_debited = tot
         if wallet.current_balance > 0:
             wallet_entry = ProductWalletHistorie()
             wallet_entry.user = wallet.user
             wallet_entry.amount_debited = wallet.amount_debited
-            wallet_entry.current = wallet.current_balance
+            wallet_entry.current_balance = wallet.current_balance
+            wallet_entry.last_tran = wallet_entry.amount_debited
             wallet_entry.save()
             messages.success(request, "Your payment has been made and your wallet updated")
             for each2 in that:
@@ -434,3 +418,44 @@ def showWallet(request):
     total_wallets = filtered_wallets.qs.count()
     context['total_wallets'] = total_wallets
     return render(request, 'users/wallet_history.html', context=context)
+
+@login_required
+@permission_required('home.add_ProductWalletHistorie')
+def creditWallet(request):
+    form = AdminCreditForm()
+    if request.method == 'POST':
+        form = AdminCreditForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            name = form.cleaned_data.get('user')
+            wallet_0 = ProductWalletHistorie.objects.filter(user=name)[0]
+            try:
+                wallet_1 = ProductWalletHistorie.objects.filter(user=name)[1]
+                wallet_0.current_balance = wallet_0.amount_credited + wallet_1.current_balance
+                wallet_0.last_tran = wallet_0.amount_credited
+                email = wallet_0.user.email
+                wallet_0.save()
+                send_mail(
+                    'Wallet Credit Confirmed',
+                    'Dear ' + str(name) + ', Your wallet balance has been topped up',
+                    'support@buildqwik.ng',
+    				[email],
+                    fail_silently=False
+                )
+                messages.success(request, str(name) + "'s wallet balance has been topped up and email notification sent to him")
+                return redirect('dashboard')
+            except:
+                wallet_0.current_balance = wallet_0.amount_credited
+                wallet_0.last_tran = wallet_0.amount_credited
+                email = wallet_0.user.email
+                wallet_0.save()
+                send_mail(
+                    'Wallet Credit Confirmed',
+                    'Dear ' + str(name) + ', Your wallet balance has been topped up',
+                    'support@buildqwik.ng',
+    				[email],
+                    fail_silently=False
+                )
+                messages.success(request, str(name) + "'s wallet balance has been topped up and email notification sent to him")
+                return redirect('dashboard')
+    return render(request, 'product/admincredit_form.html', {'form': form})

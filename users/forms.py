@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
-from .models import ProductCustomer
+from .models import ProductCustomer, ProductWalletHistorie
 from django.core.exceptions import ValidationError
 
 
@@ -25,8 +25,6 @@ class CustomRegisterForm(UserCreationForm):
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
         labels = {'first_name': 'First Name', 'last_name': 'Last Name'}
-
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -57,3 +55,8 @@ class ProductCustomerEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['CAC_Certificate'].help_text = "This field is only mandatory for QwikXplorers"
+
+class AdminCreditForm(forms.ModelForm):
+    class Meta:
+        model = ProductWalletHistorie
+        fields = ['user', 'amount_credited']

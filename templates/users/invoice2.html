@@ -14,6 +14,7 @@
 
 {% block content %}
 <br>
+{% if product_invoice.user == request.user %}
 <form class="d-flex justify-content-center">
   <input id ="printbtn" type="button" class="btn btn-warning" value="Click to show print preview" onclick="window.print();" >
 </form> <br>
@@ -77,5 +78,8 @@
       </div>
 
 </section>
-
+{% else %}
+  <h2 class="text-center">Access Restricted</h2>
+  <br>
+{% endif %}
 {% endblock content%}

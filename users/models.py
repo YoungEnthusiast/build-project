@@ -72,14 +72,12 @@ class ProductCustomer(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.pk})
 
-
-
-
 class ProductWalletHistorie(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     amount_debited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
+    last_tran = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     amount_credited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
-    current = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
+    current_balance = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
     date_recorded = models.DateTimeField(auto_now_add=True, null=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -89,17 +87,17 @@ class ProductWalletHistorie(models.Model):
     class Meta:
         ordering = ('-date_recorded',)
 
-    @property
-    def current_once(self):
-        curr = self.current
-        return curr
-
-    @property
-    def current_balance(self):
-        if self.current == None:
-            cur = self.amount_credited
-        elif self.amount_credited == None:
-            cur = self.current
-        else:
-            cur = self.current + self.amount_credited
-        return cur
+    # @property
+    # def current_once(self):
+    #     curr = self.current
+    #     return curr
+    #
+    # @property
+    # def current_balance(self):
+    #     if self.current == None:
+    #         cur = self.amount_credited
+    #     elif self.amount_credited == None:
+    #         cur = self.current
+    #     else:
+    #         cur = self.current + self.amount_credited
+    #     return cur

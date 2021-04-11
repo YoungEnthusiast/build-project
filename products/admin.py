@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class UserOrderAdmin(admin.ModelAdmin):
-    list_display = ['order_Id', 'user', 'product', 'quantity', 'payment_Mode', 'total_Price', 'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
+    list_display = ['order_Id', 'user', 'product', 'quantity', 'payment_Mode',  'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
     search_fields = ['order_Id', 'user__username', 'product__type', 'quantity', 'payment_Mode', 'date_Ordered', 'last_Modified', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city']
     list_filter = ['product', 'payment_Mode', 'order_Status', 'payment_Status', 'state', 'city']
     list_display_links = ['order_Id', 'user', 'product']
@@ -21,7 +21,7 @@ class UserOrderAdmin(admin.ModelAdmin):
 admin.site.register(UserOrder, UserOrderAdmin)
 
 class VisitorOrderAdmin(admin.ModelAdmin):
-    list_display = ['order_Id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_Mode', 'total_Price', 'schedule_Delivery', 'order_Status', 'payment_Status', 'date_Ordered']
+    list_display = ['order_Id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_Mode', 'schedule_Delivery', 'order_Status', 'payment_Status', 'date_Ordered']
     search_fields = ['order_Id', 'name', 'email', 'state', 'city', 'address', 'product', 'quantity', 'payment_Mode', 'total_Price', 'date_Ordered', 'order_Status', 'state', 'city', 'payment_Status']
     list_filter = ['state', 'city', 'product', 'payment_Mode', 'order_Status', 'payment_Status', 'state', 'city']
     list_display_links = ['order_Id', 'name', 'email', 'product']

@@ -1,6 +1,8 @@
 from django import forms
 from .models import ProductCredit, UserOrder, VisitorOrder
 from django.forms.widgets import NumberInput
+from django.core.exceptions import ValidationError
+import datetime
 
 class UserOrderForm(forms.ModelForm):
     schedule_Delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
@@ -17,6 +19,12 @@ class UserOrderForm(forms.ModelForm):
                           (attrs={'placeholder':'Leave blank if you wish to use registered address'}),
                           required = False)
 
+    def clean_schedule_Delivery(self):
+       schedule_Delivery = self.cleaned_data.get('schedule_Delivery')
+       if schedule_Delivery < datetime.date.today() + datetime.timedelta(days=2):
+           raise ValidationError("You cannot schedule within less than 48 hours")
+       return schedule_Delivery
+
     class Meta:
         model = UserOrder
         fields = ['product', 'quantity', 'payment_Mode', 'schedule_Delivery', 'email', 'phone_Number', 'state', 'city', 'address']
@@ -26,14 +34,26 @@ class UserOrderForm(forms.ModelForm):
 
 class ProductCreditForm(forms.ModelForm):
     transaction_Date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
-                            required = False)
+                            required = True)
     class Meta:
         model = ProductCredit
         fields = ['amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']
 
-
 class VisitorOrderForm(forms.ModelForm):
     schedule_Delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+
+    def clean_state(self):
+        state = self.cleaned_data.get('state')
+        if state == "Select a State":
+            raise ValidationError("Please select a state from the dropdown")
+        return state
+
+    def clean_schedule_Delivery(self):
+        schedule_Delivery = self.cleaned_data.get('schedule_Delivery')
+        if schedule_Delivery < datetime.date.today() + datetime.timedelta(days=2):
+            raise ValidationError("You cannot schedule within less than 48 hours")
+        return schedule_Delivery
+
     class Meta:
         model = VisitorOrder
         fields = ['name', 'email', 'phone_Number', 'state', 'city', 'address', 'product', 'quantity', 'payment_Mode', 'schedule_Delivery']

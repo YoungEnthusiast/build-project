@@ -37,4 +37,5 @@ path('orders/checkout-many/pay/', views.updateWallet2),
 path('products/product/guest-pay/', views.guestPay, name='guest_pay'),
 path('visitor-pay/', views.visitorPay, name='visitor_pay'),
 path('orders/wallet-history/', views.showWallet, name='wallet_history'),
+path('st---only/', views.creditWallet, name='wallet_credit'),
 ]

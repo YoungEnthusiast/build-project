@@ -53,15 +53,27 @@
               </thead>
               <tbody>
               {% for wallet in wallets_page_obj %}
-                {% if wallet.amount_debited == None and wallet.amount_credited == None %}
-
+                {% if wallet.amount_credited == None %}
+                <tr class="table-warning">
+                  <td>{{wallet.date_recorded}}</td>
+                  <td><strong class="text-danger">-</strong>₦{{wallet.amount_debited|default_if_none:"---"|intcomma}}</td>
+                  <td>{{wallet.amount_credited|default_if_none:"---"|intcomma}}</td>
+                  <td>₦{{wallet.current_balance|default_if_none:"---"|intcomma}}</td>
+                </tr>
+                {% elif wallet.amount_debited == None %}
+                <tr class="table-warning">
+                  <td>{{wallet.date_recorded}}</td>
+                  <td>{{wallet.amount_debited|default_if_none:"---"|intcomma}}</td>
+                  <td><strong class="text-success">+</strong>₦{{wallet.amount_credited|default_if_none:"---"|intcomma}}</td>
+                  <td>₦{{wallet.current_balance|default_if_none:"---"|intcomma}}</td>
+                </tr>
                 {% else %}
-                  <tr class="table-warning">
-                    <td>{{wallet.date_recorded}}</td>
-                    <td>₦{{wallet.amount_debited|default_if_none:"---"|intcomma}}</td>
-                    <td>₦{{wallet.amount_credited|default_if_none:"---"|intcomma}}</td>
-                    <td>₦{{wallet.current_balance|default_if_none:"---"|intcomma}}</td>
-                  </tr>
+                <tr class="table-warning">
+                  <td>{{wallet.date_recorded}}</td>
+                  <td>₦{{wallet.amount_debited|default_if_none:"---"|intcomma}}</td>
+                  <td>₦{{wallet.amount_credited|default_if_none:"---"|intcomma}}</td>
+                  <td>₦{{wallet.current_balance|default_if_none:"---"|intcomma}}</td>
+                </tr>
                 {% endif %}
               {% endfor %}
               </tbody>
@@ -83,7 +95,7 @@
         </div>
       {% else %}
       <div class="container">
-        <h3>No wallet history yet</h3>
+        <h3>No wallet history found</h3>
       </div>
 
       {% endif %}
