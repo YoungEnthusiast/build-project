@@ -25,7 +25,7 @@
             class="nav-item mr-3"
           {% endif %}
         >
-          <a class="nav-link" href="{% url 'product' %}"><strong>QwikMaterials</strong></a>
+          <a class="nav-link" href="{% url 'products:product_list' %}"><strong>QwikMaterials</strong></a>
         </li>
         <li
           {% if 'xplore' in request.path %}
@@ -76,6 +76,17 @@
         >
           <a class="nav-link" href="{% url 'dashboard' %}"><strong>Dashboard</strong></a>
         </li>
+        <li class="nav-item mr-3">
+          {% with total_items=cart|length %}
+            {% if cart|length > 0 %}
+              <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
+                Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price }}
+              </a>
+            {% else %}
+                  <a class="nav-link text-white">Your cart is empty.</a>
+            {% endif %}
+          {% endwith %}
+        </li>
         <li
           {% if 'logout' in request.path %}
             class="nav-item active mr-3"
@@ -87,6 +98,17 @@
             <i class="fas fa-sign-out-alt text-dark"></i> <strong class="text-dark">Logout</strong></a></button>
         </li>
       {% else %}
+        <li class="nav-item mr-3">
+            {% with total_items=cart|length %}
+                {% if cart|length > 0 %}
+                    <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
+                      Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price }}
+                    </a>
+                {% else %}
+                    <a class="nav-link text-white">Your cart is empty.</a>
+                {% endif %}
+            {% endwith %}
+        </li>
         <li
           {% if 'account' in request.path %}
             class="nav-item active mr-3"
@@ -108,6 +130,14 @@
             <i class="fas fa-key"></i> <strong>Login</strong></a>
         </li>
       {% endif %}
+</body>
+</html>
+
+
+
+
+
+
       </ul>
 
     </div>

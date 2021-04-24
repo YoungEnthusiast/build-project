@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+  <title>Fill Info</title>
+{% endblock title %}
+
+{% block content %}
+<div class="form-group col-md-12 mt-2">
+  <div class="order-info">
+      <h3>Your order</h3>
+      <ul>
+          {% for item in cart %}
+              <li>{{ item.quantity }}x {{ item.product.type }} <span>₦{{ item.total_price }}</span></li>
+          {% endfor %}
+      </ul>
+      <p>Total: ₦{{ cart.get_total_price }}</p>
+  </div>
+    <br>
+    <form class="form-group col-md-4 text-warning" method="post" class="order-form">
+    {% include 'partials/_alerts.html' %}
+    <div class="card-header bg-primary text-warning">
+      <h4><i class="fas fa-"></i> Delivery Info</h4>
+    </div>
+    <br>
+    {% csrf_token %}
+    {{ guest_form|crispy }}
+    <p><input class="bg-warning form-group col-md-12" type="submit" value="Submit"></p>
+    </form>
+    <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
+
+{% endblock content %}

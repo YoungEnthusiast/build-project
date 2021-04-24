@@ -18,13 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-# from django.contrib.auth.decorators import login_required, permission_required
-
 urlpatterns = [
     path('a-m-n/', admin.site.urls),
     path('', include('home.urls')),
     path('', include('users.urls')),
-    path('', include('products.urls')),
+    path('', include(('products.urls', 'products'), namespace='products')),
+    path('cart', include(('cart.urls', 'cart'), namespace='cart')),
+    path('', include(('orders.urls', 'orders'), namespace='orders')),
     path('', include('xplorers.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

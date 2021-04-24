@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+  <title>Invoice Page</title>
+  <style type="text/css">
+  @media print {
+      #printbtn {
+          display : none;
+      }
+  }
+  </style>
+{% endblock title %}
+
+{% block content %}
+<br>
+{% if product_invoice.user == request.user %}
+<form class="d-flex justify-content-center">
+  <input id ="printbtn" type="button" class="btn btn-warning" value="Click to show print preview" onclick="window.print();" >
+</form> <br>
+
+<section>
+
+    <div class="card bg-primary text-light form-group col-md-12">
+      <div class="row">
+        <div class="col-md-5">
+
+        </div>
+        <div class="col-md-2">
+          <img src="{% static 'img/logo.png' %}" alt="BuildQwik Logo" width="50" height="150">
+        </div>
+        <div class="col-md-5">
+
+        </div>
+      </div>
+      <h5 class="d-flex justify-content-center"> <strong>BUILDQWIK TECHNOLOGY LIMITED</strong>  </h5>
+
+      <br>
+      <div class="bg-warning text-primary form-group col-md-12">
+        <h5>BILL TO:</h5>
+        <h6>Name: <strong>{{product_invoice.user.first_name}} {{product_invoice.user.last_name}}</strong></h6>
+        <h6>State: <strong>{{product_invoice.state}}</strong></h6>
+        <h6>City: <strong>{{product_invoice.city}}</strong></h6>
+        <h6>Address: <strong>{{product_invoice.address}}</strong></h6>
+      </div>
+      <h6 class="text-center">Order ID: <strong>{{product_invoice.order_Id}}</strong></h6>
+      <h6 class="text-center">Date Ordered: <strong>{{product_invoice.date_Ordered}}</strong></h6>
+      <div class="bg-light text-primary form-group col-md-12">
+          <table class="table table-binvoiceed">
+            <thead class="thead-dark">
+              <tr>
+                <th>DESCRIPTION</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order_item in order_items %}
+              <tr class="table-light">
+                <td>{{order_item.product}}</td>
+                <td>₦{{order_item.product.price}}</td>
+                <td>{{order_item.quantity}}</td>
+                <td>₦{{order_item.get_cost}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-md-8">
+
+            </div>
+            <div class="bg-warning text-primary form-group col-md-4">
+              <strong>TOTAL = ₦{{product_invoice.get_total_cost}}</strong>
+            </div>
+          </div>
+      </div>
+
+</section>
+{% else %}
+  <h2 class="text-center">Access Restricted</h2>
+  <br>
+{% endif %}
+{% endblock content%}

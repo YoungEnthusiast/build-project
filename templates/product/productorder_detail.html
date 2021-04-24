@@ -25,13 +25,16 @@
         <hr>
         <h3 class="text-center">ORDER ID: {{product_order.order_Id}}</h3>
         <hr>
+        {% for order_item in order_items %}
         <div class="cart-row">
-          <div style="flex:2"><img class="row-image" src="{{product_order.product.imageURL}}"></div>
-          <div style="flex:2"><p>{{product_order.product.type}}</p></div>
-          <div style="flex:1"><p>₦{{product_order.product.price}}</p></div>
-          <div style="flex:1"><p>x{{product_order.quantity}}</p></div>
+          <div style="flex:2"><img class="row-image" src="{{order_item.product.imageURL}}"></div>
+          <div style="flex:2"><p>{{order_item.product.type}}</p></div>
+          <div style="flex:1"><p>₦{{order_item.price}}</p></div>
+          <div style="flex:1"><p>x{{order_item.quantity}}</p></div>
+          <div style="flex:1"><p>= ₦{{order_item.get_cost}}</p></div>
         </div>
-        <h5>Total: ₦{{product_order.total_Price}}</h5>
+        {% endfor %}
+        <h5>Total: ₦{{product_order.get_total_cost}}</h5>
       </div>
     </div>
     <div class="col-lg-6">
@@ -44,7 +47,7 @@
             </div>
             <div class="form-group">
               <label for="amount">Amount</label>
-              <input required class="form-control" readonly type="tel" value="{{product_order.total_Price}}" id="amount" required />
+              <input required class="form-control" readonly type="tel" value="{{product_order.get_total_cost}}" id="amount" required />
             </div>
             <div class="form-group">
               <button id="form-button" class="btn btn-warning btn-block" type="submit" onclick="payWithPaystack()"> <strong>Pay with Card</strong> </button>

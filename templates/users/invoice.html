@@ -16,7 +16,7 @@
     <br>
   <a href="{% url 'edit_profile' %}"><i></i>Edit Profile</a>
   <a href="{% url 'orders' %}"><i></i>Orders History</a>
-  <a href="{% url 'fund' %}"><i class=""></i>Fund Wallet</a>
+  <a href="{% url 'products:fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
   <a href="#"><i></i><strong class="text-warning">Invoice</strong></a>
 </div>
@@ -48,15 +48,10 @@
                 <tr>
                   <th>DATE</th>
                   <th>ID</th>
-                  <th>PRODUCT</th>
-                  <th>TYPE</th>
-                  <th>PRICE</th>
-                  <th>QUANTITY</th>
                   <th>TOTAL</th>
                   <th>ORDER STATUS</th>
                   <th>PAYMENT STATUS</th>
                   <th></th>
-                  <th> <a class="text-warning" href="view/many">VIEW ALL SELECTED</a> </th>
                 </tr>
               </thead>
               <tbody>
@@ -65,85 +60,55 @@
                   <tr class="table-success">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
-                    <td><img class="row-image" src="{{product_invoice.product.imageURL}}"></td>
-                    <td>{{product_invoice.product.type}}</td>
-                    <td>₦{{product_invoice.product.price}}</td>
-                    <td>{{product_invoice.quantity}}</td>
-                    <td>₦{{product_invoice.total_Price}}</td>
+                    <td>₦{{product_invoice.get_total_cost}}</td>
                     <td>{{product_invoice.order_Status}}</td>
                     <td>{{product_invoice.payment_Status}}</td>
-                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View</strong></button></a></td>
-                    <td><a class="text-info " href="{% url 'deselect_invoice' product_invoice.id %}"><strong>Selected</strong></a></td>
+                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                   </tr>
                 {% elif product_invoice.order_Status == "Completed" %}
                   <tr class="table-success">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
-                    <td><img class="row-image" src="{{product_invoice.product.imageURL}}"></td>
-                    <td>{{product_invoice.product.type}}</td>
-                    <td>₦{{product_invoice.product.price}}</td>
-                    <td>{{product_invoice.quantity}}</td>
-                    <td>₦{{product_invoice.total_Price}}</td>
+                    <td>₦{{product_invoice.get_total_cost}}</td>
                     <td>{{product_invoice.order_Status}}</td>
                     <td>{{product_invoice.payment_Status}}</td>
-                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View</strong></button></a></td>
-                    <td><a class="text-info" href="{% url 'select_invoice' product_invoice.id %}"><strong>Click to select</strong></a></td>
+                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                   </tr>
                 {% elif product_invoice.order_Status == "Pending" and product_invoice.invoice_checked %}
                   <tr class="table-warning">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
-                    <td><img class="row-image" src="{{product_invoice.product.imageURL}}"></td>
-                    <td>{{product_invoice.product.type}}</td>
-                    <td>₦{{product_invoice.product.price}}</td>
-                    <td>{{product_invoice.quantity}}</td>
-                    <td>₦{{product_invoice.total_Price}}</td>
+                    <td>₦{{product_invoice.get_total_cost}}</td>
                     <td>{{product_invoice.order_Status}}</td>
                     <td>{{product_invoice.payment_Status}}</td>
-                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View</strong></button></a></td>
-                    <td><a class="text-info" href="{% url 'deselect_invoice' product_invoice.id %}"><strong>Selected</strong></a></td>
+                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                   </tr>
                   {% elif product_invoice.order_Status == "Pending" %}
                     <tr class="table-warning">
                       <td>{{product_invoice.date_Ordered}}</td>
                       <td>{{product_invoice.order_Id}}</td>
-                      <td><img class="row-image" src="{{product_invoice.product.imageURL}}"></td>
-                      <td>{{product_invoice.product.type}}</td>
-                      <td>₦{{product_invoice.product.price}}</td>
-                      <td>{{product_invoice.quantity}}</td>
-                      <td>₦{{product_invoice.total_Price}}</td>
+                      <td>₦{{product_invoice.get_total_cost}}</td>
                       <td>{{product_invoice.order_Status}}</td>
                       <td>{{product_invoice.payment_Status}}</td>
-                      <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View</strong></button></a></td>
-                      <td><a class="text-info" href="{% url 'select_invoice' product_invoice.id %}"><strong>Click to select</strong></a></td>
+                      <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                     </tr>
                 {% elif product_invoice.order_Status == "New" and product_invoice.invoice_checked %}
                   <tr class="table-danger">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
-                    <td><img class="row-image" src="{{product_invoice.product.imageURL}}"></td>
-                    <td>{{product_invoice.product.type}}</td>
-                    <td>₦{{product_invoice.product.price}}</td>
-                    <td>{{product_invoice.quantity}}</td>
-                    <td>₦{{product_invoice.total_Price}}</td>
+                    <td>₦{{product_invoice.get_total_cost}}</td>
                     <td>{{product_invoice.order_Status}}</td>
                     <td>{{product_invoice.payment_Status}}</td>
-                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View</strong></button></a></td>
-                    <td><a class="text-info" href="{% url 'deselect_invoice' product_invoice.id %}"><strong>Selected</strong></a></td>
+                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                   </tr>
                 {% elif product_invoice.order_Status == "New" %}
                   <tr class="table-danger">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
-                    <td><img class="row-image" src="{{product_invoice.product.imageURL}}"></td>
-                    <td>{{product_invoice.product.type}}</td>
-                    <td>₦{{product_invoice.product.price}}</td>
-                    <td>{{product_invoice.quantity}}</td>
-                    <td>₦{{product_invoice.total_Price}}</td>
+                    <td>₦{{product_invoice.get_total_cost}}</td>
                     <td>{{product_invoice.order_Status}}</td>
                     <td>{{product_invoice.payment_Status}}</td>
-                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View</strong></button></a></td>
-                    <td><a class="text-info" href="{% url 'select_invoice' product_invoice.id %}"><strong>Click to select</strong></a></td>
+                    <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                   </tr>
                 {% endif %}
               {% endfor %}

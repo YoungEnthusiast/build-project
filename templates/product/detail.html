@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  <title>{{ product.type }}</title>
+{% endblock title %}
+
+{% block content %}
+  <div class="product-detail ml-2 mt-2">
+    <img width="50" height="250" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+    <h3><a class="text-warning" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h3>
+    <h3>{{ product.type }}</h3>
+    <p class="price">₦{{ product.price }}</p>
+    <form action="{% url "cart:cart_add" product.id %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to cart">
+    </form>
+    {{ product.description|linebreaks }}
+  </div>
+  <br>
+  <br>
+{% endblock %}

@@ -8,9 +8,10 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, login
-from products.models import Product, UserOrder, VisitorOrder
+from orders.models import UserOrder, VisitorOrder, OrderItem, VisitorOrderItem
+from products.models import Product
 from products.filters import UserOrderFilter, UserOrderFilter2
-from products.forms import UserOrderForm
+from orders.forms import UserOrderForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import ProductCustomer, ProductWalletHistorie
@@ -27,6 +28,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
+
 
 def create(request):
     if request.method == "POST":
@@ -253,86 +255,90 @@ def deleteProductOrder(request, id):
     # def handler403(request, exception, template_name='403.html'):
     #     return render(request, '403.html')
 
-@login_required
-def selectProductOrder(request, id):
-    product_order = UserOrder.objects.get(id=id)
-    product_order.checkout_checked = True
-    product_order.save()
-    messages.success(request, "Order selected")
-    return redirect('orders')
-
-@login_required
-def deSelectProductOrder(request, id):
-    product_order = UserOrder.objects.get(id=id)
-    product_order.checkout_checked = False
-    product_order.save()
-    messages.success(request, "Order deselected")
-    return redirect('orders')
-
-@login_required
-def selectInvoice(request, id):
-    product_invoice = UserOrder.objects.get(id=id)
-    product_invoice.invoice_checked = True
-    product_invoice.save()
-    messages.success(request, "Invoice selected")
-    return redirect('invoices')
-
-@login_required
-def deSelectInvoice(request, id):
-    product_invoice = UserOrder.objects.get(id=id)
-    product_invoice.invoice_checked = False
-    product_invoice.save()
-    messages.success(request, "Invoice deselected")
-    return redirect('invoices')
+# @login_required
+# def selectProductOrder(request, id):
+#     product_order = UserOrder.objects.get(id=id)
+#     product_order.checkout_checked = True
+#     product_order.save()
+#     messages.success(request, "Order selected")
+#     return redirect('orders')
+#
+# @login_required
+# def deSelectProductOrder(request, id):
+#     product_order = UserOrder.objects.get(id=id)
+#     product_order.checkout_checked = False
+#     product_order.save()
+#     messages.success(request, "Order deselected")
+#     return redirect('orders')
+#
+# @login_required
+# def selectInvoice(request, id):
+#     product_invoice = UserOrder.objects.get(id=id)
+#     product_invoice.invoice_checked = True
+#     product_invoice.save()
+#     messages.success(request, "Invoice selected")
+#     return redirect('invoices')
+#
+# @login_required
+# def deSelectInvoice(request, id):
+#     product_invoice = UserOrder.objects.get(id=id)
+#     product_invoice.invoice_checked = False
+#     product_invoice.save()
+#     messages.success(request, "Invoice deselected")
+#     return redirect('invoices')
 
 @login_required
 def showProductOrder(request, pk, **kwargs):
     product_order = UserOrder.objects.get(id=pk)
-    context = {'product_order': product_order}
+    order_items = OrderItem.objects.filter(order__id=pk)
+
+    context = {'product_order': product_order, 'order_items': order_items}
     return render(request, 'product/productorder_detail.html', context)
 
 @login_required
 def showInvoice(request, pk, **kwargs):
     product_invoice = UserOrder.objects.get(id=pk)
-    context = {'product_invoice': product_invoice}
+    order_items = OrderItem.objects.filter(order__id=pk)
+
+    context = {'product_invoice': product_invoice, 'order_items': order_items}
     return render(request, 'users/invoice2.html', context)
 
-@login_required
-def showInvoiceMany(request):
-    the_user = UserOrder.objects.filter(user=request.user, invoice_checked=True)[0]
-    that = UserOrder.objects.filter(user=request.user, invoice_checked=True)
-    response_that = []
-    for each in that:
-        selected = UserOrder.objects.filter(user=request.user, invoice_checked=True)
-        tot = 0
-        for a_product in selected:
-            tot = tot + a_product.total_Price
-        response_that.append(each)
+# @login_required
+# def showInvoiceMany(request):
+#     the_user = UserOrder.objects.filter(user=request.user, invoice_checked=True)[0]
+#     that = UserOrder.objects.filter(user=request.user, invoice_checked=True)
+#     response_that = []
+#     for each in that:
+#         selected = UserOrder.objects.filter(user=request.user, invoice_checked=True)
+#         tot = 0
+#         for a_product in selected:
+#             tot = tot + a_product.total_Price
+#         response_that.append(each)
+#
+#     context = {'that': response_that, 'tot':tot, 'the_user': the_user}
+#     return render(request, 'users/invoice3.html', context)
 
-    context = {'that': response_that, 'tot':tot, 'the_user': the_user}
-    return render(request, 'users/invoice3.html', context)
-
-@login_required
-def showProductOrder2(request):
-    that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-    user = request.user
-    email = user.email
-    response_that = []
-    for each in that:
-        selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-        tot = 0
-        for a_product in selected:
-            tot = tot + a_product.total_Price
-        response_that.append(each)
-    return render(request, 'product/productorder_detail2.html', {'email': email, 'that': response_that, 'tot':tot})
+# @login_required
+# def showProductOrder2(request):
+#     that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
+#     user = request.user
+#     email = user.email
+#     response_that = []
+#     for each in that:
+#         selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
+#         tot = 0
+#         for a_product in selected:
+#             tot = tot + a_product.get_total_cost
+#         response_that.append(each)
+#     return render(request, 'product/productorder_detail2.html', {'email': email, 'that': response_that, 'tot':tot})
 
 @login_required
 def updateWallet(request, pk, **kwargs):
     try:
         product_order = UserOrder.objects.get(id=pk)
         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-        wallet.current_balance = wallet.current_balance - product_order.total_Price
-        wallet.amount_debited = product_order.total_Price
+        wallet.current_balance = wallet.current_balance - product_order.get_total_cost()
+        wallet.amount_debited = product_order.get_total_cost()
         if wallet.current_balance > 0:
             wallet_entry = ProductWalletHistorie()
             wallet_entry.user = wallet.user
@@ -353,51 +359,49 @@ def updateWallet(request, pk, **kwargs):
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
         return render(request, 'product/wallet.html')
 
-@login_required
-def updateWallet2(request):
-    try:
-        that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-        response_that = []
-        for each in that:
-            selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-            tot = 0
-            for a_product in selected:
-                tot = tot + a_product.total_Price
-        wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-        wallet.current_balance = wallet.current_balance - tot
-        wallet.amount_debited = tot
-        if wallet.current_balance > 0:
-            wallet_entry = ProductWalletHistorie()
-            wallet_entry.user = wallet.user
-            wallet_entry.amount_debited = wallet.amount_debited
-            wallet_entry.current_balance = wallet.current_balance
-            wallet_entry.last_tran = wallet_entry.amount_debited
-            wallet_entry.save()
-            messages.success(request, "Your payment has been made and your wallet updated")
-            for each2 in that:
-                each2.payment_Status = "Confirmed"
-                each2.checkout_checked = False
-                each2.save()
-            return redirect('orders')
-        else:
-            messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
-        response_that.append(each)
-        context = {'that': response_that, 'tot':tot, 'wallet': wallet}
-        return render(request, 'product/wallet.html', context)
-    except:
-        messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
-        return render(request, 'product/wallet.html')
+# @login_required
+# def updateWallet2(request):
+#     try:
+#         that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
+#         response_that = []
+#         for each in that:
+#             selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
+#             tot = 0
+#             for a_product in selected:
+#                 tot = tot + a_product.total_Price
+#         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
+#         wallet.current_balance = wallet.current_balance - tot
+#         wallet.amount_debited = tot
+#         if wallet.current_balance > 0:
+#             wallet_entry = ProductWalletHistorie()
+#             wallet_entry.user = wallet.user
+#             wallet_entry.amount_debited = wallet.amount_debited
+#             wallet_entry.current_balance = wallet.current_balance
+#             wallet_entry.last_tran = wallet_entry.amount_debited
+#             wallet_entry.save()
+#             messages.success(request, "Your payment has been made and your wallet updated")
+#             for each2 in that:
+#                 each2.payment_Status = "Confirmed"
+#                 each2.checkout_checked = False
+#                 each2.save()
+#             return redirect('orders')
+#         else:
+#             messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
+#         response_that.append(each)
+#         context = {'that': response_that, 'tot':tot, 'wallet': wallet}
+#         return render(request, 'product/wallet.html', context)
+#     except:
+#         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
+#         return render(request, 'product/wallet.html')
 
 def guestPay(request):
     visitor = VisitorOrder.objects.all()[0]
     order_Id = visitor.order_Id
-    imageURL = visitor.product.imageURL
-    type = visitor.product.type
-    price = visitor.product.price
-    quantity = visitor.quantity
+    id = visitor.id
+    order_items = VisitorOrderItem.objects.filter(order__id=id)
     email = visitor.email
-    total_Price = visitor.total_Price
-    context = {'order_Id': order_Id, 'imageURL': imageURL, 'type': type, 'price': price, 'quantity': quantity, 'email': email, 'total_Price': total_Price}
+    total_Price = visitor.get_total_cost()
+    context = {'order_Id': order_Id,  'email': email, 'total_Price': total_Price, 'order_items': order_items}
     return render(request, 'product/productorder_guest.html', context)
 
 def visitorPay(request):

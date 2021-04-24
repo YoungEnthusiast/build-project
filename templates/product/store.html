@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Products' Store</title>
+  <title>{% if category %}{{ category.type }}{% else %}Products{% endif %}</title>
 {% endblock title %}
 
 {% block content %}
@@ -31,68 +31,55 @@
       helps you to deliver that project on schedule and within budget.
       Make your order and schedule delivery.
     </p>
-    <div class="row text-center">
-      {% for product in products %}
-      <div class="col-md-4">
-        <img class="img-responsive"  src="">
-        <div class="box-element product">
-          <h6><strong>{{product.type}}</strong></h6>
-          <hr>
-          <h5>Price as of {{product.date}}</h5> <h5><strong>₦{{product.price}}</strong></h5>
-          {% if user.is_authenticated %}
-            <button data-product="{{product.id}}" data-action="add" class="btn btn-warning" data-toggle="modal" data-target="#registered"><strong class="text-dark">Place Order</strong></button>
-            <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
-          {% else %}
-            <button class="btn btn-warning" data-toggle="modal" data-target="#guest"><strong class="text-dark">Place Order</strong></button>
-            <a class="btn btn-outline-warning" href="#"><strong>Calculator</strong></a>
-          {% endif %}
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="modal fade" id="registered" role="dialog">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h4 class="modal-title text-warning" id="inquiryModalLabel"><i class="fas fa-cart-arrow-down"></i> Place Order as Registered User</h4>
-                  <button type="button" class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                <form method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  {{form|crispy}}
-                  <hr>
-                  <input type="submit" value="Confirm" class="btn btn-block btn-warning">
-                </form>
-              </div>
-          </div>
-      </div>
-  </div>
-  <br>
 
-  <div class="modal fade" id="guest" role="dialog">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h4 class="modal-title text-warning" id="inquiryModalLabel"><i class="fas fa-cart-arrow-down"></i> Place Order as a Guest</h4>
-                  <button type="button" class="close" data-dismiss="modal">
-                      <span>&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{guest_form|crispy}}
-                    <hr>
-                    <input type="submit" value="Confirm" class="btn btn-block btn-warning">
-                  </form>
-              </div>
-          </div>
-      </div>
   </div>
 </section>
+<section>
+  <div class="container">
+    <div id="sidebar">
+      <ul>
+        <li {% if not category %}class="selected"{% endif %}>
+          <a href="{% url "products:product_list" %}"><strong class="text-warning">All QwikMaterials</strong></a>
+        </li>
+      {% for c in categories %}
+        <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+          <a href="{{ c.get_absolute_url }}"><strong class="text-warning">{{ c.type }}</strong></a>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+    <h3 class="text-center text-warning">{% if category %}{{ category.type }}{% else %}All QwikMaterials{% endif %}</h3>
+    <br>
+    <div class="row text-center">
+      {% if products %}
+        {% for product in products %}
 
+        <div class="col-md-4">
+          <a href="{{ product.get_absolute_url }}">
+            <img width="50" height="250" class="img-responsive" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+          </a>
+          <div class="box-element product">
+            <a href="{{ product.get_absolute_url }}"><strong class="text-warning">{{ product.type }}</strong></a><br>
+            <hr>
+            <h6>Price as of {{product.date}}</h6> <h6>₦{{product.price}}</h6>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-md-12">
+          <h2>No Products Available Yet!</h2>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      {% endif %}
+    </div>
+  </div>
+</section>
 {% endblock content %}
