@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import OrderItem, UserOrder, VisitorOrder, VisitorOrderItem
 from django.contrib import messages
-#from .forms import OrderCreateForm
+from django.core.mail import send_mail
 from .forms import UserOrderForm, VisitorOrderForm
 from cart.cart import Cart
 import random
@@ -32,11 +32,18 @@ def order_create(request):
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])
-            # clear the cart
             cart.clear()
-            # launch asynchronous task
-            #order_created.delay(order.id)
-            # email message here
+            customer = ProductCustomer.objects.get(user=request.user)
+            first_name = customer.user.first_name
+            last_name = customer.user.last_name
+            email = guest_form.cleaned_data.get('email')
+            send_mail(
+                'Registered User [' + str(first_name) + ' ' + str(last_name) + ']',
+                'Dear ' + str(first_name) + ', your order has been received. Remember you can always log in and checkout to pay from your dashboard',
+                'admin@buildqwik.ng',
+                [email, 'support@buildqwik.ng'],
+                fail_silently=False
+            )
             messages.success(request, "Order completed! You can checkout below")
             return redirect('orders')
         else:
@@ -60,20 +67,17 @@ def order_visitor(request):
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])
-            # clear the cart
+
             cart.clear()
-
-
             name = guest_form.cleaned_data.get('first_Name')
             email = guest_form.cleaned_data.get('email')
-
-            # send_mail(
-            # 	'Guest Order [' + str(name) + ']',
-            # 	'Dear ' + str(name) + ', your order has been received. The ORDER ID is: ' + visitor.order_Id + '. If you have not paid you can follow this link www.buildqwik.ng/visitor-pay/ to do so',
-            # 	'support@buildqwik.ng',
-            # 	[email, 'support@buildqwik.ng'],
-            # 	fail_silently=False
-            # )
+            send_mail(
+            	'Guest Order [' + str(name) + ']',
+            	'Dear ' + str(name) + ', your order has been received. The ORDER ID is: ' + visitor.order_Id + '. If you have not paid you can follow this link www.buildqwik.ng/visitor-pay/ to do so',
+            	'admin@buildqwik.ng',
+            	[email, 'support@buildqwik.ng'],
+            	fail_silently=False
+            )
             messages.success(request, "Your order has been placed! Please make payment below")
             return redirect('guest_pay')
         else:

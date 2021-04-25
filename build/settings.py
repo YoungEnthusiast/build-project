@@ -173,11 +173,11 @@ MESSAGE_TAGS = {
 
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'support@buildqwik.ng'
-EMAIL_HOST_PASSWORD = 'BuildAdmin7236;'
+EMAIL_HOST_USER = 'admin@buildqwik.ng'
+EMAIL_HOST_PASSWORD = 'BuildAdmin7236!'
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = 'BuildQwik Tech. Ltd. <support@buildqwik.ng>'
+DEFAULT_FROM_EMAIL = 'BuildQwik Tech. Ltd. <admin@buildqwik.ng>'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'yustaoab@gmail.com'

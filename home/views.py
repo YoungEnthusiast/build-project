@@ -43,7 +43,7 @@ def showContact(request):
             send_mail(
                 'Contact BuildQwik',
                 'A message was sent by ' + name + '. Please log in to admin panel to read message',
-                'support@buildqwik.ng',
+                'admin@buildqwik.ng',
                 [email, 'support@buildqwik.ng'],
                 fail_silently=False
             )

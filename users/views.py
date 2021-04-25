@@ -163,7 +163,7 @@ def changePassword(request):
             send_mail(
                 'Password Changed!',
                 'Dear ' + str(name) + ', your password has just been changed. If this activity was not carried out by you, please reply to this email',
-                'support@buildqwik.ng',
+                'admin@buildqwik.ng',
                 [email],
                 fail_silently=False
             )
@@ -252,40 +252,6 @@ def deleteProductOrder(request, id):
         return redirect('orders')
     context = {'product_order': product_order}
     return render(request, 'product/productorder_confirm_delete.html', context)
-    # def handler403(request, exception, template_name='403.html'):
-    #     return render(request, '403.html')
-
-# @login_required
-# def selectProductOrder(request, id):
-#     product_order = UserOrder.objects.get(id=id)
-#     product_order.checkout_checked = True
-#     product_order.save()
-#     messages.success(request, "Order selected")
-#     return redirect('orders')
-#
-# @login_required
-# def deSelectProductOrder(request, id):
-#     product_order = UserOrder.objects.get(id=id)
-#     product_order.checkout_checked = False
-#     product_order.save()
-#     messages.success(request, "Order deselected")
-#     return redirect('orders')
-#
-# @login_required
-# def selectInvoice(request, id):
-#     product_invoice = UserOrder.objects.get(id=id)
-#     product_invoice.invoice_checked = True
-#     product_invoice.save()
-#     messages.success(request, "Invoice selected")
-#     return redirect('invoices')
-#
-# @login_required
-# def deSelectInvoice(request, id):
-#     product_invoice = UserOrder.objects.get(id=id)
-#     product_invoice.invoice_checked = False
-#     product_invoice.save()
-#     messages.success(request, "Invoice deselected")
-#     return redirect('invoices')
 
 @login_required
 def showProductOrder(request, pk, **kwargs):
@@ -302,35 +268,6 @@ def showInvoice(request, pk, **kwargs):
 
     context = {'product_invoice': product_invoice, 'order_items': order_items}
     return render(request, 'users/invoice2.html', context)
-
-# @login_required
-# def showInvoiceMany(request):
-#     the_user = UserOrder.objects.filter(user=request.user, invoice_checked=True)[0]
-#     that = UserOrder.objects.filter(user=request.user, invoice_checked=True)
-#     response_that = []
-#     for each in that:
-#         selected = UserOrder.objects.filter(user=request.user, invoice_checked=True)
-#         tot = 0
-#         for a_product in selected:
-#             tot = tot + a_product.total_Price
-#         response_that.append(each)
-#
-#     context = {'that': response_that, 'tot':tot, 'the_user': the_user}
-#     return render(request, 'users/invoice3.html', context)
-
-# @login_required
-# def showProductOrder2(request):
-#     that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-#     user = request.user
-#     email = user.email
-#     response_that = []
-#     for each in that:
-#         selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-#         tot = 0
-#         for a_product in selected:
-#             tot = tot + a_product.get_total_cost
-#         response_that.append(each)
-#     return render(request, 'product/productorder_detail2.html', {'email': email, 'that': response_that, 'tot':tot})
 
 @login_required
 def updateWallet(request, pk, **kwargs):
@@ -358,41 +295,6 @@ def updateWallet(request, pk, **kwargs):
     except:
         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
         return render(request, 'product/wallet.html')
-
-# @login_required
-# def updateWallet2(request):
-#     try:
-#         that = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-#         response_that = []
-#         for each in that:
-#             selected = UserOrder.objects.filter(user=request.user, checkout_checked=True)
-#             tot = 0
-#             for a_product in selected:
-#                 tot = tot + a_product.total_Price
-#         wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-#         wallet.current_balance = wallet.current_balance - tot
-#         wallet.amount_debited = tot
-#         if wallet.current_balance > 0:
-#             wallet_entry = ProductWalletHistorie()
-#             wallet_entry.user = wallet.user
-#             wallet_entry.amount_debited = wallet.amount_debited
-#             wallet_entry.current_balance = wallet.current_balance
-#             wallet_entry.last_tran = wallet_entry.amount_debited
-#             wallet_entry.save()
-#             messages.success(request, "Your payment has been made and your wallet updated")
-#             for each2 in that:
-#                 each2.payment_Status = "Confirmed"
-#                 each2.checkout_checked = False
-#                 each2.save()
-#             return redirect('orders')
-#         else:
-#             messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
-#         response_that.append(each)
-#         context = {'that': response_that, 'tot':tot, 'wallet': wallet}
-#         return render(request, 'product/wallet.html', context)
-#     except:
-#         messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
-#         return render(request, 'product/wallet.html')
 
 def guestPay(request):
     visitor = VisitorOrder.objects.all()[0]
@@ -442,7 +344,7 @@ def creditWallet(request):
                 send_mail(
                     'Wallet Credit Confirmed',
                     'Dear ' + str(name) + ', Your wallet balance has been topped up',
-                    'support@buildqwik.ng',
+                    'admin@buildqwik.ng',
     				[email],
                     fail_silently=False
                 )
@@ -456,7 +358,7 @@ def creditWallet(request):
                 send_mail(
                     'Wallet Credit Confirmed',
                     'Dear ' + str(name) + ', Your wallet balance has been topped up',
-                    'support@buildqwik.ng',
+                    'admin@buildqwik.ng',
     				[email],
                     fail_silently=False
                 )
