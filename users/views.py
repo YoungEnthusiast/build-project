@@ -29,7 +29,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 
-
 def create(request):
     if request.method == "POST":
         form = CustomRegisterForm(request.POST)
