@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from .forms import UserOrderForm, VisitorOrderForm
 from cart.cart import Cart
 import random
+from users.models import ProductCustomer
 
 def order_create(request):
     cart = Cart(request)
@@ -36,7 +37,7 @@ def order_create(request):
             customer = ProductCustomer.objects.get(user=request.user)
             first_name = customer.user.first_name
             last_name = customer.user.last_name
-            email = guest_form.cleaned_data.get('email')
+            email = form.cleaned_data.get('email')
             send_mail(
                 'Registered User [' + str(first_name) + ' ' + str(last_name) + ']',
                 'Dear ' + str(first_name) + ', your order has been received. Remember you can always log in and checkout to pay from your dashboard',
