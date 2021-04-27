@@ -4220,6 +4220,7 @@ button.close {
   margin-left: 15%;
   list-style: none; }
   .carousel-indicators li {
+    visibility: hidden;;
     position: relative;
     flex: 0 1 auto;
     width: 30px;
@@ -4258,6 +4259,18 @@ button.close {
   padding-bottom: 20px;
   color: #fff;
   text-align: center; }
+
+  .carousel-caption-top {
+    position: absolute;
+    right: 15%;
+    top: 40px;
+    bottom: 20px;
+    left: 15%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center; }
 
 .align-baseline {
   vertical-align: baseline !important; }
