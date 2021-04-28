@@ -2,12 +2,12 @@ from django.contrib import admin
 from .models import *
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['type', 'slug']
+    list_display = ['type']
     prepopulated_fields = {'slug': ('type',)}
 admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['type', 'slug', 'category', 'price', 'image', 'date', 'created', 'updated']
+    list_display = ['type', 'category', 'price', 'image', 'date', 'created', 'updated']
     search_fields = ['type', 'price', 'date']
     list_filter = ['type', 'created', 'updated', 'category']
     list_display_links = ['type', 'image']
