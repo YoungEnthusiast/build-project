@@ -7,11 +7,11 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['type', 'slug', 'category', 'price', 'image', 'date', 'stock', 'available', 'created', 'updated']
+    list_display = ['type', 'slug', 'category', 'price', 'image', 'date', 'created', 'updated']
     search_fields = ['type', 'price', 'date']
-    list_filter = ['type', 'available', 'created', 'updated', 'category']
+    list_filter = ['type', 'created', 'updated', 'category']
     list_display_links = ['type', 'image']
-    list_editable = ['price', 'stock', 'available']
+    list_editable = ['price']
     prepopulated_fields = {'slug': ('type',)}
     list_per_page = 10
 

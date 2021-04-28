@@ -22,18 +22,14 @@ class Product(models.Model):
 	price = models.DecimalField(max_digits=11, decimal_places=2)
 	date = models.DateField(null=True)
 	image = models.ImageField(upload_to='products_img/%Y/%m/%d', null=True, blank=True)
-	#Starts here
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products')
 	slug = models.SlugField(max_length=200, db_index=True, null=True)
 	description = models.TextField(blank=True)
-	stock = models.PositiveIntegerField(null=True)
-	available = models.BooleanField(default=True)
 	created = models.DateTimeField(auto_now_add=True, null=True)
 	updated = models.DateTimeField(auto_now=True)
 
 	class Meta:
 		ordering = ('type',)
-		#added
 		index_together = (('id', 'slug'),)
 	def __str__(self):
 		return str(self.type)

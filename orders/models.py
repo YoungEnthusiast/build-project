@@ -64,7 +64,11 @@ class OrderItem(models.Model):
         return '{}'.format(self.id)
 
     def get_cost(self):
-        return self.price * self.quantity
+        if self.price == None:
+            pass
+        else:
+            return self.price * self.quantity
+
 
 class VisitorOrder(models.Model):
     PAYMENT_CHOICES = [
@@ -129,4 +133,7 @@ class VisitorOrderItem(models.Model):
         return '{}'.format(self.id)
 
     def get_cost(self):
-        return self.price * self.quantity
+        if self.price == None:
+            pass
+        else:
+            return self.price * self.quantity

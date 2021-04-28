@@ -1,10 +1,16 @@
 from django.contrib import admin
 from .models import UserOrder, OrderItem, VisitorOrder, VisitorOrderItem
 
-
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
+    readonly_fields = ['product', 'price', 'quantity', 'get_cost']
+    fields = ['product', 'price', 'quantity', 'get_cost']
     raw_id_fields = ['product']
+
+# class OrderItemAdmin(admin.ModelAdmin):
+#     list_display = ['order', 'product', 'price', 'quantity', 'get_cost']
+#
+# admin.site.register(OrderItem, OrderItemAdmin)
 
 class UserOrderAdmin(admin.ModelAdmin):
     list_display = ['order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
@@ -18,6 +24,8 @@ admin.site.register(UserOrder, UserOrderAdmin)
 
 class VisitorOrderItemInline(admin.TabularInline):
     model = VisitorOrderItem
+    readonly_fields = ['product', 'price', 'quantity', 'get_cost']
+    fields = ['product', 'price', 'quantity', 'get_cost']
     raw_id_fields = ['product']
 
 class VisitorOrderAdmin(admin.ModelAdmin):
