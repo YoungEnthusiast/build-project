@@ -65,6 +65,7 @@ class Full(models.Model):
     image = models.ImageField(upload_to='adverts_full/%Y/%m/%d', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    expiry = models.DateField(null=True)
 
     def __str__(self):
         return str(self.owner)
@@ -77,6 +78,7 @@ class ThreeQuarter(models.Model):
     image = models.ImageField(upload_to='adverts_three_quarters/%Y/%m/%d', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    expiry = models.DateField(null=True)
 
     def __str__(self):
         return str(self.owner)
@@ -89,6 +91,7 @@ class OneQuarter(models.Model):
     image = models.ImageField(upload_to='adverts_one_quarter/%Y/%m/%d', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    expiry = models.DateField(null=True)
 
     def __str__(self):
         return str(self.owner)

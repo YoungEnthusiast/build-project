@@ -25,7 +25,8 @@ class Advert(models.Model):
     image = models.ImageField(upload_to='adverts_home/%Y/%m/%d', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
+    expiry = models.DateField(null=True)
+    
     def __str__(self):
         return str(self.owner)
 

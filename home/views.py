@@ -8,9 +8,10 @@ from .forms import ContactForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.core.mail import send_mail
+from datetime import date
 
 def showHome(request):
-    adverts = Advert.objects.all()
+    adverts = Advert.objects.filter(expiry__gte=date.today())
     context = {'adverts': adverts}
     return render(request, 'home/home.html', context)
 

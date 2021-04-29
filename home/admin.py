@@ -13,7 +13,7 @@ class ContactAdmin(admin.ModelAdmin):
 admin.site.register(Contact, ContactAdmin)
 
 class AdvertAdmin(admin.ModelAdmin):
-    list_display = ['owner', 'image', 'created', 'updated']
+    list_display = ['owner', 'image', 'created', 'updated', 'expiry']
     search_fields = ['owner', 'created', 'updated']
     list_filter = []
     list_display_links = ['owner', 'image']
