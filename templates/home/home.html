@@ -303,7 +303,7 @@
         <div class="carousel-inner">
           {% for img in adverts %}
           <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}" data-interval="100">
-            <img class="d-block w-100 h-30" src="{{img.image.url}}" height="400" alt="Slide">
+            <img class="d-block w-100 h-30" src="{{img.image.url}}" height="400" alt="{{img.owner}}">
           </div>
           {% endfor %}
         </div>
