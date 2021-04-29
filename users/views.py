@@ -344,7 +344,7 @@ def creditWallet(request):
                     'Wallet Credit Confirmed',
                     'Dear ' + str(name) + ', Your wallet balance has been topped up',
                     'admin@buildqwik.ng',
-    				[email],
+    				[email, 'payment@buildqwik.ng'],
                     fail_silently=False
                 )
                 messages.success(request, str(name) + "'s wallet balance has been topped up and email notification sent to him")

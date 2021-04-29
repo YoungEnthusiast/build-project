@@ -4,11 +4,10 @@ from orders.models import VisitorOrder, UserOrder
 from .forms import ProductCreditForm
 from orders.forms import VisitorOrderForm, UserOrderForm
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from users.models import ProductCustomer
 import random
-
 from cart.forms import CartAddProductForm
 
 def product_list(request, category_slug=None):
@@ -21,7 +20,6 @@ def product_list(request, category_slug=None):
     return render(request, 'product/store.html', {'category': category,
                                                       'categories': categories,
                                                       'products': products})
-
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug)

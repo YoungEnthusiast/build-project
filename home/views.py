@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from .filters import ContactFilter
-from  .models import Contact
+from  .models import Contact, Advert
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from .forms import ContactForm
@@ -10,7 +10,9 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 def showHome(request):
-    return render(request, 'home/home.html')
+    adverts = Advert.objects.all()
+    context = {'adverts': adverts}
+    return render(request, 'home/home.html', context)
 
 def showAbout(request):
     return render(request, 'home/about.html')
@@ -44,13 +46,10 @@ def showContact(request):
                 'Contact BuildQwik',
                 'A message was sent by ' + name + '. Please log in to admin panel to read message',
                 'admin@buildqwik.ng',
-                [email, 'support@buildqwik.ng'],
+                [email, 'hello@buildqwik.ng'],
                 fail_silently=False
             )
             messages.success(request, str(name) + ", your message will receive attention shortly")
         else:
             return redirect('contact')
     return render(request, 'home/contact_form.html', {'form': form})
-
-def showXplore(request):
-    return render(request, 'home/xplore.html')

@@ -60,6 +60,42 @@ class XploreCustomer(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.pk})
 
+class Full(models.Model):
+    owner = models.CharField(max_length=30, null=True)
+    image = models.ImageField(upload_to='adverts_full/%Y/%m/%d', null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.owner)
+
+    class Meta:
+        ordering = ('owner',)
+
+class ThreeQuarter(models.Model):
+    owner = models.CharField(max_length=30, null=True)
+    image = models.ImageField(upload_to='adverts_three_quarters/%Y/%m/%d', null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.owner)
+
+    class Meta:
+        ordering = ('owner',)
+
+class OneQuarter(models.Model):
+    owner = models.CharField(max_length=30, null=True)
+    image = models.ImageField(upload_to='adverts_one_quarter/%Y/%m/%d', null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.owner)
+
+    class Meta:
+        ordering = ('owner',)
+
 # class ProductWalletHistorie(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 #     amount_debited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)

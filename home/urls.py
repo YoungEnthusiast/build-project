@@ -3,7 +3,6 @@ from home import views
 
 urlpatterns = [
     path('', views.showHome, name='index'),
-    path('about-buildqwik/', views.showAbout, name='about'),
-    path('contact-us/', views.showContact, name='contact'),
-    path('xplore/', views.showXplore, name='xplore'),
+    path('about-buildqwik', views.showAbout, name='about'),
+    path('contact-us', views.showContact, name='contact'),
 ]

@@ -8,7 +8,6 @@ class Contact(models.Model):
         ('Pending', 'Pending')
     ]
     name = models.CharField(max_length=40, blank=True, null=True)
-    #user_name = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     email = models.EmailField(null=True)
     phone_Number = models.CharField(max_length=20, blank=True, null=True)
     message = models.TextField(max_length=1000, null=True)
@@ -20,3 +19,15 @@ class Contact(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+class Advert(models.Model):
+    owner = models.CharField(max_length=30, null=True)
+    image = models.ImageField(upload_to='adverts_home/%Y/%m/%d', null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.owner)
+
+    class Meta:
+        ordering = ('owner',)

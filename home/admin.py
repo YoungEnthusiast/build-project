@@ -11,3 +11,12 @@ class ContactAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 admin.site.register(Contact, ContactAdmin)
+
+class AdvertAdmin(admin.ModelAdmin):
+    list_display = ['owner', 'image', 'created', 'updated']
+    search_fields = ['owner', 'created', 'updated']
+    list_filter = []
+    list_display_links = ['owner', 'image']
+    list_per_page = 10
+
+admin.site.register(Advert, AdvertAdmin)
