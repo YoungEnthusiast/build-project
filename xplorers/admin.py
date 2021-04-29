@@ -12,7 +12,7 @@ class XploreCustomerAdmin(admin.ModelAdmin):
 admin.site.register(XploreCustomer, XploreCustomerAdmin)
 
 class FullAdmin(admin.ModelAdmin):
-    list_display = ['owner', 'image', 'created', 'updated']
+    list_display = ['owner', 'image', 'created', 'updated', 'expiry']
     search_fields = ['owner', 'created', 'updated']
     list_filter = []
     list_display_links = ['owner', 'image']
@@ -21,7 +21,7 @@ class FullAdmin(admin.ModelAdmin):
 admin.site.register(Full, FullAdmin)
 
 class ThreeQuarterAdmin(admin.ModelAdmin):
-    list_display = ['owner', 'image', 'created', 'updated']
+    list_display = ['owner', 'image', 'created', 'updated', 'expiry']
     search_fields = ['owner', 'created', 'updated']
     list_filter = []
     list_display_links = ['owner', 'image']
@@ -30,7 +30,7 @@ class ThreeQuarterAdmin(admin.ModelAdmin):
 admin.site.register(ThreeQuarter, ThreeQuarterAdmin)
 
 class OneQuarterAdmin(admin.ModelAdmin):
-    list_display = ['owner', 'image', 'created', 'updated']
+    list_display = ['owner', 'image', 'created', 'updated', 'expiry']
     search_fields = ['owner', 'created', 'updated']
     list_filter = []
     list_display_links = ['owner', 'image']
