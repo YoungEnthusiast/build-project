@@ -2,11 +2,21 @@
 {% load static %}
 
 {% block branding %}
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-196052515-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-196052515-1');
+  </script>
+
   <h1 id="head">
     <img src="{% static 'img/logo.png' %}" width="50" height="60" class="logo" alt="BuildQwik">  <strong>BuildQwik Admin Area</strong>
   </h1>
 
-  
+
 {% endblock %}
 
 {% block extrastyle %}
