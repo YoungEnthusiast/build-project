@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Xplore</title>
+{% endblock title %}
+
+{% block content %}
+<section class="py-0 bg-primary">
+  <div class="col-md-12">
+  {% include 'partials/_alerts.html' %}
+  <br>
+    <h5 class=""><strong ><span class="text-warning">Return Policy</span></strong></h5>
+    <p class="lead text-light">
+      QwikMaterials are directly sourced from the manufacturer and are of the best available quality.
+      BuildQwik ensures that QwikMaterials that are delivered to customers passed BuildQwik
+      Quality Assurance Test and are lacking in defect.
+    </p>
+    <p class="lead text-light">
+      It is your sole responsibility to ensure that you only take delivery of material(s) lacking in defect
+      or damage. BuildQwik delivery agents are well trained to properly handle and convey material(s)
+      with utmost care, in their perfect form and state to the point of delivering it to you. Hence, your
+      QwikMaterials are prevented from incurring any defect or damage in transit.
+    </p>
+    <p class="lead text-light">
+      At the point of delivery, any and all defective material(s) shall be returned by the BuildQwik
+      delivery agent, the material(s) shall be replaced and delivered at no extra cost or a full refund
+      equivalent to the defective material(s) given and credited to the paying customer.
+    </p>
+    <p class="lead text-light">
+      BuildQwik shall not be liable for any defect or damage that results or discovers after possession
+      of materials has been taken. Hence, material(s) for which possession has been taken cannot be
+      returned nor replaced nor refunded.
+    </p>
+    <p class="lead text-light">
+      This return policy is subject to the BuildQwik Terms and Conditions of sale.
+    </p>
+  <div>
+
+</section>
+
+
+{% endblock content %}

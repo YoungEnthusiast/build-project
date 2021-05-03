@@ -15,6 +15,12 @@ def showHome(request):
     context = {'adverts': adverts}
     return render(request, 'home/home.html', context)
 
+def showTerms(request):
+    return render(request, 'home/terms.html')
+
+def showReturn(request):
+    return render(request, 'home/return.html')
+
 def showAbout(request):
     return render(request, 'home/about.html')
 
