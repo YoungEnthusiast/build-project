@@ -3,4 +3,6 @@ from xplorers import views
 
 urlpatterns = [
 path('xplore', views.showXplore, name='xplore'),
+path('xplordash', views.showXploreDashboard, name='xplore-dashboard'),
+
 ]

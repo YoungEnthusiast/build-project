@@ -56,7 +56,7 @@ def create(request):
                     'token': account_activation_token.make_token(user),
                 })
                 user.email_user(subject, message)
-                messages.success(request, ('Please login to your email, you have been sent a message for your email verification.'))
+                messages.success(request, ('Please login to your email, you have been sent a message for email verification.'))
                 return redirect('login')
             else:
                 messages.error(request, "Please ensure you pass reCAPTCHA so as to ascertain that you are human")
@@ -74,16 +74,15 @@ def create(request):
 #             user.save()
 #             current_site = get_current_site(request)
 #             subject = 'Activate Your BuildQwik Account'
-#             message = render_to_string('users/account_activation_email.html', {
+#             message = render_to_string('users/account_activation_email0.html', {
 #                 'user': user,
 #                 'domain': current_site.domain,
 #                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
 #                 'token': account_activation_token.make_token(user),
 #             })
 #             user.email_user(subject, message)
-#             messages.success(request, ('Please login to your email, you have been sent a message for your email verification.'))
+#             messages.success(request, ('Please login to your email, you have been sent a message for email verification.'))
 #             return redirect('login')
-#             #return redirect('edit_profile')
 #         else:
 #             messages.error(request, 'A user with the supplied username or email already exists')
 #         return redirect('account')
@@ -143,7 +142,7 @@ def editProfile(request, **kwargs):
             messages.success(request, "Your profile has been modified successfully")
             return redirect('edit_profile')
         else:
-            messages.error(request, "Error updating your profile")
+            messages.error(request, "Error: Please review form input fields below")
     else:
         form = ProfileEditForm(instance=request.user)
         customer_form = ProductCustomerEditForm(instance=request.user.productcustomer)
@@ -192,11 +191,6 @@ def showDashboard(request):
     context = {'new': new, 'pending': pending, 'completed': completed,
                 'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
     return render(request, 'users/dashboard.html', context)
-
-@login_required
-def showXploreDashboard(request):
-
-    return render(request, 'xplorers/xplore_dashboard.html')#, context)
 
 @login_required
 def showOrders(request):
@@ -256,7 +250,6 @@ def deleteProductOrder(request, id):
 def showProductOrder(request, pk, **kwargs):
     product_order = UserOrder.objects.get(id=pk)
     order_items = OrderItem.objects.filter(order__id=pk)
-
     context = {'product_order': product_order, 'order_items': order_items}
     return render(request, 'product/productorder_detail.html', context)
 
@@ -264,7 +257,6 @@ def showProductOrder(request, pk, **kwargs):
 def showInvoice(request, pk, **kwargs):
     product_invoice = UserOrder.objects.get(id=pk)
     order_items = OrderItem.objects.filter(order__id=pk)
-
     context = {'product_invoice': product_invoice, 'order_items': order_items}
     return render(request, 'users/invoice2.html', context)
 

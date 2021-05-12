@@ -60,36 +60,14 @@
               </thead>
               <tbody>
               {% for product_order in productorders_page_obj %}
-                {% if product_order.order_Status == "Completed" and product_order.checkout_checked and product_order.payment_Status == "Unconfirmed" %}
+                {% if product_order.order_Status == "Completed" and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-success">
                     <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
-                    <td><s>Delete Order</s></td>
-                    <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
-                  </tr>
-                {% elif product_order.order_Status == "Completed" and product_order.checkout_checked and product_order.payment_Status == "Confirmed" %}
-                  <tr class="table-success">
-                    <td>{{product_order.date_Ordered}}</td>
-                    <td>{{product_order.order_Id}}</td>
-                    <td>₦{{product_order.get_total_cost}}</td>
-                    <td>{{product_order.order_Status}}</td>
-                    <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
-                    <td><s>Delete Order</s></td>
-                    <td><s>Checkout</s></td>
-                  </tr>
-                {% elif product_order.order_Status == "Completed" and product_order.payment_Status == "Unconfirmed" %}
-                  <tr class="table-success">
-                    <td>{{product_order.date_Ordered}}</td>
-                    <td>{{product_order.order_Id}}</td>
-                    <td>₦{{product_order.get_total_cost}}</td>
-                    <td>{{product_order.order_Status}}</td>
-                    <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><s>Edit Delivery Info</s></td>
                     <td><s>Delete Order</s></td>
                     <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   </tr>
@@ -100,29 +78,51 @@
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><s>Edit Delivery Info</s></td>
                     <td><s>Delete Order</s></td>
                     <td><s>Checkout</s></td>
                   </tr>
-                {% elif product_order.order_Status == "Pending" and product_order.checkout_checked and product_order.payment_Status == "Unconfirmed" %}
-                  <tr class="table-warning">
+                {% elif product_order.order_Status == "Completed" and product_order.payment_Status == "Unconfirmed" %}
+                  <tr class="table-success">
                     <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><s>Edit Delivery Info</s></td>
                     <td><s>Delete Order</s></td>
                     <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   </tr>
-                {% elif product_order.order_Status == "Pending" and product_order.checkout_checked and product_order.payment_Status == "Confirmed" %}
+                {% elif product_order.order_Status == "Completed" and product_order.payment_Status == "Confirmed" %}
+                  <tr class="table-success">
+                    <td>{{product_order.date_Ordered}}</td>
+                    <td>{{product_order.order_Id}}</td>
+                    <td>₦{{product_order.get_total_cost}}</td>
+                    <td>{{product_order.order_Status}}</td>
+                    <td>{{product_order.payment_Status}}</td>
+                    <td><s>Edit Delivery Info</s></td>
+                    <td><s>Delete Order</s></td>
+                    <td><s>Checkout</s></td>
+                  </tr>
+                {% elif product_order.order_Status == "Pending" and product_order.payment_Status == "Unconfirmed" %}
                   <tr class="table-warning">
                     <td>{{product_order.date_Ordered}}</td>
                     <td>{{product_order.order_Id}}</td>
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><s>Delete Order</s></td>
+                    <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  </tr>
+                {% elif product_order.order_Status == "Pending" and product_order.payment_Status == "Confirmed" %}
+                  <tr class="table-warning">
+                    <td>{{product_order.date_Ordered}}</td>
+                    <td>{{product_order.order_Id}}</td>
+                    <td>₦{{product_order.get_total_cost}}</td>
+                    <td>{{product_order.order_Status}}</td>
+                    <td>{{product_order.payment_Status}}</td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
                     <td><s>Delete Order</s></td>
                     <td><s>Checkout</s></td>
                   </tr>
@@ -133,7 +133,7 @@
                       <td>₦{{product_order.get_total_cost}}</td>
                       <td>{{product_order.order_Status}}</td>
                       <td>{{product_order.payment_Status}}</td>
-                      <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                      <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
                       <td><s>Delete Order</s></td>
                       <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                     </tr>
@@ -144,29 +144,7 @@
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
-                    <td><s>Delete Order</s></td>
-                    <td><s>Checkout</s></td>
-                  </tr>
-                {% elif product_order.order_Status == "New" and product_order.checkout_checked and product_order.payment_Status == "Unconfirmed" %}
-                  <tr class="table-danger">
-                    <td>{{product_order.date_Ordered}}</td>
-                    <td>{{product_order.order_Id}}</td>
-                    <td>₦{{product_order.get_total_cost}}</td>
-                    <td>{{product_order.order_Status}}</td>
-                    <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
-                    <td><a href="product/delete/{{product_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete Order</strong></button></a></td>
-                    <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
-                  </tr>
-                {% elif product_order.order_Status == "New" and product_order.checkout_checked and product_order.payment_Status == "Confirmed" %}
-                  <tr class="table-danger">
-                    <td>{{product_order.date_Ordered}}</td>
-                    <td>{{product_order.order_Id}}</td>
-                    <td>₦{{product_order.get_total_cost}}</td>
-                    <td>{{product_order.order_Status}}</td>
-                    <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
                     <td><s>Delete Order</s></td>
                     <td><s>Checkout</s></td>
                   </tr>
@@ -177,8 +155,8 @@
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
-                    <td><a href="product/delete/{{product_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete Order</strong></button></a></td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><a href="orders/product/delete/{{product_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete Order</strong></button></a></td>
                     <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
                   </tr>
                 {% elif product_order.order_Status == "New" and product_order.payment_Status == "Confirmed" %}
@@ -188,7 +166,29 @@
                     <td>₦{{product_order.get_total_cost}}</td>
                     <td>{{product_order.order_Status}}</td>
                     <td>{{product_order.payment_Status}}</td>
-                    <td><a href="product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><s>Delete Order</s></td>
+                    <td><s>Checkout</s></td>
+                  </tr>
+                {% elif product_order.order_Status == "New" and product_order.payment_Status == "Unconfirmed" %}
+                  <tr class="table-danger">
+                    <td>{{product_order.date_Ordered}}</td>
+                    <td>{{product_order.order_Id}}</td>
+                    <td>₦{{product_order.get_total_cost}}</td>
+                    <td>{{product_order.order_Status}}</td>
+                    <td>{{product_order.payment_Status}}</td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
+                    <td><a href="orders/product/delete/{{product_order.id}}"><button type="button" class="btn btn-sm btn-danger"><strong>Delete Order</strong></button></a></td>
+                    <td><a href="{% url 'show_product' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>Checkout</strong></button></a></td>
+                  </tr>
+                {% elif product_order.order_Status == "New" and product_order.payment_Status == "Confirmed" %}
+                  <tr class="table-danger">
+                    <td>{{product_order.date_Ordered}}</td>
+                    <td>{{product_order.order_Id}}</td>
+                    <td>₦{{product_order.get_total_cost}}</td>
+                    <td>{{product_order.order_Status}}</td>
+                    <td>{{product_order.payment_Status}}</td>
+                    <td><a href="orders/product/update/{{product_order.id}}"><button type="button" class="btn btn-sm btn-info"><strong>Edit Delivery Info</strong></button></a></td>
                     <td><s>Delete Order</s></td>
                     <td><s>Checkout</s></td>
                   </tr>
