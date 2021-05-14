@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from .models import ProductCustomer, ProductWalletHistorie
 from django.core.exceptions import ValidationError
 
-
 class CustomRegisterForm(UserCreationForm):
     email = forms.EmailField()
     username = forms.CharField()

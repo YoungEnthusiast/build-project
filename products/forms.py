@@ -6,7 +6,7 @@ import datetime
 
 class ProductCreditForm(forms.ModelForm):
     transaction_Date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),
-                            required = True)
+                            required = True, label='Transaction Date')
     class Meta:
         model = ProductCredit
         fields = ['amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']

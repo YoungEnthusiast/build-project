@@ -99,26 +99,42 @@ class OneQuarter(models.Model):
     class Meta:
         ordering = ('owner',)
 
-# class ProductWalletHistorie(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-#     amount_debited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
-#     amount_credited = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
-#     current = models.DecimalField(blank=True, null=True, max_digits=15, decimal_places=2)
-#     date_recorded = models.DateTimeField(auto_now_add=True, null=True)
-#     last_modified = models.DateTimeField(auto_now=True)
-#
-#     def __str__(self):
-#         return str(self.user.username)
-#
-#     class Meta:
-#         ordering = ('-date_recorded',)
-#
-#     @property
-#     def current_balance(self):
-#         if self.current == None:
-#             cur = self.amount_credited
-#         elif self.amount_credited == None:
-#             cur = self.current
-#         else:
-#             cur = self.current + self.amount_credited
-#         return cur
+class Request(models.Model):
+    PACKAGE_CHOICES = [
+		('One Quarter: ₦---', 'One Quarter: ₦---'),
+		('Three Quarters: ₦---', 'Three Quarters: ₦---'),
+		('Full Width: ₦---', 'Full Width: ₦---'),
+        ('Home Page: ₦---', 'Home Page: ₦---'),
+        ]
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    package = models.CharField(max_length=20, choices=PACKAGE_CHOICES, default='One Quarter: ₦---', null=True)
+    image = models.ImageField(upload_to='advert_image/%Y/%m/%d', null=True)
+    payment_Evidence = models.ImageField(upload_to='payment_xplorer/%Y/%m/%d', null=True)
+    waiver_Code = models.CharField(max_length=10, null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        ordering = ('-created',)
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+class Subscription(models.Model):
+    xplorer = models.ForeignKey(XploreCustomer, on_delete=models.SET_NULL, null=True)
+    request_Id = models.ForeignKey(Request, on_delete=models.SET_NULL, null=True)
+    date_Activated = models.DateTimeField(auto_now_add=True, null=True)
+    subscription_Ends = models.DateField(null=True)
+
+    def __str__(self):
+        return str(self.request_Id)
+
+    class Meta:
+        ordering = ('-subscription_Ends',)

@@ -18,7 +18,7 @@
   <a href="{% url 'orders' %}"><i></i>Orders History</a>
   <a href="{% url 'products:fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
-  <a href="#"><i></i><strong class="text-warning">Invoice</strong></a>
+  <a href="{% url 'invoices' %}"><i></i><strong class="text-warning">Invoice</strong></a>
 </div>
   <section class="main">
     {% include 'partials/_alerts.html' %}

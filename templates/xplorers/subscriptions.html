@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>My Subscriptions</title>
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+  <br>
+<div class="sidebar">
+    <br>
+    <br>
+    <br>
+    <br>
+  <a href="{% url 'request' %}"><i></i>Request</a>
+  <a href="{% url 'subscriptions' %}"><i></i><strong class="text-warning">Subscriptions</strong></a>
+
+</div>
+
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+    {% if subscriptions_page_obj %}
+    <h4 class="text-center">Search subscription by One or Many Fields</h4>
+    <div class="col-md-12">
+      <div class="box-element bg-warning" id="form-wrapper">
+        <form method="get" class="form-inline text-dark">
+          {% for field in filtered_subscriptions.form %}
+            <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+          {% endfor %}
+          <input type="submit" class="btn btn-dark" value="Sort">
+        </form>
+      </div>
+    </div>
+    {% endif %}
+    <br>
+    <div class="row text-center">
+      {% if subscriptions_page_obj %}
+        <div class="col-md-12">
+          <div class="form-group col-md-12">
+            <h3 class="form-group">Total Subscriptions: {{total_subscriptions}}</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>ADVERT TYPE</th>
+                  <th>IMAGE</th>
+                  <th>DATE SUBMITTED</th>
+                  <th>DATE ACTIVATED</th>
+                  <th>ENDING DATE</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for subscription in subscriptions_page_obj %}
+                <tr class="table-warning">
+                  <td>{{subscription.request_Id.package}}</td>
+                  <td><img class="row-image" src="{{subscription.request_Id.imageURL}}"></td>
+                  <td>{{subscription.request_Id.created}}</td>
+                  <td>{{subscription.date_Activated}}</td>
+                  <td>{{subscription.subscription_Ends}}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if subscriptions_page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="{% my_url subscriptions_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{subscriptions_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url subscriptions_page_obj.number 'page' request.GET.urlencode %}">{{subscriptions_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if subscriptions_page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="{% my_url subscriptions_page_obj.next_page_number 'page' request.GET.urlencode %}">{{subscriptions_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="{% my_url subscriptions_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      {% else %}
+      <div class="container">
+        <h3>No subscription found!</h3>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+
+
+{% endblock content%}

@@ -11,7 +11,7 @@
   <div class="text-center card bg-warning text-primary form-group col-md-9">
     <br>
     {% if product_order.user == request.user %}
-      <h4 >Deleting ORDER ID: {{product_order}} will remove all the ORDER's records in the system. Do you still wish to continue?</h4>
+      <h4 >Deleting ORDER ID: {{product_order.order_Id}} will remove all the ORDER's records in the system. Do you still wish to continue?</h4>
       <br>
       <form method="post">
         {% csrf_token %}
