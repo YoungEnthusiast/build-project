@@ -23,7 +23,7 @@ def showXploreDashboard(request):
     try:
         expiry = Subscription.objects.filter(xplorer__user=request.user, subscription_Ends__gte=date.today()).order_by('subscription_Ends')[0]
     except:
-        expiry = ""
+        expiry = "---"
 
     context = {'inactive': inactive, 'active': active, 'expiry': expiry}
     return render(request, 'xplorers/xplore_dashboard.html', context)
