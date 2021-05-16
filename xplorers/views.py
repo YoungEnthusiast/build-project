@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Full, ThreeQuarter, OneQuarter, Subscription, Request
+from .models import Subscription, Request
 from datetime import date
 from .filters import SubscriptionFilter
 from django.core.paginator import Paginator
@@ -10,15 +10,38 @@ from django.core.mail import send_mail
 from django.contrib import messages
 
 def showXplore(request):
-    fulls = Full.objects.filter(expiry__gte=date.today())
-    three_quarters = ThreeQuarter.objects.filter(expiry__gte=date.today())
-    one_quarters = OneQuarter.objects.filter(expiry__gte=date.today())
+    fulls = Subscription.objects.filter(package='Full Width', subscription_Ends__gte=date.today())
+    three_quarters = Subscription.objects.filter(package='Three Quarters', subscription_Ends__gte=date.today())
+    one_quarters = Subscription.objects.filter(package='One Quarter', subscription_Ends__gte=date.today())
     context = {'fulls': fulls, 'three_quarters': three_quarters, 'one_quarters': one_quarters}
     return render(request, 'xplorers/xplore.html', context)
 
 @login_required
 def showXploreDashboard(request):
-    return render(request, 'xplorers/xplore_dashboard.html')#, context)
+    inactive = Subscription.objects.filter(xplorer__user=request.user, subscription_Ends__lt=date.today()).count()
+    active = Subscription.objects.filter(xplorer__user=request.user, subscription_Ends__gte=date.today()).count()
+    expiry = Subscription.objects.filter(xplorer__user=request.user, subscription_Ends__gte=date.today()).order_by('subscription_Ends')[0]
+    context = {'inactive': inactive, 'active': active, 'expiry': expiry}
+    return render(request, 'xplorers/xplore_dashboard.html', context)
+
+    # new_orders = UserOrder.objects.filter(user=request.user, order_Status = 'New')
+    # new = new_orders.count()
+    # pending_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Pending')
+    # pending = pending_orders.count()
+    # completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Completed')
+    # completed = completed_orders.count()
+    # total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
+    # try:
+    #     wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
+    #     last_tran = wallet.last_tran
+    #     current_balance = wallet.current_balance
+    # except:
+    #     last_tran = "---"
+    #     current_balance = "---"
+    #
+    # context = {'new': new, 'pending': pending, 'completed': completed,
+    #             'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
+    # return render(request, 'users/dashboard.html', context)
 
 @login_required
 def showSubscriptions(request):
@@ -44,19 +67,24 @@ def uploadRequest(request, **kwargs):
         if form.is_valid():
             form.save(commit=False).user = request.user
             form.save()
-            customer = ProductCustomer.objects.get(user=request.user)
-            first_name = customer.user.first_name
-            last_name = customer.user.last_name
-            email = customer.user.email
-            send_mail(
-                'Advert Request[' + str(first_name) + ' ' + str(last_name) + ']',
-                'Dear ' + str(first_name) + ', Your request has been received! Your advert will be activated as soon as your payment is verified',
-                'admin@buildqwik.ng',
-				[email, 'payment@buildqwik.ng'],
-                fail_silently=False
-            )
-            messages.success(request, "Request Submitted, Your advert will be activated as soon as your payment is verified")
-            return redirect('xplore-dashboard')
+            reg = Request.objects.all()[0]
+            if reg.payment_Evidence == "" and reg.waiver_Code == "":
+                reg.delete()
+                messages.error(request, "Please upload a payment evidence or use a waiver code")
+            else:
+                customer = ProductCustomer.objects.get(user=request.user)
+                first_name = customer.user.first_name
+                last_name = customer.user.last_name
+                email = customer.user.email
+                send_mail(
+                    'Advert Request[' + str(first_name) + ' ' + str(last_name) + ']',
+                    'Dear ' + str(first_name) + ', Your request has been received! Your advert will be activated as soon as your payment is verified',
+                    'admin@buildqwik.ng',
+    				[email, 'payment@buildqwik.ng'],
+                    fail_silently=False
+                )
+                messages.success(request, "Request Submitted, Your advert will be activated as soon as your payment is verified")
+                return redirect('xplore-dashboard')
         else:
             messages.error(request, "Please make sure you don't enter too much characters than necessary")
     context = {'form': form}

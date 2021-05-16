@@ -13,6 +13,7 @@ class XploreCustomerForm(forms.ModelForm):
 class RequestForm(forms.ModelForm):
     payment_Evidence = forms.ImageField(required = False, label='Payment Evidence')
     waiver_Code = forms.CharField(required=False, label='Waiver Code')
+
     class Meta:
         model = Request
         fields = ['package', 'image', 'payment_Evidence', 'waiver_Code']

@@ -19,16 +19,3 @@ class Contact(models.Model):
 
     def __str__(self):
         return str(self.name)
-
-class Advert(models.Model):
-    owner = models.CharField(max_length=30, null=True)
-    image = models.ImageField(upload_to='adverts_home/%Y/%m/%d', null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    expiry = models.DateField(null=True)
-    
-    def __str__(self):
-        return str(self.owner)
-
-    class Meta:
-        ordering = ('owner',)

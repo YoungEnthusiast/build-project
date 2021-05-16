@@ -286,9 +286,9 @@
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-          {% for img in adverts %}
+          {% for img in homes %}
           <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}" data-interval="100">
-            <img class="d-block w-100 h-30" src="{{img.image.url}}" height="400" alt="{{img.owner}}">
+            <img class="d-block w-100 h-30" src="{{img.request_Id.imageURL}}" height="400" alt="{{img.xplorer}}'s advert">
           </div>
           {% endfor %}
         </div>

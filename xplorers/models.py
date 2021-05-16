@@ -60,45 +60,6 @@ class XploreCustomer(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.pk})
 
-class Full(models.Model):
-    owner = models.CharField(max_length=30, null=True)
-    image = models.ImageField(upload_to='adverts_full/%Y/%m/%d', null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    expiry = models.DateField(null=True)
-
-    def __str__(self):
-        return str(self.owner)
-
-    class Meta:
-        ordering = ('owner',)
-
-class ThreeQuarter(models.Model):
-    owner = models.CharField(max_length=30, null=True)
-    image = models.ImageField(upload_to='adverts_three_quarters/%Y/%m/%d', null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    expiry = models.DateField(null=True)
-
-    def __str__(self):
-        return str(self.owner)
-
-    class Meta:
-        ordering = ('owner',)
-
-class OneQuarter(models.Model):
-    owner = models.CharField(max_length=30, null=True)
-    image = models.ImageField(upload_to='adverts_one_quarter/%Y/%m/%d', null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    expiry = models.DateField(null=True)
-
-    def __str__(self):
-        return str(self.owner)
-
-    class Meta:
-        ordering = ('owner',)
-
 class Request(models.Model):
     PACKAGE_CHOICES = [
 		('One Quarter: ₦---', 'One Quarter: ₦---'),
@@ -128,8 +89,15 @@ class Request(models.Model):
         return url
 
 class Subscription(models.Model):
+    PACKAGE_CHOICES = [
+		('One Quarter', 'One Quarter'),
+		('Three Quarters', 'Three Quarters'),
+		('Full Width', 'Full Width'),
+        ('Home Page', 'Home Page'),
+        ]
     xplorer = models.ForeignKey(XploreCustomer, on_delete=models.SET_NULL, null=True)
     request_Id = models.ForeignKey(Request, on_delete=models.SET_NULL, null=True)
+    package = models.CharField(max_length=14, choices=PACKAGE_CHOICES, default='One Quarter', null=True)
     date_Activated = models.DateTimeField(auto_now_add=True, null=True)
     subscription_Ends = models.DateField(null=True)
 
@@ -137,4 +105,4 @@ class Subscription(models.Model):
         return str(self.request_Id)
 
     class Meta:
-        ordering = ('-subscription_Ends',)
+        ordering = ('-date_Activated',)

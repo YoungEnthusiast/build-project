@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from .filters import ContactFilter
-from  .models import Contact, Advert
+from  .models import Contact
+from xplorers.models import Subscription
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from .forms import ContactForm
@@ -11,8 +12,8 @@ from django.core.mail import send_mail
 from datetime import date
 
 def showHome(request):
-    adverts = Advert.objects.filter(expiry__gte=date.today())
-    context = {'adverts': adverts}
+    homes = Subscription.objects.filter(package='Home Page', subscription_Ends__gte=date.today())
+    context = {'homes': homes}
     return render(request, 'home/home.html', context)
 
 def showTerms(request):
