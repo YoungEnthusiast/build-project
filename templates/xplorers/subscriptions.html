@@ -45,7 +45,7 @@
             <table class="table table-bordered">
               <thead class="thead-dark">
                 <tr>
-                  <th>ADVERT TYPE</th>
+                  <th>PACKAGE</th>
                   <th>IMAGE</th>
                   <th>DATE SUBMITTED</th>
                   <th>DATE ACTIVATED</th>
@@ -55,7 +55,7 @@
               <tbody>
               {% for subscription in subscriptions_page_obj %}
                 <tr class="table-warning">
-                  <td>{{subscription.request_Id.package}}</td>
+                  <td>{{subscription.package}}</td>
                   <td><img class="row-image" src="{{subscription.request_Id.imageURL}}"></td>
                   <td>{{subscription.request_Id.created}}</td>
                   <td>{{subscription.date_Activated}}</td>
