@@ -58,7 +58,7 @@ def showContact(request):
                 'admin@buildqwik.ng',
                 [email, 'hello@buildqwik.ng'],
                 fail_silently=False,
-                html_message = render_to_string('home/home.html')
+                html_message = render_to_string('home/home1.html')
             )
             messages.success(request, str(name) + ", your message will receive attention shortly")
         else:
