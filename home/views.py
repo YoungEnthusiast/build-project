@@ -8,8 +8,9 @@ from django.urls import reverse_lazy
 from .forms import ContactForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from datetime import date
+from django.template.loader import render_to_string
 
 def showHome(request):
     homes = Subscription.objects.filter(package='Home Page', subscription_Ends__gte=date.today())
@@ -49,13 +50,15 @@ def showContact(request):
         if form.is_valid():
             form.save()
             name = form.cleaned_data.get('name')
+
             email = form.cleaned_data.get('email')
             send_mail(
                 'Contact BuildQwik',
                 'A message was sent by ' + name + '. Please log in to admin panel to read message',
                 'admin@buildqwik.ng',
                 [email, 'hello@buildqwik.ng'],
-                fail_silently=False
+                fail_silently=False,
+                html_message = render_to_string('home/home.html')
             )
             messages.success(request, str(name) + ", your message will receive attention shortly")
         else:
