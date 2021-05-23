@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserOrder, OrderItem, VisitorOrder, VisitorOrderItem
+from .models import UserOrder, OrderItem, VisitorOrder, VisitorOrderItem, UserOrderStatus
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
@@ -13,8 +13,8 @@ class OrderItemInline(admin.TabularInline):
 # admin.site.register(OrderItem, OrderItemAdmin)
 
 class UserOrderAdmin(admin.ModelAdmin):
-    list_display = ['order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
-    search_fields = ['order_Id', 'user__username', 'email', 'payment_Mode', 'date_Ordered', 'last_Modified', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city']
+    list_display = ['id', 'order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
+    search_fields = ['id', 'order_Id', 'user__username', 'email', 'payment_Mode', 'date_Ordered', 'last_Modified', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city']
     list_filter = ['payment_Mode', 'order_Status', 'payment_Status', 'state', 'city']
     list_display_links = ['order_Id', 'user']
     list_per_page = 10
@@ -37,3 +37,12 @@ class VisitorOrderAdmin(admin.ModelAdmin):
     inlines = [VisitorOrderItemInline]
 
 admin.site.register(VisitorOrder, VisitorOrderAdmin)
+
+class UserOrderStatusAdmin(admin.ModelAdmin):
+    list_display = ['order', 'order_Status', 'created', 'updated']
+    search_fields = ['order__order_Id', 'order_Status', 'created', 'updated']
+    list_filter = ['order_Status']
+    list_display_links = ['order']
+    list_per_page = 10
+
+admin.site.register(UserOrderStatus, UserOrderStatusAdmin)

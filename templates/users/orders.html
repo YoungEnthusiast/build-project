@@ -16,6 +16,7 @@
     <br>
   <a href="{% url 'edit_profile' %}"><i></i>Edit Profile</a>
   <a href="{% url 'orders' %}"><i></i><strong class="text-warning">Orders History</strong></a>
+  <a href="{% url 'tracks' %}"><i></i>Track Delivery</a>
   <a href="{% url 'products:fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
   <a href="{% url 'invoices' %}"><i class=""></i>Invoice</a>
@@ -48,7 +49,7 @@
             <table class="table table-bordered">
               <thead class="thead-dark">
                 <tr>
-                  <th>DATE</th>
+                  <th>DATE ORDERED</th>
                   <th>ID</th>
                   <th>TOTAL</th>
                   <th>ORDER STATUS</th>

@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import OrderItem, UserOrder, VisitorOrder, VisitorOrderItem
+from .models import OrderItem, UserOrder, VisitorOrder, VisitorOrderItem, UserOrderStatus
 from django.contrib import messages
 from django.core.mail import send_mail
-from .forms import UserOrderForm, VisitorOrderForm
+from .forms import UserOrderForm, VisitorOrderForm, AddOrderForm
 from cart.cart import Cart
 import random
 from users.models import ProductCustomer
+from django.contrib.auth.decorators import login_required, permission_required
 
 def order_create(request):
     cart = Cart(request)
@@ -87,3 +88,27 @@ def order_visitor(request):
         guest_form = VisitorOrderForm()
     return render(request, 'orders/visitor_create.html', {'cart': cart,
                                                         'guest_form': guest_form})
+
+@login_required
+@permission_required('orders.add_UserOrderStatus')
+def addOrder(request):
+    form = AddOrderForm()
+    if request.method == 'POST':
+        form = AddOrderForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            order = form.cleaned_data.get('order')
+            status = form.cleaned_data.get('order_Status')
+            reg = UserOrder.objects.get(order_Id=order)
+            email = reg.user.email
+            name = reg.user.first_name
+            send_mail(
+                'Order Status',
+                'Dear ' + str(name) + ', Your order status has now been changed to ' + str(status),
+                'admin@buildqwik.ng',
+                [email, 'support@buildqwik.ng'],
+                fail_silently=False
+            )
+            messages.success(request, str(name) + "'s Order Status has been updated")
+            return redirect('dashboard')
+    return render(request, 'orders/addorder_form.html', {'form': form})

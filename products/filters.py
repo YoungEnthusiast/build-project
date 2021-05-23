@@ -16,3 +16,10 @@ class UserOrderFilter2(filters.FilterSet):
     class Meta:
         model = UserOrder
         fields = ['order_Id', 'order_Status']
+
+class TrackFilter(filters.FilterSet):
+    start_date = DateFilter(field_name="date_Ordered", lookup_expr='gte', label='Date Ordered')
+
+    class Meta:
+        model = UserOrder
+        fields = ['order_Id']

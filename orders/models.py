@@ -30,7 +30,7 @@ class UserOrder(models.Model):
     order_Id = models.CharField(
 		 max_length = 10,
 		 null=True,
-		 editable=False,
+		 editable=True,
 		 default=2021
 	)
     payment_Mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
@@ -43,13 +43,14 @@ class UserOrder(models.Model):
     date_Ordered = models.DateTimeField(auto_now_add=True)
     last_Modified = models.DateTimeField(auto_now=True)
     order_Status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
+    delivery_Status = models.CharField(max_length=3, default='New', null=True)
     payment_Status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True)
 
     class Meta:
         ordering = ('-date_Ordered',)
 
     def __str__(self):
-        return 'Order {}'.format(self.id)
+        return str(self.order_Id)
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
@@ -68,7 +69,6 @@ class OrderItem(models.Model):
             pass
         else:
             return self.price * self.quantity
-
 
 class VisitorOrder(models.Model):
     PAYMENT_CHOICES = [
@@ -112,13 +112,14 @@ class VisitorOrder(models.Model):
     date_Ordered = models.DateTimeField(auto_now_add=True)
     last_Modified = models.DateTimeField(auto_now=True)
     order_Status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
+    delivery_Status = models.CharField(max_length=3, default='New', null=True)
     payment_Status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True)
 
     class Meta:
         ordering = ('-date_Ordered',)
 
     def __str__(self):
-        return 'Order {}'.format(self.id)
+        return str(self.order_Id)
 
     def get_total_cost(self):
         return sum(visitor_item.get_cost() for visitor_item in self.visitor_items.all())
@@ -137,3 +138,21 @@ class VisitorOrderItem(models.Model):
             pass
         else:
             return self.price * self.quantity
+
+class UserOrderStatus(models.Model):
+    STATUS_CHOICES = [
+        ('Completed','Completed'),
+        ('Pending', 'Pending')
+    ]
+    order = models.ForeignKey(UserOrder, on_delete=models.SET_NULL, null=True, related_name='order_status_items')
+    order_Status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='Pending', null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'User Order Status'
+        verbose_name_plural = 'User Order Statuses'
+
+    def __str__(self):
+        return str(self.order)

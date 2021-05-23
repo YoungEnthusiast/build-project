@@ -20,6 +20,9 @@ def showHome(request):
 def showTerms(request):
     return render(request, 'home/terms.html')
 
+def showTerms2(request):
+    return render(request, 'home/terms2.html')
+
 def showReturn(request):
     return render(request, 'home/return.html')
 

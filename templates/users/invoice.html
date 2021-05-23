@@ -16,6 +16,7 @@
     <br>
   <a href="{% url 'edit_profile' %}"><i></i>Edit Profile</a>
   <a href="{% url 'orders' %}"><i></i>Orders History</a>
+  <a href="{% url 'tracks' %}"><i></i>Track Delivery</a>
   <a href="{% url 'products:fund' %}"><i class=""></i>Fund Wallet</a>
   <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
   <a href="{% url 'invoices' %}"><i></i><strong class="text-warning">Invoice</strong></a>
@@ -56,7 +57,7 @@
               </thead>
               <tbody>
               {% for product_invoice in productinvoices_page_obj %}
-                {% if product_invoice.order_Status == "Completed" and product_invoice.invoice_checked%}
+                {% if product_invoice.order_Status == "Completed" %}
                   <tr class="table-success">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
@@ -74,7 +75,7 @@
                     <td>{{product_invoice.payment_Status}}</td>
                     <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                   </tr>
-                {% elif product_invoice.order_Status == "Pending" and product_invoice.invoice_checked %}
+                {% elif product_invoice.order_Status == "Pending" %}
                   <tr class="table-warning">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>
@@ -92,7 +93,7 @@
                       <td>{{product_invoice.payment_Status}}</td>
                       <td><a href="{% url 'show_invoice' product_invoice.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Invoice</strong></button></a></td>
                     </tr>
-                {% elif product_invoice.order_Status == "New" and product_invoice.invoice_checked %}
+                {% elif product_invoice.order_Status == "New" %}
                   <tr class="table-danger">
                     <td>{{product_invoice.date_Ordered}}</td>
                     <td>{{product_invoice.order_Id}}</td>

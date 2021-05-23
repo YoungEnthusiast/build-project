@@ -74,8 +74,9 @@
           alert('Window closed.');
         },
         callback: function(response){
-          let message = 'You have completed your payment! Your Reference Number is: ' + response.reference;
+          let message = 'Thank you, you have completed your payment! Your Reference Number is: ' + response.reference;
           alert(message);
+          window.location.href = "{% url 'dashboard' %}"
         }
       });
       handler.openIframe();

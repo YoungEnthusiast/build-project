@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Orders' History</title>
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+  <br>
+<div class="sidebar">
+    <br>
+    <br>
+    <br>
+    <br>
+  <a href="{% url 'edit_profile' %}"><i></i>Edit Profile</a>
+  <a href="{% url 'orders' %}"><i></i>Orders History</a>
+  <a href="{% url 'tracks' %}"><i></i><strong class="text-warning">Track Delivery</strong></a>
+  <a href="{% url 'products:fund' %}"><i class=""></i>Fund Wallet</a>
+  <a href="{% url 'wallet_history' %}"><i class=""></i>Wallet History</a>
+  <a href="{% url 'invoices' %}"><i class=""></i>Invoice</a>
+
+</div>
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+
+    {% if productorders_page_obj %}
+    <h4 class="text-center">Search by One or Many Fields</h4>
+    <div class="col-md-12">
+      <div class="box-element bg-warning" id="form-wrapper">
+        <form method="get" class="form-inline text-dark">
+          {% for field in filtered_productorders.form %}
+            <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+          {% endfor %}
+          <input type="submit" class="btn btn-dark" value="Sort">
+        </form>
+      </div>
+    </div>
+    {% endif %}
+    <br>
+    <div class="row text-center">
+      {% if productorders_page_obj %}
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>DATE</th>
+                  <th>ID</th>
+                  <th>TOTAL</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for product_order in productorders_page_obj %}
+                <tr class="table-warning">
+                  <td>{{product_order.date_Ordered}}</td>
+                  <td>{{product_order.order_Id}}</td>
+                  <td>₦{{product_order.get_total_cost}}</td>
+                  <td><a href="{% url 'show_track' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Order Stage</strong></button></a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if productorders_page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="{% my_url productorders_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{productorders_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url productorders_page_obj.number 'page' request.GET.urlencode %}">{{productorders_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if productorders_page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="{% my_url productorders_page_obj.next_page_number 'page' request.GET.urlencode %}">{{productorders_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="{% my_url productorders_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      {% else %}
+      <div class="container">
+        <h3>No order found!</h3>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+
+
+{% endblock content%}

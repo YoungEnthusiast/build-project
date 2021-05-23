@@ -8,9 +8,9 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, login
-from orders.models import UserOrder, VisitorOrder, OrderItem, VisitorOrderItem
+from orders.models import UserOrder, VisitorOrder, OrderItem, VisitorOrderItem, UserOrderStatus
 from products.models import Product
-from products.filters import UserOrderFilter, UserOrderFilter2
+from products.filters import UserOrderFilter, UserOrderFilter2, TrackFilter
 from orders.forms import UserOrderForm
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required, permission_required
@@ -209,6 +209,22 @@ def showOrders(request):
     return render(request, 'users/orders.html', context=context)
 
 @login_required
+def showTracks(request):
+    context = {}
+    filtered_productorders = TrackFilter(
+        request.GET,
+        queryset = UserOrder.objects.filter(user=request.user)
+    )
+    context['filtered_productorders'] = filtered_productorders
+    paginated_filtered_productorders = Paginator(filtered_productorders.qs, 10)
+    page_number = request.GET.get('page')
+    productorders_page_obj = paginated_filtered_productorders.get_page(page_number)
+    context['productorders_page_obj'] = productorders_page_obj
+    total_productorders = filtered_productorders.qs.count()
+    context['total_productorders'] = total_productorders
+    return render(request, 'users/track.html', context=context)
+
+@login_required
 def showInvoices(request):
     context = {}
     filtered_productinvoices = UserOrderFilter2(
@@ -252,6 +268,13 @@ def showProductOrder(request, pk, **kwargs):
     order_items = OrderItem.objects.filter(order__id=pk)
     context = {'product_order': product_order, 'order_items': order_items}
     return render(request, 'product/productorder_detail.html', context)
+
+@login_required
+def showTrack(request, pk, **kwargs):
+    product_order = UserOrder.objects.get(id=pk)
+    order_statuses = UserOrderStatus.objects.filter(order__id=pk)
+    context = {'product_order': product_order, 'order_statuses': order_statuses}
+    return render(request, 'orders/history.html', context)
 
 @login_required
 def showInvoice(request, pk, **kwargs):
@@ -317,7 +340,7 @@ def showWallet(request):
     return render(request, 'users/wallet_history.html', context=context)
 
 @login_required
-@permission_required('home.add_ProductWalletHistorie')
+@permission_required('users.add_ProductWalletHistorie')
 def creditWallet(request):
     form = AdminCreditForm()
     if request.method == 'POST':

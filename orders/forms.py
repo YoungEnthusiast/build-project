@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserOrder, VisitorOrder
+from .models import UserOrder, VisitorOrder, UserOrderStatus
 from django.forms.widgets import NumberInput
 from django.core.exceptions import ValidationError
 import datetime
@@ -59,3 +59,8 @@ class VisitorOrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['state'].help_text = "Select from the available states we have for now"
+
+class AddOrderForm(forms.ModelForm):
+    class Meta:
+        model = UserOrderStatus
+        fields = ['order', 'order_Status']

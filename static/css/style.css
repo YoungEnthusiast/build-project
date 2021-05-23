@@ -218,7 +218,7 @@ img {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #000000;
+    background-color: ;
     overflow-x: hidden;
     padding-top: 16px;
     }
@@ -254,10 +254,10 @@ img {
       padding: 6px 8px 6px 16px;
       text-decoration: none;
       font-size: 20px;
-      color: #818181;
+      color: #99938a;
       display: block;
       border: none;
-      background: none;
+      background: #000000;
       width:100%;
       text-align: left;
       cursor: pointer;
@@ -265,7 +265,7 @@ img {
     }
     /* On mouse-over */
     .sidebar a:hover, .dropdown-btn:hover {
-      color: #f1f1f1;
+      color: #ffffff;
     }
 
     /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
