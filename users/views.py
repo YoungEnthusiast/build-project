@@ -319,7 +319,7 @@ def guestPay(request):
     return render(request, 'product/productorder_guest.html', context)
 
 def visitorPay(request):
-    return render(request, 'product/productorder_visitor.html', context)
+    return render(request, 'product/productorder_visitor.html')
 @login_required
 def showWallet(request):
     context = {}
