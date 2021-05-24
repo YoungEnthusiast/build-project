@@ -75,13 +75,14 @@ def order_visitor(request):
             cart.clear()
             name = guest_form.cleaned_data.get('first_Name')
             email = guest_form.cleaned_data.get('email')
-            # send_mail(
-            # 	'Guest Order [' + str(name) + ']',
-            # 	'Dear ' + str(name) + ', your order has been received. The ORDER ID is: ' + visitor.order_Id + '. If you have not paid you can follow this link www.buildqwik.ng/visitor-pay/ to do so',
-            # 	'admin@buildqwik.ng',
-            # 	[email, 'support@buildqwik.ng'],
-            # 	fail_silently=False
-            # )
+            send_mail(
+            	'Guest Order [' + str(name) + ']',
+            	'Dear ' + str(name) + ', your order has been received. The ORDER ID is: ' + visitor.order_Id + '. If you have not paid you can follow this link www.buildqwik.ng/visitor-pay/ to do so',
+            	'admin@buildqwik.ng',
+            	[email, 'support@buildqwik.ng'],
+            	fail_silently=False,
+                html_message = render_to_string('orders/order_email.html')
+            )
             messages.success(request, "Your order has been placed! Please make payment below")
             return redirect('guest_pay')
         else:
