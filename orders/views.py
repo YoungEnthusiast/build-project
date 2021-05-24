@@ -46,7 +46,7 @@ def order_create(request):
                 'admin@buildqwik.ng',
                 [email, 'support@buildqwik.ng'],
                 fail_silently=False,
-                html_message = render_to_string('orders/order_email.html')
+                html_message = render_to_string('orders/order_email.html', {'name': str(first_name)})
             )
             messages.success(request, "Order completed! You can checkout below")
             return redirect('orders')
