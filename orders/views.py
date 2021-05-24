@@ -8,6 +8,7 @@ from cart.cart import Cart
 import random
 from users.models import ProductCustomer
 from django.contrib.auth.decorators import login_required, permission_required
+from django.template.loader import render_to_string
 
 def order_create(request):
     cart = Cart(request)
