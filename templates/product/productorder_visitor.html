@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 
 {% block title %}
   <title>Checkout</title>
@@ -44,8 +43,9 @@
           alert('Window closed.');
         },
         callback: function(response){
-          let message = 'You have completed your payment! Your Reference Number is: ' + response.reference;
+          let message = 'Thank you! You have completed your payment! Your Reference Number is: ' + response.reference;
           alert(message);
+          
         }
       });
       handler.openIframe();

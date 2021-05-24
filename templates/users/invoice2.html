@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% block title %}
   <title>Invoice Page</title>
   <style type="text/css">
@@ -46,7 +45,7 @@
       <h6 class="text-center">Order ID: <strong>{{product_invoice.order_Id}}</strong></h6>
       <h6 class="text-center">Date Ordered: <strong>{{product_invoice.date_Ordered}}</strong></h6>
       <div class="bg-light text-primary form-group col-md-12">
-          <table class="table table-binvoiceed">
+          <table class="table table-bordered">
             <thead class="thead-dark">
               <tr>
                 <th>DESCRIPTION</th>

@@ -297,17 +297,15 @@ def updateWallet(request, pk, **kwargs):
             wallet_entry.current_balance = wallet.current_balance
             wallet_entry.last_tran = wallet_entry.amount_debited
             wallet_entry.save()
-            messages.success(request, "Your payment has been made and your wallet updated")
             product_order.payment_Status = "Confirmed"
             product_order.checkout_checked = False
             product_order.save()
-            return redirect('orders')
+            return render(request, 'orders/payment.html')
         else:
             messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
         context = {'product_order': product_order, 'wallet': wallet_entry}
         return render(request, 'product/wallet.html', context)
     except:
-        messages.error(request, "Wallet balance is not enough to perform this transaction. Please fund your wallet")
         return render(request, 'product/wallet.html')
 
 def guestPay(request):
@@ -319,9 +317,6 @@ def guestPay(request):
     total_Price = visitor.get_total_cost()
     context = {'order_Id': order_Id,  'email': email, 'total_Price': total_Price, 'order_items': order_items}
     return render(request, 'product/productorder_guest.html', context)
-
-def visitorPay(request):
-    return render(request, 'product/productorder_visitor.html')
 
 @login_required
 def showWallet(request):
@@ -379,3 +374,6 @@ def creditWallet(request):
                 messages.success(request, str(name) + "'s wallet balance has been topped up and email notification sent to him")
                 return redirect('dashboard')
     return render(request, 'product/admincredit_form.html', {'form': form})
+
+def showPaymentComplete(request):
+    return render(request, 'orders/payment_card.html')

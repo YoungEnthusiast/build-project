@@ -53,7 +53,6 @@ def showContact(request):
         if form.is_valid():
             form.save()
             name = form.cleaned_data.get('name')
-
             email = form.cleaned_data.get('email')
             send_mail(
                 'Contact BuildQwik',
