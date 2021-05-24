@@ -45,7 +45,7 @@
         callback: function(response){
           let message = 'Thank you! You have completed your payment! Your Reference Number is: ' + response.reference;
           alert(message);
-          
+          window.location.href = "{% url 'payment_completed' %}"
         }
       });
       handler.openIframe();

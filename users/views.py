@@ -318,6 +318,8 @@ def guestPay(request):
     context = {'order_Id': order_Id,  'email': email, 'total_Price': total_Price, 'order_items': order_items}
     return render(request, 'product/productorder_guest.html', context)
 
+def visitorPay(request):
+    return render(request, 'product/productorder_visitor.html', context)
 @login_required
 def showWallet(request):
     context = {}

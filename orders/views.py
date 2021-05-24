@@ -81,7 +81,7 @@ def order_visitor(request):
             	'admin@buildqwik.ng',
             	[email, 'support@buildqwik.ng'],
             	fail_silently=False,
-                html_message = render_to_string('orders/order_email.html')
+                html_message = render_to_string('orders/order_email2.html', {'name': str(name), 'order_Id': visitor.order_Id})
             )
             messages.success(request, "Your order has been placed! Please make payment below")
             return redirect('guest_pay')
