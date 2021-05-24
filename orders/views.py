@@ -46,7 +46,7 @@ def order_create(request):
                 'admin@buildqwik.ng',
                 [email, 'support@buildqwik.ng'],
                 fail_silently=False,
-                html_message = render_to_string('orders/order_email.html', {'message': <p style="text-align:center"><img src="https://www.buildqwik.ng/static/img/logo.png" alt="BuildQwik Logo" width="150" height="150"></p><h1 style="text-align:center; color:#edc17e"><strong>BUILDQWIK TECHNOLOGY LIMITED</strong></h1><h3 style="text-align:center">Your order has been received. Remember you can always log in and checkout to pay from your dashboard</h3>})
+                html_message = render_to_string('orders/order_email.html')
             )
             messages.success(request, "Order completed! You can checkout below")
             return redirect('orders')
