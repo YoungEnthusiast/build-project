@@ -145,7 +145,7 @@ class UserOrderStatus(models.Model):
         ('Out for Delivery', 'Out for Delivery')
     ]
     order = models.ForeignKey(UserOrder, on_delete=models.SET_NULL, null=True, related_name='order_status_items')
-    status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='Out for Delivery', null=True)
+    order_Status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='Out for Delivery', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

@@ -39,9 +39,9 @@ class VisitorOrderAdmin(admin.ModelAdmin):
 admin.site.register(VisitorOrder, VisitorOrderAdmin)
 
 class UserOrderStatusAdmin(admin.ModelAdmin):
-    list_display = ['order', 'status', 'created', 'updated']
-    search_fields = ['order__order_Id', 'status', 'created', 'updated']
-    list_filter = ['status']
+    list_display = ['order', 'order_Status', 'created', 'updated']
+    search_fields = ['order__order_Id', 'order_Status', 'created', 'updated']
+    list_filter = ['order_Status']
     list_display_links = ['order']
     list_per_page = 10
 

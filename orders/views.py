@@ -101,7 +101,7 @@ def addOrder(request):
         if form.is_valid():
             form.save()
             order = form.cleaned_data.get('order')
-            status = form.cleaned_data.get('status')
+            status = form.cleaned_data.get('order_Status')
             reg = UserOrder.objects.get(order_Id=order)
             email = reg.user.email
             name = reg.user.first_name
