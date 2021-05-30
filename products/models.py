@@ -44,7 +44,6 @@ class Product(models.Model):
 	def get_absolute_url(self):
 		return reverse('products:product_detail', args=[self.id, self.slug])
 
-
 class ProductCredit(models.Model):
 	user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 	amount_Paid = models.DecimalField(null=True, max_digits=15, decimal_places=2)

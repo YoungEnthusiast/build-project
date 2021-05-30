@@ -47,16 +47,16 @@
             </thead>
             <tbody>
               {% for order_status in order_statuses %}
-                {% if order_status.order_Status == "Pending" %}
+                {% if order_status.status == "Out for Delivery" %}
                   <tr class="table-light">
                     <td>{{order_status.created}}</td>
-                    <td>{{order_status.order_Status}}</td>
+                    <td>{{order_status.status}}</td>
                     <td><span class="fas fa-truck fa-2x text-warning"></span> </td>
                   </tr>
-                {% elif order_status.order_Status == "Completed" %}
+                {% elif order_status.status == "Delivered" %}
                   <tr class="table-light">
                     <td>{{order_status.created}}</td>
-                    <td>{{order_status.order_Status}}</td>
+                    <td>{{order_status.status}}</td>
                     <td><span class="fas fa-check-circle fa-2x text-warning"></span></td>
                   </tr>
                 {% endif %}

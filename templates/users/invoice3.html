@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}
   <title>Invoice Page</title>
   <style type="text/css">
@@ -57,9 +58,9 @@
                   <th>{{each.date_Ordered}}</th>
                   <td>{{each.order_Id}}</td>
                   <td>{{each.product}}</td>
-                  <td>₦{{each.product.price}}</td>
+                  <td>₦{{each.product.price|intcomma}}</td>
                   <td>{{each.quantity}}</td>
-                  <td>₦{{each.total_Price}}</td>
+                  <td>₦{{each.total_Price|intcomma}}</td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -68,7 +69,7 @@
             <div class="col-md-8">
             </div>
             <div class="bg-warning text-primary form-group col-md-4">
-              <strong>TOTAL = ₦{{tot}}</strong>
+              <strong>TOTAL = ₦{{tot|intcomma}}</strong>
             </div>
           </div>
       </div>

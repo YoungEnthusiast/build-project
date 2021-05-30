@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
   <title>Your Cart</title>
@@ -39,15 +40,15 @@
               </form>
             </td>
             <td><button class="btn-warning" type="button"><a href="{% url "cart:cart_remove" product.id %}">Remove</a></button></td>
-            <td>₦{{ item.price }}</td>
-            <td>₦{{ item.total_price }}</td>
+            <td>₦{{ item.price|intcomma }}</td>
+            <td>₦{{ item.total_price|intcomma }}</td>
           </tr>
           {% endwith %}
       {% endfor %}
       <tr class="total">
           <td>Total</td>
           <td colspan="4"></td>
-          <td>₦{{ cart.get_total_price }}</td>
+          <td>₦{{ cart.get_total_price|intcomma }}</td>
       </tr>
     </tbody>
   </table>

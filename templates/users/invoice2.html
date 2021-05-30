@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %}
   <title>Invoice Page</title>
   <style type="text/css">
@@ -58,9 +59,9 @@
               {% for order_item in order_items %}
               <tr class="table-light">
                 <td>{{order_item.product}}</td>
-                <td>₦{{order_item.product.price}}</td>
+                <td>₦{{order_item.product.price|intcomma}}</td>
                 <td>{{order_item.quantity}}</td>
-                <td>₦{{order_item.get_cost}}</td>
+                <td>₦{{order_item.get_cost|intcomma}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -70,7 +71,7 @@
 
             </div>
             <div class="bg-warning text-primary form-group col-md-4">
-              <strong style="float:right">TOTAL = ₦{{product_invoice.get_total_cost}}</strong>
+              <strong style="float:right">TOTAL = ₦{{product_invoice.get_total_cost|intcomma}}</strong>
             </div>
           </div>
       </div>

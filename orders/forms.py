@@ -63,4 +63,4 @@ class VisitorOrderForm(forms.ModelForm):
 class AddOrderForm(forms.ModelForm):
     class Meta:
         model = UserOrderStatus
-        fields = ['order', 'order_Status']
+        fields = ['order', 'status']

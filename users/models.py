@@ -52,7 +52,6 @@ class ProductCustomer(models.Model):
     address = models.CharField(max_length=200, null=True)
     CAC_Certificate = models.ImageField(upload_to='CAC_Certs/%Y/%m/%d', null=True, blank=True)
     last_Modified = models.DateTimeField(auto_now=True)
-
     email_confirmed = models.BooleanField(default=False)
 
     @receiver(post_save, sender=User)
@@ -85,18 +84,3 @@ class ProductWalletHistorie(models.Model):
 
     class Meta:
         ordering = ('-date_recorded',)
-
-    # @property
-    # def current_once(self):
-    #     curr = self.current
-    #     return curr
-    #
-    # @property
-    # def current_balance(self):
-    #     if self.current == None:
-    #         cur = self.amount_credited
-    #     elif self.amount_credited == None:
-    #         cur = self.current
-    #     else:
-    #         cur = self.current + self.amount_credited
-    #     return cur

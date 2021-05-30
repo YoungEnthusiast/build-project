@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 {% block title %}
   <title>Invoice Page</title>
@@ -59,9 +60,9 @@
               {% for order_item in order_items %}
               <tr class="table-light">
                 <td>{{order_item.product}}</td>
-                <td>₦{{order_item.product.price}}</td>
+                <td>₦{{order_item.product.price|intcomma}}</td>
                 <td>{{order_item.quantity}}</td>
-                <td>₦{{order_item.get_cost}}</td>
+                <td>₦{{order_item.get_cost|intcomma}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -71,7 +72,7 @@
 
             </div>
             <div class="bg-warning text-primary form-group col-md-4">
-              <strong>TOTAL = ₦{{product_invoice.get_total_cost}}</strong>
+              <strong>TOTAL = ₦{{product_invoice.get_total_cost|intcomma}}</strong>
             </div>
           </div>
       </div>

@@ -175,9 +175,9 @@ def changePassword(request):
 def showDashboard(request):
     new_orders = UserOrder.objects.filter(user=request.user, order_Status = 'New')
     new = new_orders.count()
-    pending_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Pending')
+    pending_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Out for Delivery')
     pending = pending_orders.count()
-    completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Completed')
+    completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Delivered')
     completed = completed_orders.count()
     total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
     try:

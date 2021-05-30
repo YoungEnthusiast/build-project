@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block title %}
   <title>Orders' History</title>
 {% endblock title %}
@@ -55,7 +55,7 @@
                 <tr class="table-warning">
                   <td>{{product_order.date_Ordered}}</td>
                   <td>{{product_order.order_Id}}</td>
-                  <td>₦{{product_order.get_total_cost}}</td>
+                  <td>₦{{product_order.get_total_cost|intcomma}}</td>
                   <td><a href="{% url 'show_track' product_order.id %}"><button type="button" class="btn btn-sm btn-warning"><strong>View Order Stage</strong></button></a></td>
                 </tr>
               {% endfor %}

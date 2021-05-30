@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
+{% load humanize %}
 
 {% block title %}
   <title>Fill Info</title>
@@ -12,10 +12,10 @@
       <h3>Your order</h3>
       <ul>
           {% for item in cart %}
-              <li>{{ item.quantity }}x {{ item.product.type }} <span>₦{{ item.total_price }}</span></li>
+              <li>{{ item.quantity }}x {{ item.product.type }} <span>₦{{ item.total_price|intcomma }}</span></li>
           {% endfor %}
       </ul>
-      <p>Total: ₦{{ cart.get_total_price }}</p>
+      <p>Total: ₦{{ cart.get_total_price|intcomma }}</p>
   </div>
     <br>
     <form class="form-group col-md-6 text-warning" method="post" class="order-form">

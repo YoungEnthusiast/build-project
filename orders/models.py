@@ -8,9 +8,9 @@ class UserOrder(models.Model):
 		('Pay on Site', 'Pay on Site')
 	]
     STATUS_CHOICES = [
-        ('Completed','Completed'),
+        ('Delivered','Delivered'),
         ('New', 'New'),
-        ('Pending', 'Pending')
+        ('Out for Delivery', 'Out for Delivery')
     ]
     PAID_CHOICES = [
         ('Unconfirmed', 'Unconfirmed'),
@@ -42,7 +42,7 @@ class UserOrder(models.Model):
     address = models.CharField(max_length=255, null=True, blank=True)
     date_Ordered = models.DateTimeField(auto_now_add=True)
     last_Modified = models.DateTimeField(auto_now=True)
-    order_Status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
+    order_Status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='New', null=True)
     delivery_Status = models.CharField(max_length=3, default='New', null=True)
     payment_Status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True)
 
@@ -76,9 +76,9 @@ class VisitorOrder(models.Model):
 		('Pay on Site', 'Pay on Site')
 	]
     STATUS_CHOICES = [
-        ('Completed','Completed'),
+        ('Delivered','Delivered'),
         ('New', 'New'),
-        ('Pending', 'Pending')
+        ('Out for Delivery', 'Out for Delivery')
     ]
     PAID_CHOICES = [
         ('Unconfirmed', 'Unconfirmed'),
@@ -111,7 +111,7 @@ class VisitorOrder(models.Model):
     address = models.CharField(max_length=255, null=True, blank=True)
     date_Ordered = models.DateTimeField(auto_now_add=True)
     last_Modified = models.DateTimeField(auto_now=True)
-    order_Status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='New', null=True)
+    order_Status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='New', null=True)
     delivery_Status = models.CharField(max_length=3, default='New', null=True)
     payment_Status = models.CharField(max_length=12, choices=PAID_CHOICES, default='Unconfirmed', null=True)
 
@@ -141,11 +141,11 @@ class VisitorOrderItem(models.Model):
 
 class UserOrderStatus(models.Model):
     STATUS_CHOICES = [
-        ('Completed','Completed'),
-        ('Pending', 'Pending')
+        ('Delivered','Delivered'),
+        ('Out for Delivery', 'Out for Delivery')
     ]
     order = models.ForeignKey(UserOrder, on_delete=models.SET_NULL, null=True, related_name='order_status_items')
-    order_Status = models.CharField(max_length=9, choices=STATUS_CHOICES, default='Pending', null=True)
+    status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='Out for Delivery', null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

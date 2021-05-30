@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
   <title>{% if category %}{{ category.type }}{% else %}Products{% endif %}</title>
@@ -57,7 +58,7 @@
           <div class="box-element product">
             <a href="{{ product.get_absolute_url }}"><strong class="text-warning">{{ product.type }}</strong></a><br>
             <hr>
-            <h6>Price as of {{product.date}}</h6> <h6>₦{{product.price}}</h6>
+            <h6>Price as of {{product.date}}</h6> <h6>₦{{product.price|intcomma}}</h6>
           </div>
         </div>
         {% endfor %}

@@ -28,25 +28,6 @@ def showXploreDashboard(request):
     context = {'inactive': inactive, 'active': active, 'expiry': expiry}
     return render(request, 'xplorers/xplore_dashboard.html', context)
 
-    # new_orders = UserOrder.objects.filter(user=request.user, order_Status = 'New')
-    # new = new_orders.count()
-    # pending_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Pending')
-    # pending = pending_orders.count()
-    # completed_orders = UserOrder.objects.filter(user=request.user, order_Status = 'Completed')
-    # completed = completed_orders.count()
-    # total_debited = ProductWalletHistorie.objects.filter(user=request.user).aggregate(Sum('amount_debited'))['amount_debited__sum']
-    # try:
-    #     wallet = ProductWalletHistorie.objects.filter(user=request.user)[0]
-    #     last_tran = wallet.last_tran
-    #     current_balance = wallet.current_balance
-    # except:
-    #     last_tran = "---"
-    #     current_balance = "---"
-    #
-    # context = {'new': new, 'pending': pending, 'completed': completed,
-    #             'total_debited': total_debited, 'last_tran': last_tran, 'current_balance':current_balance}
-    # return render(request, 'users/dashboard.html', context)
-
 @login_required
 def showSubscriptions(request):
     context = {}

@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <nav class="p-0 navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <a class="ml-2 navbar-brand" href="{% url 'index' %}">
       <img src="{% static 'img/logo.png' %}" width="50" height="80" class="logo" alt="BuildQwik">
@@ -79,7 +80,7 @@
           {% with total_items=cart|length %}
             {% if cart|length > 0 %}
               <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
-                Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price }}
+                Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price|intcomma }}
               </a>
             {% else %}
                   <a class="nav-link text-white">Your cart is empty.</a>
@@ -101,7 +102,7 @@
             {% with total_items=cart|length %}
                 {% if cart|length > 0 %}
                     <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
-                      Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price }}
+                      Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price|intcomma }}
                     </a>
                 {% else %}
                     <a class="nav-link text-white">Your cart is empty.</a>
