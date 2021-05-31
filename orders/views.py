@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import OrderItem, UserOrder, VisitorOrder, VisitorOrderItem, UserOrderStatus
+from .models import OrderItem, UserOrder, VisitorOrder, VisitorOrderItem, OrderStatus
 from django.contrib import messages
 from django.core.mail import send_mail
 from .forms import UserOrderForm, VisitorOrderForm, AddOrderForm
@@ -93,7 +93,7 @@ def order_visitor(request):
                                                         'guest_form': guest_form})
 
 @login_required
-@permission_required('orders.add_UserOrderStatus')
+@permission_required('orders.add_OrderStatus')
 def addOrder(request):
     form = AddOrderForm()
     if request.method == 'POST':

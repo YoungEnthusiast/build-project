@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserOrder, VisitorOrder, UserOrderStatus
+from .models import UserOrder, VisitorOrder, OrderStatus
 from django.forms.widgets import NumberInput
 from django.core.exceptions import ValidationError
 import datetime
@@ -62,5 +62,5 @@ class VisitorOrderForm(forms.ModelForm):
 
 class AddOrderForm(forms.ModelForm):
     class Meta:
-        model = UserOrderStatus
+        model = OrderStatus
         fields = ['order', 'order_Status']

@@ -1,16 +1,11 @@
 from django.contrib import admin
-from .models import UserOrder, OrderItem, VisitorOrder, VisitorOrderItem, UserOrderStatus
+from .models import UserOrder, OrderItem, VisitorOrder, VisitorOrderItem, OrderStatus
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     readonly_fields = ['product', 'price', 'quantity', 'get_cost']
     fields = ['product', 'price', 'quantity', 'get_cost']
     raw_id_fields = ['product']
-
-# class OrderItemAdmin(admin.ModelAdmin):
-#     list_display = ['order', 'product', 'price', 'quantity', 'get_cost']
-#
-# admin.site.register(OrderItem, OrderItemAdmin)
 
 class UserOrderAdmin(admin.ModelAdmin):
     list_display = ['order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
@@ -38,11 +33,11 @@ class VisitorOrderAdmin(admin.ModelAdmin):
 
 admin.site.register(VisitorOrder, VisitorOrderAdmin)
 
-class UserOrderStatusAdmin(admin.ModelAdmin):
+class OrderStatusAdmin(admin.ModelAdmin):
     list_display = ['order', 'order_Status', 'created', 'updated']
     search_fields = ['order__order_Id', 'order_Status', 'created', 'updated']
     list_filter = ['order_Status']
     list_display_links = ['order']
     list_per_page = 10
 
-admin.site.register(UserOrderStatus, UserOrderStatusAdmin)
+admin.site.register(OrderStatus, OrderStatusAdmin)

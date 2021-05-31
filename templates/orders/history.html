@@ -19,58 +19,55 @@
 </form> <br>
 
 <section>
+  <div class="card bg-primary text-light form-group col-md-12">
+    <div class="row">
+      <div class="col-md-5">
 
-    <div class="card bg-primary text-light form-group col-md-12">
-      <div class="row">
-        <div class="col-md-5">
-
-        </div>
-        <div class="col-md-2">
-          <img src="{% static 'img/logo.png' %}" alt="BuildQwik Logo" width="50" height="150">
-        </div>
-        <div class="col-md-5">
-
-        </div>
       </div>
-      <h5 class="d-flex justify-content-center"> <strong>BUILDQWIK TECHNOLOGY LIMITED</strong>  </h5>
-      <br>
-      <br>
-      <h6 class="text-center">Order ID: <strong>{{product_order.order_Id}}</strong></h6>
-      <div class="bg-light text-primary form-group col-md-12">
-          <table class="table table-binvoiceed">
-            <thead class="thead-dark">
-              <tr>
-                <th>DATE</th>
-                <th>ORDER STATUS</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for order_status in order_statuses %}
-                {% if order_status.status == "Out for Delivery" %}
-                  <tr class="table-light">
-                    <td>{{order_status.created}}</td>
-                    <td>{{order_status.status}}</td>
-                    <td><span class="fas fa-truck fa-2x text-warning"></span> </td>
-                  </tr>
-                {% elif order_status.status == "Delivered" %}
-                  <tr class="table-light">
-                    <td>{{order_status.created}}</td>
-                    <td>{{order_status.status}}</td>
-                    <td><span class="fas fa-check-circle fa-2x text-warning"></span></td>
-                  </tr>
-                {% endif %}
-              {% endfor %}
+      <div class="col-md-2">
+        <img src="{% static 'img/logo.png' %}" alt="BuildQwik Logo" width="50" height="150">
+      </div>
+      <div class="col-md-5">
+
+      </div>
+    </div>
+    <h5 class="d-flex justify-content-center"> <strong>BUILDQWIK TECHNOLOGY LIMITED</strong>  </h5>
+    <br>
+    <br>
+    <h6 class="text-center">Order ID: <strong>{{product_order.order_Id}}</strong></h6>
+    <div class="bg-light text-primary form-group col-md-12">
+      <table class="table table-binvoiceed">
+        <thead class="thead-dark">
+          <tr>
+            <th>DATE</th>
+            <th>ORDER STATUS</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_status in order_statuses %}
+            {% if order_status.order_Status == "Out for Delivery" %}
               <tr class="table-light">
-                <td>{{product_order.date_Ordered}}</td>
-                <td>{{product_order.delivery_Status}}</td>
-                <td><span class="fas fa-thumbs-up fa-2x text-warning"></span> </td>
+                <td>{{order_status.created}}</td>
+                <td>{{order_status.order_Status}}</td>
+                <td><span class="fas fa-truck fa-2x text-warning"></span> </td>
               </tr>
-            </tbody>
-          </table>
-
-      </div>
-
+            {% elif order_status.order_Status == "Delivered" %}
+              <tr class="table-light">
+                <td>{{order_status.created}}</td>
+                <td>{{order_status.order_Status}}</td>
+                <td><span class="fas fa-check-circle fa-2x text-warning"></span></td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <td>{{product_order.date_Ordered}}</td>
+            <td>{{product_order.delivery_Status}}</td>
+            <td><span class="fas fa-thumbs-up fa-2x text-warning"></span> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </section>
 {% else %}
   <h2 class="text-center">Access Restricted</h2>

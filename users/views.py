@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, login
-from orders.models import UserOrder, VisitorOrder, OrderItem, VisitorOrderItem, UserOrderStatus
+from orders.models import UserOrder, VisitorOrder, OrderItem, VisitorOrderItem, OrderStatus
 from products.models import Product
 from products.filters import UserOrderFilter, UserOrderFilter2, TrackFilter
 from orders.forms import UserOrderForm
@@ -272,7 +272,7 @@ def showProductOrder(request, pk, **kwargs):
 @login_required
 def showTrack(request, pk, **kwargs):
     product_order = UserOrder.objects.get(id=pk)
-    order_statuses = UserOrderStatus.objects.filter(order__id=pk)
+    order_statuses = OrderStatus.objects.filter(order__id=pk)
     context = {'product_order': product_order, 'order_statuses': order_statuses}
     return render(request, 'orders/history.html', context)
 

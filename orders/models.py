@@ -139,7 +139,7 @@ class VisitorOrderItem(models.Model):
         else:
             return self.price * self.quantity
 
-class UserOrderStatus(models.Model):
+class OrderStatus(models.Model):
     STATUS_CHOICES = [
         ('Delivered','Delivered'),
         ('Out for Delivery', 'Out for Delivery')
@@ -151,8 +151,8 @@ class UserOrderStatus(models.Model):
 
     class Meta:
         ordering = ('-created',)
-        verbose_name = 'User Order Status'
-        verbose_name_plural = 'User Order Statuses'
+        verbose_name = 'Order Status'
+        verbose_name_plural = 'Order Statuses'
 
     def __str__(self):
         return str(self.order)
