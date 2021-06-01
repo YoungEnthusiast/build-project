@@ -8,9 +8,9 @@ class OrderItemInline(admin.TabularInline):
     raw_id_fields = ['product']
 
 class UserOrderAdmin(admin.ModelAdmin):
-    list_display = ['order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
-    search_fields = ['order_Id', 'user__username', 'email', 'payment_Mode', 'date_Ordered', 'last_Modified', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city']
-    list_filter = ['payment_Mode', 'order_Status', 'payment_Status', 'state', 'city']
+    list_display = ['order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'delivery_Type', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
+    search_fields = ['order_Id', 'user__username', 'email', 'payment_Mode', 'delivery_Type', 'date_Ordered', 'last_Modified', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city']
+    list_filter = ['payment_Mode', 'delivery_Type', 'order_Status', 'payment_Status', 'state', 'city']
     list_display_links = ['order_Id', 'user']
     list_per_page = 10
     inlines = [OrderItemInline]

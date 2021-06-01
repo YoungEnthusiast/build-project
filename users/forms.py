@@ -31,12 +31,17 @@ class CustomRegisterForm(UserCreationForm):
         self.fields['email'].help_text = "This field is required. It must be a valid email address"
         self.fields['username'].help_text = "This field is required. It can contain letters, digits and @/./+/-/_ only."
         self.fields['password1'].help_text = "<ul><li>Be rest assured that your password will be encrypted (hidden). That means even the website developer will not be able to see it.</li><li>Your password can’t be too similar to your other personal information.<li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul>"
-
+        self.fields['password2'].label = "Password Confirmation"
 class ProfileEditForm(UserChangeForm):
     password = forms.CharField(widget=forms.TextInput(attrs={'type':'hidden'}))
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].label = "First Name"
+        self.fields['last_name'].label = "Last Name"
+        self.fields['email'].label = "Email Address"
 
 
 class ProductCustomerEditForm(forms.ModelForm):
@@ -54,7 +59,7 @@ class ProductCustomerEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['CAC_Certificate'].help_text = "This field is only mandatory for QwikXplorers"
-
+        self.fields['CAC_Certificate'].label = "CAC Certificate"
 class AdminCreditForm(forms.ModelForm):
     class Meta:
         model = ProductWalletHistorie

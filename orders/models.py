@@ -26,6 +26,10 @@ class UserOrder(models.Model):
 		('Osun', 'Osun'),
 		('Oyo', 'Oyo')
 	]
+    DELIVERY_CHOICES = [
+        ('Normal (Single)', 'Normal (Single)'),
+        ('Joined (To be delivered with orders in the same area)', 'Joined (To be delivered with orders in the same area)')
+    ]
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     order_Id = models.CharField(
 		 max_length = 10,
@@ -34,6 +38,7 @@ class UserOrder(models.Model):
 		 default=2021
 	)
     payment_Mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
+    delivery_Type = models.CharField(max_length=53, choices=DELIVERY_CHOICES, default='Normal (Single)', null=True)
     schedule_Delivery = models.DateField(blank=True, null=True)
     email = models.EmailField(null=True)
     phone_Number = models.CharField(max_length=20, null=True)
@@ -94,6 +99,10 @@ class VisitorOrder(models.Model):
 		('Osun', 'Osun'),
 		('Oyo', 'Oyo')
 	]
+    DELIVERY_CHOICES = [
+        ('Normal (Single)', 'Normal (Single)'),
+        ('Joined (To be delivered with orders in the same area)', 'Joined (To be delivered with orders in the same area)')
+    ]
     order_Id = models.CharField(
 		 max_length = 10,
 		 null=True,
@@ -103,6 +112,7 @@ class VisitorOrder(models.Model):
     first_Name = models.CharField(max_length=30, null=True)
     last_Name = models.CharField(max_length=30, null=True)
     payment_Mode = models.CharField(max_length=14, choices=PAYMENT_CHOICES, default='Pay Instantly', null=True)
+    delivery_Type = models.CharField(max_length=53, choices=DELIVERY_CHOICES, default='Normal (Single)', null=True)
     schedule_Delivery = models.DateField(blank=True, null=True)
     email = models.EmailField(null=True)
     phone_Number = models.CharField(max_length=20, null=True)

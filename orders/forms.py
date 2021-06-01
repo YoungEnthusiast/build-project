@@ -5,11 +5,17 @@ from django.core.exceptions import ValidationError
 import datetime
 
 class UserOrderForm(forms.ModelForm):
-    schedule_Delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+    PAYMENT_CHOICES=[('Pay Instantly','Pay Instantly'),
+         ('Pay on Site', 'Pay on Site')]
+    payment_Mode = forms.ChoiceField(label='Payment Mode', choices=PAYMENT_CHOICES, widget=forms.RadioSelect)
+    DELIVERY_CHOICES=[('Normal (Single)', 'Normal (Single)'),
+         ('Joined (To be delivered with orders in the same area)', 'Joined (To be delivered with orders in the same area)')]
+    delivery_Type = forms.ChoiceField(label='Delivery Type', choices=DELIVERY_CHOICES, widget=forms.RadioSelect)
+    schedule_Delivery = forms.DateField(label='Schedule Delivery', widget=NumberInput(attrs={'type': 'date'}))
     email = forms.EmailField(widget= forms.TextInput
                           (attrs={'placeholder':'Leave blank if you wish to use registered email address'}),
                           required = False)
-    phone_Number = forms.CharField(widget= forms.TextInput
+    phone_Number = forms.CharField(label='Phone Number', widget= forms.TextInput
                           (attrs={'placeholder':'Leave blank if you wish to use registered phone number'}),
                           required = False)
     city= forms.CharField(widget= forms.TextInput
@@ -33,12 +39,18 @@ class UserOrderForm(forms.ModelForm):
 
     class Meta:
         model = UserOrder
-        fields = ['email', 'phone_Number', 'state', 'city', 'address', 'payment_Mode', 'schedule_Delivery']
+        fields = ['email', 'phone_Number', 'state', 'city', 'address', 'payment_Mode',  'delivery_Type', 'schedule_Delivery']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['state'].help_text = "Select from the available states we have for now"
 
 class VisitorOrderForm(forms.ModelForm):
+    PAYMENT_CHOICES=[('Pay Instantly','Pay Instantly'),
+         ('Pay on Site', 'Pay on Site')]
+    payment_Mode = forms.ChoiceField(label='Payment Mode', choices=PAYMENT_CHOICES, widget=forms.RadioSelect)
+    DELIVERY_CHOICES=[('Normal (Single)', 'Normal (Single)'),
+         ('Joined (To be delivered with orders in the same area)', 'Joined (To be delivered with orders in the same area)')]
+    delivery_Type = forms.ChoiceField(label='Delivery Type', choices=DELIVERY_CHOICES, widget=forms.RadioSelect)
     schedule_Delivery = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
 
     def clean_state(self):
@@ -55,7 +67,7 @@ class VisitorOrderForm(forms.ModelForm):
 
     class Meta:
         model = VisitorOrder
-        fields = ['first_Name', 'last_Name', 'email', 'phone_Number', 'state', 'city', 'address', 'payment_Mode', 'schedule_Delivery']
+        fields = ['first_Name', 'last_Name', 'email', 'phone_Number', 'state', 'city', 'address', 'payment_Mode',  'delivery_Type', 'schedule_Delivery']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['state'].help_text = "Select from the available states we have for now"
