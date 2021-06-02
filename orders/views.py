@@ -105,12 +105,14 @@ def addOrder(request):
             reg = UserOrder.objects.get(order_Id=order)
             email = reg.user.email
             name = reg.user.first_name
+            order_Id = reg.order_Id
             send_mail(
                 'Order Status',
                 'Dear ' + str(name) + ', Your order status has now been changed to ' + str(status),
                 'admin@buildqwik.ng',
                 [email, 'support@buildqwik.ng'],
-                fail_silently=False
+                fail_silently=False,
+                html_message = render_to_string('orders/add_order_email.html', {'name': str(name), 'status': str(status), 'order_Id': str(order_Id)})
             )
             messages.success(request, str(name) + "'s Order Status has been updated")
             return redirect('dashboard')

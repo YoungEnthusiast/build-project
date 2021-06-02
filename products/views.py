@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from users.models import ProductCustomer
 import random
 from cart.forms import CartAddProductForm
+from django.template.loader import render_to_string
 
 def product_list(request, category_slug=None):
     category = None
@@ -46,7 +47,8 @@ def fundWallet(request, **kwargs):
                 'Dear ' + str(first_name) + ', Your request has been received! Your wallet will be funded as soon as your payment is verified',
                 'admin@buildqwik.ng',
 				[email, 'payment@buildqwik.ng'],
-                fail_silently=False
+                fail_silently=False,
+                html_message = render_to_string('products/fund_wallet_email.html', {'name': str(first_name)})
             )
 			messages.success(request, "Request Submitted, Your wallet will be funded as soon as your payment is verified")
 			return redirect('dashboard')

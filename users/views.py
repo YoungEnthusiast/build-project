@@ -139,7 +139,7 @@ def editProfile(request, **kwargs):
                 new_xplorer.address = new_customer.address
                 new_xplorer.CAC_Certificate = new_customer.CAC_Certificate
                 new_xplorer.save()
-            messages.success(request, "Your profile has been modified successfully")
+            messages.success(request, "Your profile has been modified")
             return redirect('edit_profile')
         else:
             messages.error(request, "Error: Please review form input fields below")
@@ -163,9 +163,10 @@ def changePassword(request):
                 'Dear ' + str(name) + ', your password has just been changed. If this activity was not carried out by you, please reply to this email',
                 'admin@buildqwik.ng',
                 [email],
-                fail_silently=False
+                fail_silently=False,
+                html_message = render_to_string('users/change_password_email.html', {'name': str(name)})
             )
-            messages.success(request, "Your password has been changed successfully")
+            messages.success(request, "Your password has been changed")
             return redirect('change_password')
     else:
         form = PasswordChangeForm(user=request.user)
@@ -351,13 +352,15 @@ def creditWallet(request):
                 wallet_0.current_balance = wallet_0.amount_credited + wallet_1.current_balance
                 wallet_0.last_tran = wallet_0.amount_credited
                 email = wallet_0.user.email
+                name2 = wallet_0.user.first_name
                 wallet_0.save()
                 send_mail(
                     'Wallet Credit Confirmed',
-                    'Dear ' + str(name) + ', Your wallet balance has been topped up',
+                    'Dear ' + str(name2) + ', Your wallet balance has been topped up',
                     'admin@buildqwik.ng',
     				[email, 'payment@buildqwik.ng'],
-                    fail_silently=False
+                    fail_silently=False,
+                    html_message = render_to_string('users/credit_wallet_email.html', {'name': str(name2)})
                 )
                 messages.success(request, str(name) + "'s wallet balance has been topped up and email notification sent to him")
                 return redirect('dashboard')
@@ -365,13 +368,15 @@ def creditWallet(request):
                 wallet_0.current_balance = wallet_0.amount_credited
                 wallet_0.last_tran = wallet_0.amount_credited
                 email = wallet_0.user.email
+                name2 = wallet_0.user.first_name
                 wallet_0.save()
                 send_mail(
                     'Wallet Credit Confirmed',
-                    'Dear ' + str(name) + ', Your wallet balance has been topped up',
+                    'Dear ' + str(name2) + ', Your wallet balance has been topped up',
                     'admin@buildqwik.ng',
     				[email],
-                    fail_silently=False
+                    fail_silently=False,
+                    html_message = render_to_string('users/credit_wallet_email.html', {'name': str(name2)})
                 )
                 messages.success(request, str(name) + "'s wallet balance has been topped up and email notification sent to him")
                 return redirect('dashboard')
