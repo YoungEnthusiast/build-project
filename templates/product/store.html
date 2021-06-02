@@ -24,7 +24,7 @@
     </p>
     <p class="lead text-light">
       QwikMaterials are sourced directly from the manufacturers and are of best available quality.
-      Be it cements, steels and rods, paints, roofing sheets and ceilings, bricks and interlocks.
+      Be it cements, steels and rods, paints, roofing sheets and ceilings, blocks and interlocks.
       We get them to you anywhere across the country. QwikMaterials helps you to deliver that
       project on schedule and within budget.
     </p>
@@ -50,7 +50,6 @@
     <div class="row text-center">
       {% if products %}
         {% for product in products %}
-
         <div class="col-md-4">
           <a href="{{ product.get_absolute_url }}">
             <img width="50" height="250" class="img-responsive" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
@@ -58,7 +57,7 @@
           <div class="box-element product">
             <a href="{{ product.get_absolute_url }}"><strong class="text-warning">{{ product.type }}</strong></a><br>
             <hr>
-            <h6>Price as of {{product.date}}</h6> <h6>₦{{product.price|intcomma}}</h6>
+            <h6>Price as of {{product.date}}</h6> <h6>₦{{product.price|intcomma}} (Covers Delivery Charge)</h6>
           </div>
         </div>
         {% endfor %}

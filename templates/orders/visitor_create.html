@@ -13,6 +13,7 @@
       <ul>
           {% for item in cart %}
               <li>{{ item.quantity }}x {{ item.product.type }} <span>₦{{ item.total_price|intcomma }}</span></li>
+              <li><s>Delivery Charge</s></li>
           {% endfor %}
       </ul>
       <p>Total: ₦{{ cart.get_total_price|intcomma }}</p>
