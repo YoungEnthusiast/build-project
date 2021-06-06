@@ -1,0 +1,14 @@
+{% load static %}
+
+<p style="text-align:center"><img src="{% static 'img/logo_trans.png' %}" alt="BuildQwik Logo" width="123" height="113"></p>
+
+<div class="d-flex justify-content-center">
+  <div class="text-center card bg-light text-dark form-group col-md-9">
+    <br>
+    <h3 style="color:red">Error 403!</h3> <h4>Only the school owner can perform this operation</h4>
+  </div>
+</div>
+
+<div class="row text-center">
+  <button class="btn btn-warning btn-block"><a href="{% url 'index' %}"><strong>Return to Home</strong></a></button>
+</div>

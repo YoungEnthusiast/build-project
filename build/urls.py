@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+handler404 = 'home.views.handler404'
 
 urlpatterns = [
     path('a-m-n/', admin.site.urls),
@@ -26,5 +27,6 @@ urlpatterns = [
     path('cart', include(('cart.urls', 'cart'), namespace='cart')),
     path('', include(('orders.urls', 'orders'), namespace='orders')),
     path('', include('xplorers.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

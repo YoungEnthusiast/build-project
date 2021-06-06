@@ -29,6 +29,15 @@ def showReturn(request):
 def showAbout(request):
     return render(request, 'home/about.html')
 
+def handler403(request, exception, template_name='403.html'):
+    return render(request, 'home/403.html')
+
+def handler404(request, exception):
+    context = {}
+    response = render(request, "home/404.html", context=context)
+    response.status_code = 404
+    return response
+
 @login_required
 @permission_required('home.view_Contact')
 def showContacts(request):
