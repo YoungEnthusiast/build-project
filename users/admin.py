@@ -13,7 +13,7 @@ class ProductCustomerAdmin(admin.ModelAdmin):
 admin.site.register(ProductCustomer, ProductCustomerAdmin)
 
 class ProductWalletHistorieAdmin(admin.ModelAdmin):
-    list_display = ['user', 'amount_debited', 'amount_credited', 'current_balance', 'date_recorded']
+    list_display = ['date_recorded', 'user', 'amount_debited', 'amount_credited', 'current_balance']
     search_fields = ['user__username', 'amount_debited', 'amount_credited', 'current']
     list_filter = ['amount_debited', 'amount_credited']
     list_display_links = ['user']

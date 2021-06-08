@@ -7,7 +7,7 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['type', 'category', 'price', 'image', 'date', 'created', 'updated']
+    list_display = ['created', 'updated', 'date', 'type', 'category', 'price', 'image']
     search_fields = ['type', 'price', 'date']
     list_filter = ['type', 'created', 'updated', 'category']
     list_display_links = ['type', 'image']
@@ -18,7 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class ProductCreditAdmin(admin.ModelAdmin):
-    list_display = ['user', 'amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence', 'date_Submitted']
+    list_display = ['date_Submitted', 'user', 'amount_Paid', 'transaction_Date', 'transaction_Name', 'payment_Evidence']
     search_fields = ['user__username', 'amount_Paid', 'transaction_Date', 'transaction_Name']
     list_filter = ['transaction_Date', 'transaction_Name']
     list_display_links = ['user', 'payment_Evidence']

@@ -12,8 +12,8 @@ class XploreCustomerAdmin(admin.ModelAdmin):
 admin.site.register(XploreCustomer, XploreCustomerAdmin)
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ['xplorer', 'request_Id', 'package', 'date_Activated', 'subscription_Ends']
-    search_fields = ['xplorer__user__username', 'request_Id__id', 'package', 'date_Activated', 'subscription_Ends']
+    list_display = ['date_Activated', 'subscription_Ends', 'xplorer', 'request_Id', 'package']
+    search_fields = ['date_Activated', 'subscription_Ends', 'xplorer__user__username', 'request_Id__id', 'package']
     list_filter = ['package']
     list_display_links = []
     list_per_page = 10
@@ -21,8 +21,8 @@ class SubscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Subscription, SubscriptionAdmin)
 
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'package', 'image', 'payment_Evidence', 'waiver_Code', 'created']
-    search_fields = ['id', 'user__username', 'package', 'waiver_Code', 'created']
+    list_display = ['created', 'id', 'user', 'package', 'image', 'payment_Evidence', 'waiver_Code']
+    search_fields = ['created', 'id', 'user__username', 'package', 'waiver_Code']
     list_filter = ['package']
     list_display_links = ['id', 'image', 'payment_Evidence']
     list_per_page = 10

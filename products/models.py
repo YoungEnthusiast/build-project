@@ -29,7 +29,7 @@ class Product(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 
 	class Meta:
-		ordering = ('type',)
+		ordering = ('-date',)
 		index_together = (('id', 'slug'),)
 	def __str__(self):
 		return str(self.type)

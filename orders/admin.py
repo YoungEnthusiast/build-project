@@ -8,7 +8,7 @@ class OrderItemInline(admin.TabularInline):
     raw_id_fields = ['product']
 
 class UserOrderAdmin(admin.ModelAdmin):
-    list_display = ['order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'delivery_Type', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address', 'date_Ordered']
+    list_display = ['date_Ordered', 'order_Id', 'user', 'email', 'payment_Mode', 'get_total_cost', 'schedule_Delivery', 'delivery_Type', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city', 'address']
     search_fields = ['order_Id', 'user__username', 'email', 'payment_Mode', 'delivery_Type', 'date_Ordered', 'last_Modified', 'order_Status', 'payment_Status', 'phone_Number', 'state', 'city']
     list_filter = ['payment_Mode', 'delivery_Type', 'order_Status', 'payment_Status', 'state', 'city']
     list_display_links = ['order_Id', 'user']
@@ -24,7 +24,7 @@ class VisitorOrderItemInline(admin.TabularInline):
     raw_id_fields = ['product']
 
 class VisitorOrderAdmin(admin.ModelAdmin):
-    list_display = ['order_Id', 'first_Name', 'email', 'state', 'city', 'address', 'payment_Mode', 'schedule_Delivery', 'order_Status', 'payment_Status', 'date_Ordered']
+    list_display = ['date_Ordered', 'order_Id', 'first_Name', 'email', 'state', 'city', 'address', 'payment_Mode', 'schedule_Delivery', 'order_Status', 'payment_Status']
     search_fields = ['order_Id', 'first_Name', 'email', 'state', 'city', 'address', 'payment_Mode', 'date_Ordered', 'order_Status', 'state', 'city', 'payment_Status']
     list_filter = ['state', 'city', 'payment_Mode', 'order_Status', 'payment_Status', 'state', 'city']
     list_display_links = ['order_Id', 'first_Name', 'email']
@@ -34,8 +34,8 @@ class VisitorOrderAdmin(admin.ModelAdmin):
 admin.site.register(VisitorOrder, VisitorOrderAdmin)
 
 class OrderStatusAdmin(admin.ModelAdmin):
-    list_display = ['order', 'order_Status', 'created', 'updated']
-    search_fields = ['order__order_Id', 'order_Status', 'created', 'updated']
+    list_display = ['created', 'updated', 'order', 'order_Status']
+    search_fields = ['created', 'updated', 'order__order_Id', 'order_Status']
     list_filter = ['order_Status']
     list_display_links = ['order']
     list_per_page = 10
