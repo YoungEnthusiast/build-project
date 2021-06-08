@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
-    'users',
+    'users.apps.UsersConfig',
     'products.apps.ProductsConfig',
     'xplorers.apps.XplorersConfig',
     'django_filters',
