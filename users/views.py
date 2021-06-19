@@ -28,7 +28,6 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-#from codes.forms import CodeForm
 
 def create(request):
     if request.method == "POST":
@@ -91,26 +90,7 @@ def create(request):
 #         form = CustomRegisterForm()
 #     return render(request, 'users/account.html', {'form': form})
 
-# def verify_view(request):
-#     form = CodeForm(request.POST or None)
-#     pk = request.session.get('pk')
-#     if pk:
-#         user = ProductCustomer.objects.get(pk=pk)
-#         code = user.code
-#         code_user = f"{user.username}: {user.code}"
-#         if not request.POST:
-#             print(code_user)
-#             #send sms
-#         if form.is_valid():
-#             num = form.cleaned_data.get('number')
-#
-#             if str(code) == num:
-#                 code.save()
-#                 login(request, user)
-#                 return redirect('dashboard')
-#             else:
-#                 return redirect('login')
-#     return render(request, 'users/verify.html', {'form':form})
+
 
 class ActivateAccount(View):
     def get(self, request, uidb64, token, *args, **kwargs):

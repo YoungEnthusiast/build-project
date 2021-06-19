@@ -57,7 +57,7 @@
           <div class="box-element product">
             <a href="{{ product.get_absolute_url }}"><strong class="text-warning">{{ product.type }}</strong></a><br>
             <hr>
-            <h6>Price as of {{product.date}}</h6> <h6>₦{{product.price|intcomma}} (Covers Delivery Charge)</h6>
+            <h6>Price as of {{today}}</h6> <h6><strong>₦{{product.price|intcomma}} (Covers Delivery Charge)</strong></h6>
           </div>
         </div>
         {% endfor %}
