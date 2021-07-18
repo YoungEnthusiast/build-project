@@ -184,10 +184,5 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = 'BuildQwik Tech. Ltd. <admin@buildqwik.ng>'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'yustaoab@gmail.com'
-# EMAIL_HOST_PASSWORD = 'twnqanloovwgjrsq'
-# EMAIL_USE_TLS=True
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6Lel75saAAAAALidKht0ZK-CYwML-J3__IiXIN0N'
