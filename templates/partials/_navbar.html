@@ -1,144 +1,135 @@
 {% load static %}
 {% load humanize %}
 <nav class="p-0 navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-    <a class="ml-2 navbar-brand" href="{% url 'index' %}">
-      <img src="{% static 'img/logo.png' %}" width="50" height="80" class="logo" alt="BuildQwik">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <ul class="navbar-nav">
-        <li
-          {% if '/' == request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'index' %}"><strong>Home</strong></a>
-        </li>
-        <li
-          {% if 'product' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'products:product_list' %}"><strong>QwikMaterials</strong></a>
-        </li>
-        <li
-          {% if 'xplore' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'xplore' %}"><strong>QwikXplore</strong></a>
-        </li>
-        <li
-          {% if 'about' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'about' %}"><strong>About</strong></a>
-        </li>
-        <li
-          {% if 'contact' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'contact' %}"><strong>Contact</strong></a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
+  <a class="ml-2 navbar-brand" href="{% url 'index' %}">
+    <img src="{% static 'img/logo.png' %}" width="50" height="80" class="logo" alt="BuildQwik">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <ul class="navbar-nav">
+      <li
+        {% if '/' == request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'index' %}"><strong>Home</strong></a>
+      </li>
+      <li
+        {% if 'product' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'products:product_list' %}"><strong>QwikMaterials</strong></a>
+      </li>
+      <li
+        {% if 'xplore' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'xplore' %}"><strong>QwikXplore</strong></a>
+      </li>
+      <li
+        {% if 'about' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'about' %}"><strong>About</strong></a>
+      </li>
+      <li
+        {% if 'contact' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'contact' %}"><strong>Contact</strong></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
 
-      {% if user.is_authenticated %}
-        <li
-          {% if 'xplordash' in request.path %}
-            class="nav-item active mr-3"
+    {% if user.is_authenticated %}
+      <li
+        {% if 'xplordash' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'xplore-dashboard' %}"><strong>Xplore</strong></a>
+      </li>
+      <li
+        {% if 'dashboard' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'dashboard' %}"><strong>Dashboard</strong></a>
+      </li>
+      <li class="nav-item mr-3">
+        {% with total_items=cart|length %}
+          {% if cart|length > 0 %}
+            <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
+              Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price|intcomma }}
+            </a>
           {% else %}
-            class="nav-item mr-3"
+                <a class="nav-link text-white">Your cart is empty.</a>
           {% endif %}
-        >
-          <a class="nav-link" href="{% url 'xplore-dashboard' %}"><strong>Xplore</strong></a>
-        </li>
-        <li
-          {% if 'dashboard' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'dashboard' %}"><strong>Dashboard</strong></a>
-        </li>
-        <li class="nav-item mr-3">
+        {% endwith %}
+      </li>
+      <li
+        {% if 'logout' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <button class="btn btn-outline-warning btn-sm"><a class="nav-link" href="{% url 'logout' %}">
+          <i class="fas fa-sign-out-alt text-light"></i> <strong class="text-light">Logout</strong></a></button>
+      </li>
+    {% else %}
+      <li class="nav-item mr-3">
           {% with total_items=cart|length %}
-            {% if cart|length > 0 %}
-              <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
-                Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price|intcomma }}
-              </a>
-            {% else %}
+              {% if cart|length > 0 %}
+                  <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
+                    Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price|intcomma }}
+                  </a>
+              {% else %}
                   <a class="nav-link text-white">Your cart is empty.</a>
-            {% endif %}
+              {% endif %}
           {% endwith %}
-        </li>
-        <li
-          {% if 'logout' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <button class="btn btn-outline-warning btn-sm"><a class="nav-link" href="{% url 'logout' %}">
-            <i class="fas fa-sign-out-alt text-light"></i> <strong class="text-light">Logout</strong></a></button>
-        </li>
-      {% else %}
-        <li class="nav-item mr-3">
-            {% with total_items=cart|length %}
-                {% if cart|length > 0 %}
-                    <a class="nav-link text-white" href="{% url "cart:cart_detail" %}">
-                      Your cart: {{ total_items }} item{{ total_items|pluralize }}, ₦{{ cart.get_total_price|intcomma }}
-                    </a>
-                {% else %}
-                    <a class="nav-link text-white">Your cart is empty.</a>
-                {% endif %}
-            {% endwith %}
-        </li>
-        <li
-          {% if 'account' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <button class="btn btn-outline-warning btn-sm"><a class="nav-link" href="{% url 'account' %}">
-            <i class="fas fa-user-plus text-light"></i> <strong class="text-light">Register</strong></a></button>
-        </li class="nav-item mr-3">
-        <li
-          {% if 'login' in request.path %}
-            class="nav-item active mr-3"
-          {% else %}
-            class="nav-item mr-3"
-          {% endif %}
-        >
-          <a class="nav-link" href="{% url 'login' %}">
-            <i class="fas fa-key"></i> <strong>Login</strong></a>
-        </li>
-      {% endif %}
-</body>
-</html>
-
-
-
-
-
-
-      </ul>
-
-    </div>
+      </li>
+      <li
+        {% if 'account' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <button class="btn btn-outline-warning btn-sm"><a class="nav-link" href="{% url 'account' %}">
+          <i class="fas fa-user-plus text-light"></i> <strong class="text-light">Register</strong></a></button>
+      </li class="nav-item mr-3">
+      <li
+        {% if 'login' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link" href="{% url 'login' %}">
+          <i class="fas fa-key"></i> <strong>Login</strong></a>
+      </li>
+    {% endif %}
+    </ul>
+  </div>
 </nav>

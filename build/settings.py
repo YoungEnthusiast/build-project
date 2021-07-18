@@ -155,6 +155,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'login'
@@ -166,6 +167,9 @@ LOGIN_REDIRECT_URL = 'dashboard'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
+
+
 CART_SESSION_ID = 'cart'
 
 from django.contrib.messages import constants as messages
@@ -176,8 +180,7 @@ MESSAGE_TAGS = {
 
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'admin@buildqwik.ng'
-EMAIL_HOST_PASSWORD = 'BuildAdmin7236!'
+
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = 'BuildQwik Tech. Ltd. <admin@buildqwik.ng>'

@@ -39,12 +39,12 @@ class ProfileEditForm(UserChangeForm):
     password = forms.CharField(widget=forms.TextInput(attrs={'type':'hidden'}))
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        fields = ['first_name', 'last_name', 'password']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].label = "First Name"
         self.fields['last_name'].label = "Last Name"
-        self.fields['email'].label = "Email Address"
+        #self.fields['email'].label = "Email Address"
 
 
 class ProductCustomerEditForm(forms.ModelForm):

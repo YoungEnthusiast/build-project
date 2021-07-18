@@ -1,6 +1,6 @@
 from django import template
 register = template.Library()
-from ..models import Contact
+#from ..models import Contact
 
 # @register.simple_tag
 # def total_classes():

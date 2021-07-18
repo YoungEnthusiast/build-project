@@ -16,7 +16,7 @@
       <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" class="btn btn-danger" value="Yes, confirm"> <a class="btn btn-outline-primary" href="{% url 'dashboard' %}">No, cancel</a>
+        <input type="submit" class="btn btn-danger" value="Yes, confirm"> <a class="btn btn-outline-primary" href="{% url 'orders' %}">No, cancel</a>
       </form>
     {% else %}
       <h2 class="text-center">Access Restricted</h2>
