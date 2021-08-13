@@ -4142,7 +4142,7 @@ button.close {
 
 .carousel-fade .carousel-item {
   opacity: 0;
-  transition-duration: .3s;
+  transition-duration: 3s;
   transition-property: opacity; }
 
 .carousel-fade .carousel-item.active,
@@ -6226,7 +6226,7 @@ a.text-success:hover, a.text-success:focus {
   color: #12b01f !important; }
 
 .text-twitter {
-  color: #2d9beb !important; }
+  color: #18bbed !important; }
 
 .text-youtube {
   color: #ff0000 !important; }
