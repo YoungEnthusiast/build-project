@@ -12,6 +12,8 @@
     gtag('config', 'UA-196052515-1');
   </script>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta charset="utf-8">
 
 
@@ -30,20 +32,18 @@
     {% endblock title %}
   </head>
   <body>
-    <div class="wrapper">
-    {% include 'partials/_navbar.html' %}
+    <main class="wrapper">
+      {% include 'partials/_navbar.html' %}
 
-    {% block content %}
+      {% block content %}
 
-    {% endblock content%}
+      {% endblock content%}
 
-    {% include 'partials/_footer.html' %}
+      {% include 'partials/_footer.html' %}
 
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %} "></script>
-
-
-  </div>
+      <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'js/main.js' %} "></script>
+    </main>
   </body>
 </html>

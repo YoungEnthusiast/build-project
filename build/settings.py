@@ -26,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'cs@wku0df^c*@#rmw-8sbm(w!i75bp&qo$@wwffnn@#px-%b61'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -45,6 +46,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -60,7 +63,7 @@ INSTALLED_APPS = [
     'orders',
 
 ]
-
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -177,9 +180,13 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
 }
 
+
+
+GOOGLE_RECAPTCHA_SECRET_KEY = '6Lel75saAAAAALidKht0ZK-CYwML-J3__IiXIN0N'
+
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 465
-
+EMAIL_HOST_USER = 'admin@buildqwik.ng'
+EMAIL_HOST_PASSWORD = 'BuildAdmin7236!'
 EMAIL_USE_SSL = True
-
 DEFAULT_FROM_EMAIL = 'BuildQwik Tech. Ltd. <admin@buildqwik.ng>'
